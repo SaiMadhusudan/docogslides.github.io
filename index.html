@@ -129,22 +129,22 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
 <body>
 <div class="deck" id="deck">
 
-<!-- ====== TITLE ====== -->
-<section class="slide hero" style="--accent:var(--docog)">
-  <div class="vc" style="display:flex;flex-direction:column;align-items:center">
-  <h1 style="margin-top:2vh">From grounded <span style="color:#05539C">answers</span><br>to grounded <span style="color:#7C3AED">reasoning</span></h1>
-  <p class="sub">Grounded document understanding · BharatGen × IIIT Hyderabad</p>
-  <div class="logos">
-    <span><img src="assets/logo_bharatgen.png" alt="BharatGen"></span>
-    <span><img src="assets/logo_iiith.jpg" alt="IIIT Hyderabad"></span>
-    <span><img src="assets/logo_eccv.png" alt="ECCV 2026"></span>
-  </div>
+<!-- ====== 20 · DOCOG DIVIDER ====== -->
+<section class="slide divider" style="--accent:var(--docog)">
+  <div class="kicker">ECCV 2026 &nbsp;<span style="background:#F59222;color:#3b2200;padding:.4vh 1.4vh;border-radius:100px;letter-spacing:.14em;font-weight:800">ORAL</span></div>
+  <h2>DoCoG</h2>
+  <p>Mask-based <b>Multi-Type</b> Grounded <b>Chain-of-Thought</b> for Document QA</p>
+  <p style="font-size:2.45vh;margin-top:3vh"><span class="nb" style="font-weight:800;text-decoration:underline;text-underline-offset:.3em;text-decoration-thickness:.18vh">Sai Madhusudan Gunda*</span> · <span class="nb">Jyothi Swaroopa Jinka*</span> · <span class="nb">Hrithik Sagar Rachakonda*</span> · <span class="nb">Aryan Jain†</span> · <span class="nb">Venkata Kesav Venna†</span> · <span class="nb">Anirudh Srinivasan</span> · <span class="nb">Ravi Kiran Sarvadevabhatla</span><br><span style="font-size:2.05vh;color:#ffffffbb">*, † equal contribution &nbsp;·&nbsp; IIIT Hyderabad · BharatGen &nbsp;·&nbsp; docog-eccv.github.io</span></p>
+  <div class="logos" style="justify-content:flex-start;margin-top:4vh">
+    <span><img src="assets/logo_bharatgen.png" alt="BharatGen" style="height:10vh"></span>
+    <span><img src="assets/logo_iiith.jpg" alt="IIIT Hyderabad" style="height:10vh"></span>
+    <span><img src="assets/logo_eccv.png" alt="ECCV 2026" style="height:10vh"></span>
   </div>
 </section>
 
 <!-- ====== 3 · WHY GROUNDING ====== -->
 <section class="slide" style="--accent:var(--intro)">
-  <div class="kicker">Motivation</div>
+  <div class="kicker">The setting · Document question answering</div>
   <h2>An answer you can't <span class="k">point to</span> is an answer you can't trust</h2>
   <div class="cols vc" style="grid-template-columns:1.2fr .8fr">
     <div class="card" style="padding:2.4vh">
@@ -165,7 +165,7 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
         <defs><marker id="warr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#F59222"/></marker></defs>
         <text x="300" y="44" font-size="14.5" fill="#5b6b7a">Q: “Which value is abnormal?”</text>
         <rect x="288" y="118" width="262" height="44" rx="10" fill="#fff" stroke="#dde5ec" stroke-width="1.5"/>
-        <text x="300" y="145" font-size="13.5" fill="#33424f">A: “the <tspan fill="#8a4b00" font-family="Menlo,monospace" font-size="12">MCV of 72.0 fL</tspan> <tspan fill="#8a4b00" font-family="Menlo,monospace" font-size="11" font-weight="700">[GND]</tspan>”</text>
+        <text x="300" y="145" font-size="13.5" fill="#33424f">A: “the <tspan fill="#8a4b00" font-family="Menlo,monospace" font-size="12">MCV of 72.0 fL</tspan> <tspan fill="#8a4b00" font-family="Menlo,monospace" font-size="11" font-weight="700">[GROUND]</tspan>”</text>
       </svg>
       <p class="small" style="margin-top:1vh;text-align:center">Grounded QA: every claimed value is <b>linked to the exact pixels</b> it came from.</p>
     </div>
@@ -175,113 +175,12 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
       <div class="card frag"><h3>Act on regions</h3><p>Redaction, extraction, agents — all need <i>where</i>, not just <i>what</i>.</p></div>
     </div>
   </div>
-  <div class="footer"><span class="act">Act I · The problem</span><span>Why grounding</span></div>
-</section>
-
-<!-- ====== 4 · STATUS QUO ====== -->
-<section class="slide" style="--accent:var(--intro)">
-  <div class="kicker">The status quo</div>
-  <h2>Today, grounding = <span class="x">emit a bounding box</span></h2>
-  <div class="vc">
-    <div class="svgbox">
-    <svg viewBox="0 0 720 120" style="width:78%;max-width:1000px">
-      <rect x="4" y="20" width="250" height="80" rx="14" fill="#fff" stroke="#dde5ec" stroke-width="2"/>
-      <text x="129" y="55" text-anchor="middle" font-size="20" font-weight="700" fill="#16222e">Language model</text>
-      <text x="129" y="79" text-anchor="middle" font-size="14" fill="#5b6b7a">writes geometry as text…</text>
-      <path d="M262 60 h50" stroke="#8a97a5" stroke-width="3" marker-end="url(#arr1)"/>
-      <defs><marker id="arr1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8a97a5"/></marker></defs>
-      <rect x="322" y="30" width="394" height="60" rx="10" fill="#0d2740"/>
-      <text x="519" y="67" text-anchor="middle" font-size="19" font-family="Menlo,monospace" fill="#ffd28a">&lt;box&gt;212,88,410,236&lt;/box&gt;</text>
-    </svg>
-    </div>
-    <p class="small" style="text-align:center;margin-top:1.6vh">Four numbers, produced the same way as any other word. Three things go wrong.</p>
-    <div class="probs">
-      <div class="prob frag"><h3>Rectangles are not enough</h3><p>Document evidence is curved text, a wrapped paragraph, a slice of a chart. A rectangle cannot take that shape.</p></div>
-      <div class="prob frag"><h3>The numbers can be hallucinated</h3><p>Coordinates are just more tokens to predict — nothing ties them to what is actually on the page.</p></div>
-      <div class="prob frag"><h3>One box is incomplete</h3><p>Evidence is often several pieces in different places; a single rectangle either misses most of it or swallows the whole region.</p></div>
-    </div>
-  </div>
-  <div class="footer"><span class="act">Act I · The problem</span><span>Boxes via the vocabulary</span></div>
-</section>
-
-<!-- ====== 5 · WHERE BOXES BREAK ====== -->
-<section class="slide" style="--accent:var(--intro)">
-  <div class="kicker">Where rectangles break</div>
-  <h2>A box over a pie wedge grabs the <span class="x">wrong wedges</span></h2>
-  <div class="cols vc" style="grid-template-columns:1.1fr .9fr;align-items:start">
-    <div class="card" style="padding:2vh">
-      <p style="text-align:center;margin:0 0 .8vh;font-size:2.05vh;color:#33424f">Q: “What share does <b>Mumbai</b> hold?” → A: <b>7.7%</b> — now <i>show the evidence</i></p>
-      <svg viewBox="0 0 596 330" style="width:100%">
-        <g transform="translate(150,150)">
-          <g stroke="#fff" stroke-width="2">
-            <path d="M0 0 L0 -95 A95 95 0 0 1 38.3 -86.9 Z" fill="#dfe7ee"/>
-            <path d="M0 0 L38.3 -86.9 A95 95 0 0 1 74.35 -59.1 Z" fill="#F59222"/>
-            <path d="M0 0 L74.35 -59.1 A95 95 0 0 1 93.3 -17.8 Z" fill="#e8dfe8"/>
-            <path d="M0 0 L93.3 -17.8 A95 95 0 0 1 22.5 92.3 Z" fill="#dce8f4"/>
-            <path d="M0 0 L22.5 92.3 A95 95 0 0 1 -93.9 14.4 Z" fill="#cfdeed"/>
-            <path d="M0 0 L-93.9 14.4 A95 95 0 0 1 0 -95 Z" fill="#e4ecdf"/>
-          </g>
-          <rect x="-4" y="-99" width="86" height="104" fill="none" stroke="#b42318" stroke-width="3" stroke-dasharray="8 5"/>
-          <text x="16" y="-108" text-anchor="middle" font-size="12.5" fill="#5b6b7a">Paris</text>
-          <text x="88" y="-72" text-anchor="start" font-size="12.5" font-weight="700" fill="#8a4b00">Mumbai</text>
-          <text x="102" y="-46" text-anchor="start" font-size="12.5" fill="#5b6b7a">Sydney</text>
-          <text x="0" y="126" text-anchor="middle" font-size="13.5" fill="#5b6b7a">the box grabs Paris + Sydney too</text>
-        </g>
-        <g transform="translate(440,150)">
-          <g stroke="#fff" stroke-width="2">
-            <path d="M0 0 L0 -95 A95 95 0 0 1 38.3 -86.9 Z" fill="#eef2f6"/>
-            <path d="M0 0 L38.3 -86.9 A95 95 0 0 1 74.35 -59.1 Z" fill="#05539C"/>
-            <path d="M0 0 L74.35 -59.1 A95 95 0 0 1 93.3 -17.8 Z" fill="#eef2f6"/>
-            <path d="M0 0 L93.3 -17.8 A95 95 0 0 1 22.5 92.3 Z" fill="#eef2f6"/>
-            <path d="M0 0 L22.5 92.3 A95 95 0 0 1 -93.9 14.4 Z" fill="#eef2f6"/>
-            <path d="M0 0 L-93.9 14.4 A95 95 0 0 1 0 -95 Z" fill="#eef2f6"/>
-          </g>
-          <text x="16" y="-108" text-anchor="middle" font-size="12.5" fill="#9aa7b4">Paris</text>
-          <text x="88" y="-72" text-anchor="start" font-size="12.5" font-weight="700" fill="#05539C">Mumbai</text>
-          <text x="102" y="-46" text-anchor="start" font-size="12.5" fill="#9aa7b4">Sydney</text>
-          <text x="0" y="126" text-anchor="middle" font-size="13.5" fill="#5b6b7a">the mask: Mumbai’s wedge — nothing else</text>
-        </g>
-        <text x="150" y="316" text-anchor="middle" font-size="14" font-weight="700" fill="#b42318">bbox-based</text>
-        <text x="440" y="316" text-anchor="middle" font-size="14" font-weight="700" fill="#05539C">mask-based</text>
-      </svg>
-    </div>
-    <div class="svgbox">
-    <svg viewBox="0 0 348 400" style="max-height:64vh">
-      <g class="frag">
-        <path d="M80 20 A46 46 0 0 1 122 82 L80 66 Z" fill="#F59222"/><circle cx="80" cy="66" r="46" fill="none" stroke="#c9d4de" stroke-width="2"/>
-        <rect x="76" y="16" width="52" height="70" fill="none" stroke="#b42318" stroke-width="2.5" stroke-dasharray="6 4"/>
-        <text x="150" y="52" font-size="15" font-weight="700" fill="#16222e">pie wedges</text>
-        <text x="150" y="72" font-size="13" fill="#5b6b7a">box overshoots</text>
-      </g>
-      <g class="frag">
-        <path d="M30 168 q60 -46 120 0" fill="none" stroke="#05539C" stroke-width="13" stroke-linecap="round"/>
-        <rect x="24" y="126" width="132" height="52" fill="none" stroke="#b42318" stroke-width="2.5" stroke-dasharray="6 4"/>
-        <text x="176" y="150" font-size="15" font-weight="700" fill="#16222e">curved text</text>
-        <text x="176" y="170" font-size="13" fill="#5b6b7a">mostly empty box</text>
-      </g>
-      <g class="frag">
-        <path d="M60 226 l34 26 l-34 26 l-34 -26 z" fill="#0E7C61" opacity=".85"/>
-        <path d="M96 252 h48" stroke="#0E7C61" stroke-width="3" marker-end="url(#arr2)"/>
-        <defs><marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#0E7C61"/></marker></defs>
-        <rect x="22" y="222" width="126" height="60" fill="none" stroke="#b42318" stroke-width="2.5" stroke-dasharray="6 4"/>
-        <text x="176" y="248" font-size="15" font-weight="700" fill="#16222e">diagram parts</text>
-        <text x="176" y="268" font-size="13" fill="#5b6b7a">nodes, arrows, labels</text>
-      </g>
-      <g class="frag">
-        <rect x="26" y="320" width="60" height="14" rx="4" fill="#7C3AED"/><rect x="98" y="356" width="72" height="14" rx="4" fill="#7C3AED"/>
-        <rect x="18" y="310" width="162" height="70" fill="none" stroke="#b42318" stroke-width="2.5" stroke-dasharray="6 4"/>
-        <text x="196" y="340" font-size="15" font-weight="700" fill="#16222e">multi-span facts</text>
-        <text x="196" y="360" font-size="13" fill="#5b6b7a">one box ≠ two places</text>
-      </g>
-    </svg>
-    </div>
-  </div>
-  <div class="footer"><span class="act">Act I · The problem</span><span>Failure modes</span></div>
+  <div class="footer"><span class="act">Document QA</span><span>Why grounding</span></div>
 </section>
 
 <!-- ====== 6 · SAM RECIPE ====== -->
 <section class="slide" style="--accent:var(--intro)">
-  <div class="kicker">The enabling tool</div>
+  <div class="kicker">Our previous work · M3Grounder (CVPR 2026)</div>
   <h2>Promptable segmentation — <span class="k">the prompt need not be human</span></h2>
   <div class="vc">
   <div class="svgbox">
@@ -301,7 +200,7 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
     <rect x="420" y="81" width="344" height="64" rx="10" fill="#0d2740"/>
     <text x="438" y="120" font-size="16" font-family="Menlo,monospace" fill="#dfe9f5">…the answer is Mumbai</text>
     <rect x="646" y="91" width="108" height="44" rx="8" fill="#F59222"/>
-    <text x="700" y="118" text-anchor="middle" font-size="15" font-weight="700" font-family="Menlo,monospace" fill="#3b2200">[GND]</text>
+    <text x="700" y="118" text-anchor="middle" font-size="15" font-weight="700" font-family="Menlo,monospace" fill="#3b2200">[GROUND]</text>
     <path d="M700 145 v41 q0 12 -12 12 h-130 q-12 0 -12 12 v46" fill="none" stroke="#F59222" stroke-width="4" marker-end="url(#arr4)"/>
     <text x="690" y="178" text-anchor="end" font-size="13.5" font-weight="700" fill="#8a4b00">its hidden state = the prompt</text>
     <path d="M76 194 v62" stroke="#8a97a5" stroke-width="3" marker-end="url(#arr3)"/>
@@ -318,40 +217,10 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
     <text x="806" y="382" text-anchor="middle" font-size="14" fill="#5b6b7a">pixel mask · any shape</text>
   </svg>
   </div>
-  <div class="callout frag" style="margin-top:1.4vh;text-align:center;font-size:2.5vh">A VLM emits a <b>special token</b> — its <b>hidden state is the prompt</b>.</div>
+  <div class="callout frag" style="margin-top:1.4vh;text-align:center;font-size:2.5vh">A VLM emits a <b>special token</b> — its <b>hidden state is the prompt</b>. No coordinates are ever written as text.</div>
+  <p class="small frag" style="text-align:center;margin-top:.8vh">This grounds <b>one answer</b> (F1 79.0 vs Gemini-2.5-Pro 43.4 · +63 ms). But an answer is the end of a chain of reasoning&hellip;</p>
   </div>
-  <div class="footer"><span class="act">Act I · The idea</span><span>Hidden state = prompt</span></div>
-</section>
-
-<!-- ====== COT PRIMER ====== -->
-<section class="slide" style="--accent:var(--intro)">
-  <div class="kicker">One more ingredient</div>
-  <h2>Chain of thought — <span class="k">think in steps</span>, then answer</h2>
-  <div class="vc">
-  <div class="svgbox">
-  <svg viewBox="0 0 900 220" style="width:86%">
-    <defs><marker id="carr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8a97a5"/></marker></defs>
-    <rect x="10" y="70" width="180" height="80" rx="12" fill="#fff" stroke="#dde5ec" stroke-width="2"/>
-    <text x="100" y="103" text-anchor="middle" font-size="14" font-weight="700" fill="#16222e">Q: which grew</text>
-    <text x="100" y="124" text-anchor="middle" font-size="14" font-weight="700" fill="#16222e">faster, A or B?</text>
-    <path d="M190 110 h38" stroke="#8a97a5" stroke-width="2.5" fill="none" marker-end="url(#carr)"/>
-    <rect x="236" y="70" width="184" height="80" rx="12" fill="#fff" stroke="#c9d4de" stroke-width="2"/>
-    <text x="328" y="97" text-anchor="middle" font-size="12.5" fill="#8a97a5" font-style="italic">step 1</text>
-    <text x="328" y="122" text-anchor="middle" font-size="13.5" fill="#33424f">A went 10 → 14 (+40%)</text>
-    <path d="M420 110 h38" stroke="#8a97a5" stroke-width="2.5" fill="none" marker-end="url(#carr)"/>
-    <rect x="466" y="70" width="184" height="80" rx="12" fill="#fff" stroke="#c9d4de" stroke-width="2"/>
-    <text x="558" y="97" text-anchor="middle" font-size="12.5" fill="#8a97a5" font-style="italic">step 2</text>
-    <text x="558" y="122" text-anchor="middle" font-size="13.5" fill="#33424f">B went 20 → 24 (+20%)</text>
-    <path d="M650 110 h38" stroke="#8a97a5" stroke-width="2.5" fill="none" marker-end="url(#carr)"/>
-    <rect x="696" y="70" width="190" height="80" rx="12" fill="#eaf1f8" stroke="#05539C" stroke-width="2.5"/>
-    <text x="791" y="103" text-anchor="middle" font-size="12.5" fill="#5b6b7a" font-style="italic">answer</text>
-    <text x="791" y="127" text-anchor="middle" font-size="16" font-weight="700" fill="#05539C">A — it grew faster</text>
-    <text x="450" y="196" text-anchor="middle" font-size="14" fill="#5b6b7a">on hard questions, models answer better when they write the steps out</text>
-  </svg>
-  </div>
-  <div class="callout frag" style="margin-top:1.4vh;text-align:center;font-size:2.5vh">But every step is <b>just text</b> — nothing ties it to the page. Hold that thought.</div>
-  </div>
-  <div class="footer"><span class="act">Act I · The idea</span><span>Chain of thought</span></div>
+  <div class="footer"><span class="act">Our previous work · M3Grounder</span><span>Hidden state = prompt</span></div>
 </section>
 
 <!-- ====== 21 · DOCOG GAP ====== -->
@@ -392,13 +261,16 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
   <div class="footer"><span class="act">Paper 2 · DoCoG</span><span>In the wild</span></div>
 </section>
 
-<!-- ====== 23 · DOCOG ARCH ====== -->
-<section class="slide" style="--accent:var(--docog)">
-  <div class="kicker">DoCoG · Architecture</div>
-  <h2>VLM + segmenter, joined by <span class="k">GIM</span></h2>
-  <figure class="fig framed" style="flex:1;width:100%"><img src="assets/docog_model.png" alt="DoCoG architecture" style="max-height:62vh;width:96%"></figure>
-  <p class="small" style="text-align:center;margin-top:.8vh">① VLM (Qwen3-VL-8B) emits steps S = (S₁…Sₙ, S<sub>f</sub>) with <span class="tok g">[GND]</span> ② · hidden states <span style="position:relative;display:inline-block">G<span style="position:absolute;left:0;right:0;top:-0.34em;text-align:center;font-size:.75em;line-height:1">˜</span></span> ③ → GIM ④<br>cross-attends segmenter features ⑤ F<sub>enc</sub>(I) ⑥ · prompt encoder ⑦ + mask decoder → one mask per [GND]</p>
-  <div class="footer"><span class="act">Paper 2 · DoCoG</span><span>Architecture</span></div>
+<!-- ====== 24 · DOCOG INTERACTIVE ====== -->
+<section class="slide iframe-slide" style="--accent:var(--docog)">
+  <div class="kicker">DoCoG · Interactive</div>
+  <h2 style="font-size:3.4vh">Watch the forward pass — tokens flow through GIM into masks</h2>
+  <div class="ifwrap"><iframe data-src="interactive/docog.html" loading="lazy" title="DoCoG interactive architecture"></iframe></div>
+  <div class="ifbar">
+    <span class="small">Click inside to drive it · <kbd>Space</kbd> pause · <kbd>R</kbd> restart · <kbd>F</kbd> fit — then use ‹ › to continue the talk</span>
+    <a href="interactive/docog.html" target="_blank">open standalone ↗</a>
+  </div>
+  <div class="footer"><span class="act">Paper 2 · DoCoG</span><span>Interactive architecture</span></div>
 </section>
 
 <!-- ====== 25 · GIM ====== -->
@@ -481,40 +353,6 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
   <div class="footer"><span class="act">Paper 2 · DoCoG</span><span>Training · stage 1</span></div>
 </section>
 
-<!-- ====== DPO PRIMER ====== -->
-<section class="slide" style="--accent:var(--docog)">
-  <div class="kicker">DoCoG · Training stage 2 · the idea</div>
-  <h2>DPO in one minute: <span class="k">prefer the better answer</span></h2>
-  <div class="cols vc" style="grid-template-columns:1.25fr .75fr">
-    <div class="svgbox">
-    <svg viewBox="0 0 720 310" style="width:100%">
-      <defs><marker id="arrDP" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8a97a5"/></marker></defs>
-      <rect x="16" y="118" width="150" height="64" rx="12" fill="#fff" stroke="#dde5ec" stroke-width="2"/>
-      <text x="91" y="146" text-anchor="middle" font-size="14" font-weight="700" fill="#16222e">same question</text>
-      <text x="91" y="166" text-anchor="middle" font-size="11.5" fill="#5b6b7a">(image, q)</text>
-      <path d="M166 150 h36" stroke="#8a97a5" stroke-width="2.5" fill="none" marker-end="url(#arrDP)"/>
-      <rect x="210" y="118" width="150" height="64" rx="12" fill="#7C3AED"/>
-      <text x="285" y="146" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">VLM</text>
-      <text x="285" y="166" text-anchor="middle" font-size="11.5" fill="#e6d5ff">writes several answers</text>
-      <path d="M360 136 L420 84" stroke="#8a97a5" stroke-width="2.5" fill="none" marker-end="url(#arrDP)"/>
-      <path d="M360 164 L420 216" stroke="#8a97a5" stroke-width="2.5" fill="none" marker-end="url(#arrDP)"/>
-      <rect x="430" y="36" width="264" height="86" rx="12" fill="#fff" stroke="#0ca30c" stroke-width="2"/>
-      <text x="562" y="72" text-anchor="middle" font-size="14.5" font-weight="700" fill="#006300">✓ better answer</text>
-      <text x="562" y="94" text-anchor="middle" font-size="12" fill="#5b6b7a">right — and well grounded</text>
-      <rect x="430" y="178" width="264" height="86" rx="12" fill="#fff" stroke="#d03b3b" stroke-width="2"/>
-      <text x="562" y="214" text-anchor="middle" font-size="14.5" font-weight="700" fill="#b42318">✗ worse answer</text>
-      <text x="562" y="236" text-anchor="middle" font-size="12" fill="#5b6b7a">wrong, or unsupported</text>
-      <text x="360" y="300" text-anchor="middle" font-size="14" fill="#33424f">train: nudge the model <tspan font-weight="700" fill="#006300">toward ✓</tspan>, <tspan font-weight="700" fill="#b42318">away from ✗</tspan> — that is all DPO is</text>
-    </svg>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:1.2vh;justify-content:center">
-      <div class="card"><p class="small">No new labels, no reward model — the model learns from <b>its own outputs</b>, ranked better vs worse.</p></div>
-      <div class="card frag"><p class="small">In DoCoG this update touches <b>only the VLM</b> — the part that writes the text. Why everything else stays frozen → next slide.</p></div>
-    </div>
-  </div>
-  <div class="footer"><span class="act">Paper 2 · DoCoG</span><span>DPO · the idea</span></div>
-</section>
-
 <!-- ====== DPO FORMULA ====== -->
 <section class="slide" style="--accent:var(--docog)">
   <div class="kicker">DoCoG · Training stage 2 · the objective</div>
@@ -589,46 +427,6 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
     </div>
   </div>
   <div class="footer"><span class="act">Paper 2 · DoCoG</span><span>DPO + anchor loss</span></div>
-</section>
-
-<!-- ====== STAGE 2 RECIPE ====== -->
-<section class="slide" style="--accent:var(--docog)">
-  <div class="kicker">DoCoG · Training stage 2</div>
-  <h2>Stage 2, <span class="k">end to end</span></h2>
-  <div class="cols vc" style="grid-template-columns:1.3fr .7fr">
-    <div class="svgbox">
-    <svg viewBox="0 0 720 330" style="width:100%">
-      <defs><marker id="arrS2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8a97a5"/></marker></defs>
-      <rect x="16" y="36" width="200" height="66" rx="12" fill="#fff" stroke="#7d8b99" stroke-width="2"/>
-      <text x="116" y="63" text-anchor="middle" font-size="14.5" font-weight="700" fill="#33424f">❄ SFT model</text>
-      <text x="116" y="84" text-anchor="middle" font-size="11.5" fill="#5b6b7a">samples N CoTs per (I, q)</text>
-      <path d="M216 69 h38" stroke="#8a97a5" stroke-width="2.5" fill="none" marker-end="url(#arrS2)"/>
-      <rect x="262" y="36" width="200" height="66" rx="12" fill="#fff" stroke="#7d8b99" stroke-width="2"/>
-      <text x="362" y="63" text-anchor="middle" font-size="14.5" font-weight="700" fill="#33424f">reward</text>
-      <text x="362" y="84" text-anchor="middle" font-size="11.5" fill="#5b6b7a">format check → AQ + CQ + GQ</text>
-      <path d="M462 69 h38" stroke="#8a97a5" stroke-width="2.5" fill="none" marker-end="url(#arrS2)"/>
-      <rect x="508" y="36" width="196" height="66" rx="12" fill="#fff" stroke="#7d8b99" stroke-width="2"/>
-      <text x="606" y="63" text-anchor="middle" font-size="14.5" font-weight="700" fill="#33424f">DoCoG-PQA</text>
-      <text x="606" y="84" text-anchor="middle" font-size="11.5" fill="#5b6b7a">20K chosen ✓ / rejected ✗</text>
-      <path d="M606 102 v40 h-246 v28" stroke="#8a97a5" stroke-width="2.5" fill="none" marker-end="url(#arrS2)"/>
-      <rect x="190" y="176" width="340" height="76" rx="14" fill="#7C3AED"/>
-      <text x="360" y="207" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">DPO — on the text only</text>
-      <text x="360" y="230" text-anchor="middle" font-size="12.5" fill="#e6d5ff">🔥 VLM · ❄ GIM + segmenter</text>
-      <path d="M548 214 h-14" stroke="#F59222" stroke-width="2.5" fill="none" marker-end="url(#arrS2o)"/>
-      <defs><marker id="arrS2o" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#F59222"/></marker></defs>
-      <text x="556" y="207" font-size="13" font-weight="700" fill="#c96f00">+ anchor</text>
-      <text x="556" y="224" font-size="11.5" fill="#5b6b7a">on refined [GND]</text>
-      <text x="556" y="240" font-size="11.5" fill="#5b6b7a">embeddings</text>
-      <text x="360" y="300" text-anchor="middle" font-size="15" font-style="italic" fill="#33424f">𝓛<tspan font-size="10" dy="3">opt</tspan><tspan dy="-3"> = 𝓛</tspan><tspan font-size="10" dy="3">DPO</tspan><tspan dy="-3"> + λ</tspan><tspan font-size="10" dy="3">anchor</tspan><tspan dy="-3">·𝓛</tspan><tspan font-size="10" dy="3">anchor</tspan></text>
-    </svg>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:1.2vh;justify-content:center">
-      <div class="stat"><div class="v" style="font-size:4.2vh">84.1 → 85.8</div><div class="l">AQ — what stage 2 adds</div></div>
-      <div class="stat frag"><div class="v" style="font-size:4.2vh">70.5 held</div><div class="l">mask IoU — the anchor at work</div></div>
-      <p class="small frag">One objective: better chains, unmoved grounding interface.</p>
-    </div>
-  </div>
-  <div class="footer"><span class="act">Paper 2 · DoCoG</span><span>Stage 2 · full recipe</span></div>
 </section>
 
 <!-- ====== 29 · DOCOG DATA ====== -->
@@ -740,7 +538,7 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
 <section class="slide hero" style="--accent:var(--docog)">
   <h1 style="font-size:5.4vh">Thank you — <span class="k">questions?</span></h1>
   <p class="sub" style="margin-top:1.8vh">docog-eccv.github.io</p>
-  <div class="logos"><span><img src="assets/logo_bharatgen.png" alt="BharatGen"></span><span><img src="assets/logo_iiith.jpg" alt="IIIT Hyderabad"></span></div>
+  <div class="logos"><span><img src="assets/logo_bharatgen.png" alt="BharatGen" style="height:10vh"></span><span><img src="assets/logo_iiith.jpg" alt="IIIT Hyderabad" style="height:10vh"></span><span><img src="assets/logo_eccv.png" alt="ECCV 2026" style="height:10vh"></span></div>
   <p class="sub" style="font-size:1.85vh;margin-top:2.6vh">DoCoG (ECCV 2026, Oral) · BharatGen · IIIT Hyderabad</p>
 </section>
 </div>
