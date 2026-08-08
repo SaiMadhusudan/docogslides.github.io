@@ -131,14 +131,12 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
 
 <!-- ====== 20 · DOCOG DIVIDER ====== -->
 <section class="slide divider" style="--accent:var(--docog)">
-  <div class="kicker">ECCV 2026 &nbsp;<span style="background:#F59222;color:#3b2200;padding:.4vh 1.4vh;border-radius:100px;letter-spacing:.14em;font-weight:800">ORAL</span></div>
   <h2>DoCoG</h2>
   <p>Mask-based <b>Multi-Type</b> Grounded <b>Chain-of-Thought</b> for Document QA</p>
   <p style="font-size:2.45vh;margin-top:3vh"><span class="nb" style="font-weight:800;text-decoration:underline;text-underline-offset:.3em;text-decoration-thickness:.18vh">Sai Madhusudan Gunda*</span> · <span class="nb">Jyothi Swaroopa Jinka*</span> · <span class="nb">Hrithik Sagar Rachakonda*</span> · <span class="nb">Aryan Jain†</span> · <span class="nb">Venkata Kesav Venna†</span> · <span class="nb">Anirudh Srinivasan</span> · <span class="nb">Ravi Kiran Sarvadevabhatla</span><br><span style="font-size:2.05vh;color:#ffffffbb">*, † equal contribution &nbsp;·&nbsp; IIIT Hyderabad · BharatGen &nbsp;·&nbsp; docog-eccv.github.io</span></p>
   <div class="logos" style="justify-content:flex-start;margin-top:4vh">
     <span><img src="assets/logo_bharatgen.png" alt="BharatGen" style="height:10vh"></span>
     <span><img src="assets/logo_iiith.jpg" alt="IIIT Hyderabad" style="height:10vh"></span>
-    <span><img src="assets/logo_eccv.png" alt="ECCV 2026" style="height:10vh"></span>
   </div>
 </section>
 
@@ -271,54 +269,6 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
     <a href="interactive/docog.html" target="_blank">open standalone ↗</a>
   </div>
   <div class="footer"><span class="act">Paper 2 · DoCoG</span><span>Interactive architecture</span></div>
-</section>
-
-<!-- ====== 25 · GIM ====== -->
-<section class="slide" style="--accent:var(--docog)">
-  <div class="kicker">DoCoG · The new piece</div>
-  <h2>GIM — because evidence tokens must <span class="k">agree</span> with each other</h2>
-  <p class="small" style="margin-bottom:.4vh">Grounding <b>one answer</b> is easy — one token, refined alone. DoCoG emits a <span class="tok g">[GND]</span> in <b>every step + the answer</b> — refined in isolation, they can contradict.</p>
-  <div class="cols vc" style="grid-template-columns:1.3fr .7fr">
-    <div class="svgbox">
-    <svg viewBox="0 0 720 330" style="width:100%">
-      <rect x="60" y="34" width="440" height="256" rx="16" fill="none" stroke="#7C3AED" stroke-width="1.5" stroke-dasharray="7 5"/>
-      <text x="72" y="58" font-size="14" fill="#7C3AED" font-weight="700">GIM · transformer encoder</text>
-      <g font-family="Menlo,monospace" font-size="13" text-anchor="middle">
-        <rect x="90" y="104" width="88" height="40" rx="9" fill="#2b1a4d"/><text x="134" y="129" fill="#e6d5ff">[GND]₁</text>
-        <rect x="226" y="104" width="88" height="40" rx="9" fill="#2b1a4d"/><text x="270" y="129" fill="#e6d5ff">[GND]₂</text>
-        <rect x="362" y="104" width="88" height="40" rx="9" fill="#2b1a4d"/><text x="406" y="129" fill="#e6d5ff">[GND]₃</text>
-      </g>
-      <g stroke="#7C3AED" stroke-width="2.5" fill="none">
-        <path d="M146 102 q62 -30 116 0"/><path d="M282 102 q62 -30 116 0"/><path d="M150 98 q124 -46 248 0"/>
-      </g>
-      <text x="712" y="86" text-anchor="end" font-size="14" fill="#7C3AED" font-weight="700">self-attention</text>
-      <text x="712" y="106" text-anchor="end" font-size="12.5" fill="#5b6b7a">[GND] embeddings stay</text>
-      <text x="712" y="122" text-anchor="end" font-size="12.5" fill="#5b6b7a">mutually consistent</text>
-      <g transform="translate(96,196)">
-        <g fill="#d9c9f5"><rect width="20" height="20" rx="3"/><rect x="24" width="20" height="20" rx="3"/><rect x="48" width="20" height="20" rx="3"/><rect x="72" width="20" height="20" rx="3"/><rect y="24" width="20" height="20" rx="3"/><rect x="24" y="24" width="20" height="20" rx="3" fill="#7C3AED"/><rect x="48" y="24" width="20" height="20" rx="3"/><rect x="72" y="24" width="20" height="20" rx="3"/><rect y="48" width="20" height="20" rx="3"/><rect x="24" y="48" width="20" height="20" rx="3"/><rect x="48" y="48" width="20" height="20" rx="3" fill="#7C3AED"/><rect x="72" y="48" width="20" height="20" rx="3"/></g>
-        <text x="46" y="90" text-anchor="middle" font-size="12.5" fill="#5b6b7a">segmenter features</text>
-        <text x="46" y="106" text-anchor="middle" font-size="12.5" fill="#5b6b7a">x = F<tspan dy="3" font-size="9">enc</tspan><tspan dy="-3">(I)</tspan></text>
-      </g>
-      <g stroke="#F59222" stroke-width="2.5" fill="none">
-        <path d="M134 148 q0 30 8 44" marker-end="url(#arr6)"/><path d="M270 148 q-76 26 -106 42" marker-end="url(#arr6)"/><path d="M406 148 q-176 30 -222 42" marker-end="url(#arr6)"/>
-      </g>
-      <defs><marker id="arr6" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#F59222"/></marker></defs>
-      <text x="330" y="212" font-size="14" fill="#c96f00" font-weight="700">cross-attention</text>
-      <text x="330" y="231" font-size="12.5" fill="#5b6b7a">aligns tokens to the</text>
-      <text x="330" y="247" font-size="12.5" fill="#5b6b7a">segmenter's space</text>
-      <path d="M502 160 h44" stroke="#8a97a5" stroke-width="3" marker-end="url(#arr3c)"/>
-      <defs><marker id="arr3c" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8a97a5"/></marker></defs>
-      <rect x="552" y="128" width="150" height="64" rx="12" fill="#7C3AED"/>
-      <text x="627" y="155" text-anchor="middle" font-size="15" fill="#fff" font-weight="700">refined G</text>
-      <text x="627" y="177" text-anchor="middle" font-size="12.5" fill="#e6d5ff">→ prompt enc → masks</text>
-    </svg>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:1.2vh;justify-content:center">
-      <div class="stat"><div class="v bad" style="font-size:4.2vh">81.9 → 69.6</div><div class="l">final-answer grounding without GIM</div></div>
-      <div class="stat frag"><div class="v bad" style="font-size:4.2vh">78.2 → 73.5</div><div class="l">GQ<sub>all</sub> if GIM loses image cross-attention</div></div>
-    </div>
-  </div>
-  <div class="footer"><span class="act">Paper 2 · DoCoG</span><span>GIM</span></div>
 </section>
 
 <!-- ====== 26 · DOCOG SFT ====== -->
@@ -537,9 +487,10 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
 <!-- ====== THANKS ====== -->
 <section class="slide hero" style="--accent:var(--docog)">
   <h1 style="font-size:5.4vh">Thank you — <span class="k">questions?</span></h1>
-  <p class="sub" style="margin-top:1.8vh">docog-eccv.github.io</p>
+  <p class="sub" style="margin-top:2.2vh;font-size:2.9vh">DoCoG is accepted at <b>ECCV 2026</b> &nbsp;<span style="background:#F59222;color:#3b2200;padding:.5vh 1.6vh;border-radius:100px;letter-spacing:.12em;font-weight:800;font-size:2.2vh">ORAL</span></p>
+  <p class="sub" style="margin-top:1.4vh">docog-eccv.github.io</p>
   <div class="logos"><span><img src="assets/logo_bharatgen.png" alt="BharatGen" style="height:10vh"></span><span><img src="assets/logo_iiith.jpg" alt="IIIT Hyderabad" style="height:10vh"></span><span><img src="assets/logo_eccv.png" alt="ECCV 2026" style="height:10vh"></span></div>
-  <p class="sub" style="font-size:1.85vh;margin-top:2.6vh">DoCoG (ECCV 2026, Oral) · BharatGen · IIIT Hyderabad</p>
+  <p class="sub" style="font-size:1.85vh;margin-top:2.6vh">BharatGen · IIIT Hyderabad</p>
 </section>
 </div>
 
