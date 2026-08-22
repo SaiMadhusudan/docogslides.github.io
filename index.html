@@ -129,25 +129,16 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
 <body>
 <div class="deck" id="deck">
 
-<!-- ====== HELLO ====== -->
-<section class="slide hero" style="--accent:var(--blue)">
-  <div class="vc" style="display:flex;flex-direction:column;align-items:center">
-  <p class="sub" style="font-size:2vh;letter-spacing:.14em;text-transform:uppercase;color:#8a97a5">Hello — I&rsquo;m</p>
-  <h1 style="margin-top:.6vh">Sai Madhusudan Gunda</h1>
-  <p class="sub" style="margin-top:1.6vh">MS student with Prof. Ravi Kiran Sarvadevabhatla &nbsp;·&nbsp; CVIT, IIIT Hyderabad</p>
-  <p class="sub" style="margin-top:2.8vh;font-size:2.7vh;max-width:64vw;line-height:1.55">I work on teaching models to <b>read, ground, and reason</b> over complex documents &mdash; from modern PDFs to centuries-old palm-leaf manuscripts in low-resource Indic scripts.</p>
-  <p class="sub" style="margin-top:2.4vh;font-size:1.9vh;color:#8a97a5">saimadhusudan.github.io</p>
-  </div>
-</section>
-
 <!-- ====== 20 · DOCOG DIVIDER ====== -->
 <section class="slide divider" style="--accent:var(--docog)">
+  <div class="kicker">ECCV 2026 &nbsp;<span style="background:#F59222;color:#3b2200;padding:.4vh 1.4vh;border-radius:100px;letter-spacing:.14em;font-weight:800">SPOTLIGHT</span></div>
   <h2>DoCoG</h2>
   <p>Mask-based <b>Multi-Type</b> Grounded <b>Chain-of-Thought</b> for Document QA</p>
-  <p style="font-size:2.45vh;margin-top:3vh"><span class="nb" style="font-weight:800;text-decoration:underline;text-underline-offset:.3em;text-decoration-thickness:.18vh">Sai Madhusudan Gunda*</span> · <span class="nb">Jyothi Swaroopa Jinka*</span> · <span class="nb">Hrithik Sagar Rachakonda*</span> · <span class="nb">Aryan Jain†</span> · <span class="nb">Venkata Kesav Venna†</span> · <span class="nb">Anirudh Srinivasan</span> · <span class="nb">Ravi Kiran Sarvadevabhatla</span><br><span style="font-size:2.05vh;color:#ffffffbb">*, † equal contribution &nbsp;·&nbsp; IIIT Hyderabad · BharatGen &nbsp;·&nbsp; docog-eccv.github.io</span></p>
+  <p style="font-size:2.45vh;margin-top:3vh"><span class="nb">Sai Madhusudan Gunda*</span> · <span class="nb">Jyothi Swaroopa Jinka*</span> · <span class="nb">Hrithik Sagar Rachakonda*</span> · <span class="nb">Aryan Jain†</span> · <span class="nb">Venkata Kesav Venna†</span> · <span class="nb">Anirudh Srinivasan</span> · <span class="nb">Ravi Kiran Sarvadevabhatla</span><br><span style="font-size:2.05vh;color:#ffffffbb">*, † equal contribution &nbsp;·&nbsp; IIIT Hyderabad · BharatGen &nbsp;·&nbsp; docog-eccv.github.io</span></p>
   <div class="logos" style="justify-content:flex-start;margin-top:4vh">
     <span><img src="assets/logo_bharatgen.png" alt="BharatGen" style="height:10vh"></span>
     <span><img src="assets/logo_iiith.jpg" alt="IIIT Hyderabad" style="height:10vh"></span>
+    <span><img src="assets/logo_eccv.png" alt="ECCV 2026" style="height:10vh"></span>
   </div>
 </section>
 
@@ -255,7 +246,7 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
     <text x="450" y="308" text-anchor="middle" font-size="15" fill="#5b6b7a"><tspan font-weight="700" fill="#7C3AED">multi-type:</tspan> text, pie wedges, legends, flowchart nodes &amp; arrows</text>
   </svg>
   </div>
-  <div class="footer"><span class="act">Paper 2 · DoCoG</span><span>Motivation</span></div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>Motivation</span></div>
 </section>
 
 <!-- ====== 32 · DOCOG QUAL ====== -->
@@ -267,7 +258,7 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
     <span class="small">Autoplays · tabs switch examples · click any <span class="tok g">[GND]</span> to re-sweep its mask</span>
     <a href="interactive/docog-examples.html" target="_blank">open standalone ↗</a>
   </div>
-  <div class="footer"><span class="act">Paper 2 · DoCoG</span><span>In the wild</span></div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>In the wild</span></div>
 </section>
 
 <!-- ====== 24 · DOCOG INTERACTIVE ====== -->
@@ -279,7 +270,7 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
     <span class="small">Click inside to drive it · <kbd>Space</kbd> pause · <kbd>R</kbd> restart · <kbd>F</kbd> fit — then use ‹ › to continue the talk</span>
     <a href="interactive/docog.html" target="_blank">open standalone ↗</a>
   </div>
-  <div class="footer"><span class="act">Paper 2 · DoCoG</span><span>Interactive architecture</span></div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>Interactive architecture</span></div>
 </section>
 
 <!-- ====== 26 · DOCOG SFT ====== -->
@@ -311,7 +302,7 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
   <p class="small" style="text-align:center">Stage 1 is plain supervised fine-tuning, end-to-end (VLM + GIM + mask decoder):<br>cross-entropy on the text · Dice + BCE on every predicted evidence mask.</p>
   <div class="callout frag" style="width:82%;margin:0 auto"><b>Why a stage 2?</b> SFT only imitates the single annotated chain — fixed-style supervision. It never compares the model's own better and worse chains — DPO adds that.</div>
   </div>
-  <div class="footer"><span class="act">Paper 2 · DoCoG</span><span>Training · stage 1</span></div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>Training · stage 1</span></div>
 </section>
 
 <!-- ====== DPO FORMULA ====== -->
@@ -353,7 +344,7 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
   </div>
   <div class="callout frag"><b>The catch</b> — π<sub>ref</sub> leashes the <b>text</b>, not the hidden <span class="tok g">[GND]</span> states the frozen mask pipeline reads → the drift trap, next.</div>
   </div>
-  <div class="footer"><span class="act">Paper 2 · DoCoG</span><span>DPO · the formula</span></div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>DPO · the formula</span></div>
 </section>
 
 <!-- ====== 27 · DOCOG DPO ====== -->
@@ -387,7 +378,7 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
       </div>
     </div>
   </div>
-  <div class="footer"><span class="act">Paper 2 · DoCoG</span><span>DPO + anchor loss</span></div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>DPO + anchor loss</span></div>
 </section>
 
 <!-- ====== 29 · DOCOG DATA ====== -->
@@ -424,7 +415,7 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
       <figcaption>what the data teaches: every step cites its evidence — locations, dashed routes, numbers — as masks</figcaption>
     </figure>
   </div>
-  <div class="footer"><span class="act">Paper 2 · DoCoG</span><span>Stage-1 data</span></div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>Stage-1 data</span></div>
 </section>
 
 <!-- ====== 28 · DOCOG REWARDS ====== -->
@@ -444,7 +435,7 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
   </div>
   <p class="small frag" style="text-align:center;margin:0">Same yardstick at test time: <b>DoCoG-Bench reports exactly these metrics</b> (deterministic, + one G-Eval) — the numbers on the next slides.</p>
   </div>
-  <div class="footer"><span class="act">Paper 2 · DoCoG</span><span>Reward design</span></div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>Reward design</span></div>
 </section>
 
 <!-- ====== 30 · DOCOG RESULTS SCATTER ====== -->
@@ -485,23 +476,22 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
       <div class="card frag"><h3>General QA intact</h3><p class="small">ChartQA <b>92.7</b> · ChartBench <b>79.4</b> · FlowVQA 85.5 · MISS-QA <b>78.4</b> · TabFact <b>89.4</b> · DocVQA 93.4</p></div>
     </div>
   </div>
-  <div class="footer"><span class="act">Paper 2 · DoCoG</span><span>Main results</span></div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>Main results</span></div>
 </section>
 
 <!-- ====== DOCOG POSTER ====== -->
 <section class="slide" style="--accent:var(--docog)">
   <div class="kicker">DoCoG · In one image</div>
   <figure class="fig" style="flex:1;min-height:0"><img src="assets/docog_poster.png" alt="DoCoG: the answer and its grounding — take both pills" style="max-height:80vh"></figure>
-  <div class="footer"><span class="act">Paper 2 · DoCoG</span><span>Poster</span></div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>Poster</span></div>
 </section>
 
 <!-- ====== THANKS ====== -->
 <section class="slide hero" style="--accent:var(--docog)">
-  <p class="sub" style="font-size:3vh;margin-bottom:1.6vh">DoCoG is accepted at <b>ECCV 2026</b> &nbsp;<span style="background:#F59222;color:#3b2200;padding:.5vh 1.6vh;border-radius:100px;letter-spacing:.12em;font-weight:800;font-size:2.2vh">ORAL</span></p>
   <h1 style="font-size:5.4vh">Thank you — <span class="k">questions?</span></h1>
   <div style="display:flex;justify-content:center;margin-top:2.6vh"><figure style="margin:0;background:#fff;border:1px solid #dde5ec;border-radius:14px;padding:1.6vh;box-shadow:0 2px 8px rgba(10,30,60,.06);text-align:center"><img src="assets/qr_docog.png" alt="DoCoG project page QR" style="height:19vh;display:block"><figcaption style="font-size:1.8vh;color:#5b6b7a;margin-top:.8vh">docog-eccv.github.io</figcaption></figure></div>
   <div class="logos"><span><img src="assets/logo_bharatgen.png" alt="BharatGen" style="height:10vh"></span><span><img src="assets/logo_iiith.jpg" alt="IIIT Hyderabad" style="height:10vh"></span><span><img src="assets/logo_eccv.png" alt="ECCV 2026" style="height:10vh"></span></div>
-  <p class="sub" style="font-size:1.85vh;margin-top:2.6vh">BharatGen · IIIT Hyderabad</p>
+  <p class="sub" style="font-size:1.85vh;margin-top:2.6vh">DoCoG (ECCV 2026, Spotlight) · BharatGen · IIIT Hyderabad</p>
 </section>
 </div>
 
