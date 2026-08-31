@@ -24,51 +24,51 @@ body{font-family:"Avenir Next","Segoe UI",Inter,system-ui,-apple-system,sans-ser
 .slide{position:absolute;inset:0;display:none;flex-direction:column;background:var(--bg);
   padding:3.8vh 4vw 6vh;overflow:hidden}
 .slide.on{display:flex}
-.slide h2{font-size:4.82vh;line-height:1.12;margin-bottom:1.2vh;font-weight:700;text-wrap:balance}
+.slide h2{font-size:4.3vh;line-height:1.12;margin-bottom:1.2vh;font-weight:700}
 .slide h2 .k{color:var(--accent,var(--blue))}
 .slide h2 .x{color:var(--bad)}
-.kicker{font-size:2.3vh;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--accent,var(--blue));margin-bottom:.8vh}
-.slide p{font-size:2.76vh;line-height:1.45}
-.small{font-size:2.3vh;color:var(--muted)}
-.tiny{font-size:2.24vh;color:var(--faint)}
+.kicker{font-size:1.8vh;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--accent,var(--blue));margin-bottom:.8vh}
+.slide p{font-size:2.3vh;line-height:1.45}
+.small{font-size:1.8vh;color:var(--muted)}
+.tiny{font-size:1.6vh;color:var(--faint)}
 .vc{margin-top:auto;margin-bottom:auto}
 .cols{display:grid;grid-template-columns:1fr 1fr;gap:2vw;align-items:center;min-height:0}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.8vh 1.8vh;box-shadow:0 2px 10px rgba(10,30,60,.05)}
-.card h3{font-size:2.76vh;margin-bottom:.8vh;color:var(--accent,var(--blue))}
-.card p{font-size:2.56vh;color:#33424f}
+.card h3{font-size:2.3vh;margin-bottom:.8vh;color:var(--accent,var(--blue))}
+.card p{font-size:2vh;color:#33424f}
 .fig{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:0}
 .fig img{max-width:100%;max-height:100%;object-fit:contain;border-radius:10px;background:#fff}
 .fig.framed img{border:1px solid var(--line);box-shadow:0 3px 14px rgba(10,30,60,.08);padding:1vh;background:#fff}
 .tok{font-family:ui-monospace,Menlo,monospace;font-size:.9em;background:#0d2740;color:#ffd28a;border-radius:6px;padding:.12vh .7vh;white-space:nowrap;margin:0 .2em}
 .tok.g{background:#0d2740;color:#ffd28a}
-.pill{display:inline-block;font-size:2.37vh;border:1.5px solid var(--accent,var(--blue));color:var(--accent,var(--blue));border-radius:999px;padding:.35vh 1.3vh;margin:.3vh .5vh .3vh 0;font-weight:600;background:#fff}
-.eqop{font-size:3.81vh;color:var(--muted);font-weight:700}
+.pill{display:inline-block;font-size:1.85vh;border:1.5px solid var(--accent,var(--blue));color:var(--accent,var(--blue));border-radius:999px;padding:.35vh 1.3vh;margin:.3vh .5vh .3vh 0;font-weight:600;background:#fff}
+.eqop{font-size:3.4vh;color:var(--muted);font-weight:700}
 .stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.6vh 2vh;text-align:center;box-shadow:0 2px 10px rgba(10,30,60,.05)}
-.stat .v{font-size:5.3vh;font-weight:700;color:var(--accent,var(--blue));line-height:1.05}
-.stat .l{font-size:2.24vh;color:var(--muted);margin-top:.4vh}
+.stat .v{font-size:5vh;font-weight:700;color:var(--accent,var(--blue));line-height:1.05}
+.stat .l{font-size:1.75vh;color:var(--muted);margin-top:.4vh}
 .divider{justify-content:center;background:
   linear-gradient(120deg, color-mix(in srgb, var(--accent) 92%, #000) 0%, var(--accent) 60%, color-mix(in srgb, var(--accent) 72%, #fff) 100%)}
-.divider .kicker{color:#ffffffcc;font-size:2.69vh;letter-spacing:.16em}
-.divider h2{color:#fff;font-size:8.9vh}
-.divider p{color:#ffffffdd;font-size:3.81vh;margin-top:1.6vh;max-width:88vw;text-wrap:balance}
-.footer{position:absolute;left:0;right:0;bottom:0;height:4.4vh;display:flex;align-items:center;justify-content:space-between;padding:0 9vw 0 4vw;font-size:2.24vh;color:var(--muted)}
+.divider .kicker{color:#ffffffcc;font-size:2.1vh;letter-spacing:.16em}
+.divider h2{color:#fff;font-size:8.4vh}
+.divider p{color:#ffffffdd;font-size:3.4vh;margin-top:1.6vh;max-width:82vw}
+.footer{position:absolute;left:0;right:0;bottom:0;height:4.4vh;display:flex;align-items:center;justify-content:space-between;padding:0 9vw 0 4vw;font-size:1.6vh;color:var(--muted)}
 .footer .act{font-weight:700;color:var(--accent,var(--blue))}
 #bar{position:fixed;left:0;bottom:0;height:.7vh;background:linear-gradient(90deg,var(--blue),var(--orange));width:0;z-index:50;transition:width .25s}
-#count{position:fixed;right:1.1vw;bottom:1.3vh;z-index:50;font-size:2.38vh;color:#9fb0c0;font-family:ui-monospace,Menlo,monospace}
+#count{position:fixed;right:1.1vw;bottom:1.3vh;z-index:50;font-size:1.7vh;color:#9fb0c0;font-family:ui-monospace,Menlo,monospace}
 .frag{opacity:0;transform:translateY(1.2vh);transition:all .3s}
 .frag.show{opacity:1;transform:none}
-.callout{background:#fff;border:1px solid var(--line);border-left:6px solid var(--orange);border-radius:12px;padding:1.3vh 1.8vh;font-size:2.75vh}
+.callout{background:#fff;border:1px solid var(--line);border-left:6px solid var(--orange);border-radius:12px;padding:1.3vh 1.8vh;font-size:2.15vh}
 .callout b{color:var(--blue)}
 .logos{display:flex;gap:1.8vw;align-items:center;justify-content:center;margin-top:3.4vh}
 .logos span{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.4vh 2.2vh;display:flex;align-items:center;box-shadow:0 2px 8px rgba(10,30,60,.06)}
 .logos img{height:8.4vh;object-fit:contain}
-kbd{font-family:ui-monospace,Menlo,monospace;background:#fff;border:1px solid var(--line);border-bottom-width:3px;border-radius:6px;padding:.1vh .7vh;font-size:2.38vh}
+kbd{font-family:ui-monospace,Menlo,monospace;background:#fff;border:1px solid var(--line);border-bottom-width:3px;border-radius:6px;padding:.1vh .7vh;font-size:1.7vh}
 .svgbox{min-height:0;display:flex;align-items:center;justify-content:center}
 .svgbox svg{max-width:100%;max-height:100%;height:auto}
 svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
 .chartcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:1.8vh;box-shadow:0 2px 10px rgba(10,30,60,.06);display:flex;flex-direction:column;min-height:0}
-.chartcard h3{font-size:2.69vh;margin-bottom:.4vh}
-.chartcard .sub{font-size:2.38vh;color:var(--muted);margin-bottom:1vh}
+.chartcard h3{font-size:2.1vh;margin-bottom:.4vh}
+.chartcard .sub{font-size:1.7vh;color:var(--muted);margin-bottom:1vh}
 .fullbleed{position:absolute;inset:0;background:#fff}
 .fullbleed iframe{width:100%;height:100%;border:0;display:block}
 .stepcard{display:flex;justify-content:space-between;align-items:center;gap:1vw}
@@ -119,8 +119,8 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
 /* problem / solution card pair (MERIT .mot-card) */
 .mot{border-radius:14px;padding:1.5vh 1.8vh;border:1px solid var(--line);background:#fff;
   box-shadow:0 2px 10px rgba(10,30,60,.05);display:flex;flex-direction:column;gap:.8vh}
-.mot h4{font-size:2.69vh;font-weight:800;margin:0}
-.mot p{font-size:2.69vh;line-height:1.45;color:#39485a}
+.mot h4{font-size:2.1vh;font-weight:800;margin:0}
+.mot p{font-size:2.1vh;line-height:1.45;color:#39485a}
 .mot.prob{background:#fffcfc;border-color:#f7d9da;border-top:3px solid var(--bad)}
 .mot.prob h4{color:var(--bad)} .mot.prob h4::before{content:"⚠  "}
 .mot.sol{background:#fafffa;border-color:#d2e7d2;border-top:3px solid #39a450}
@@ -129,9 +129,9 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
 /* key-idea callout (MERIT .insight-callout) */
 .keyidea{background:#fff;border-left:5px solid var(--accent,var(--blue));border-radius:0 14px 14px 0;
   padding:1.4vh 2vh;box-shadow:0 2px 12px rgba(10,30,60,.07)}
-.keyidea .tag{display:inline-block;background:var(--accent,var(--blue));color:#fff;font-size:1.89vh;
+.keyidea .tag{display:inline-block;background:var(--accent,var(--blue));color:#fff;font-size:1.35vh;
   font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.3vh 1vh;border-radius:999px;margin-bottom:.7vh}
-.keyidea p{font-size:2.76vh;line-height:1.4}
+.keyidea p{font-size:2.3vh;line-height:1.4}
 .keyidea b{color:var(--accent,var(--blue))}
 
 /* the rung rail — tells you where you are on the ladder */
@@ -141,7 +141,7 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
 .rung i.on{background:var(--accent,var(--blue));transform:scale(1.55)}
 .rung i.done{background:#9fb4c6}
 .mnum{flex:0 0 auto;width:4.4vh;height:4.4vh;border-radius:50%;display:grid;place-items:center;
-  font-weight:800;font-size:2.69vh;color:#fff;background:var(--accent,var(--blue))}
+  font-weight:800;font-size:2.1vh;color:#fff;background:var(--accent,var(--blue))}
 .qhead{display:flex;align-items:center;gap:1vw;margin-bottom:.6vh}
 .qhead h2{margin-bottom:0}
 
@@ -149,25 +149,25 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
 .pillsvg{height:2.8vh;flex:none}
 
 /* capability matrix */
-.mtx{width:100%;border-collapse:separate;border-spacing:0;font-size:2.43vh}
+.mtx{width:100%;border-collapse:separate;border-spacing:0;font-size:1.9vh}
 .mtx th,.mtx td{padding:.85vh .6vw;text-align:center;border-bottom:1px solid var(--line)}
-.mtx thead th{font-size:2.38vh;color:var(--muted);font-weight:700;line-height:1.2;vertical-align:bottom;padding-bottom:1.1vh}
-.mtx tbody th{text-align:left;font-weight:700;color:var(--ink);font-size:2.56vh;white-space:nowrap;padding-left:0}
-.mtx .yes{color:var(--good);font-weight:800;font-size:3vh}
-.mtx .no{color:#c8d3dc;font-weight:700;font-size:2.76vh}
-.mtx .txt{color:var(--muted);font-family:ui-monospace,Menlo,monospace;font-size:2.24vh}
+.mtx thead th{font-size:1.7vh;color:var(--muted);font-weight:700;line-height:1.2;vertical-align:bottom;padding-bottom:1.1vh}
+.mtx tbody th{text-align:left;font-weight:700;color:var(--ink);font-size:2vh;white-space:nowrap;padding-left:0}
+.mtx .yes{color:var(--good);font-weight:800;font-size:2.5vh}
+.mtx .no{color:#c8d3dc;font-weight:700;font-size:2.3vh}
+.mtx .txt{color:var(--muted);font-family:ui-monospace,Menlo,monospace;font-size:1.6vh}
 .mtx col.ours{background:#eaf2fb}
-.mtx thead th.ours{color:var(--blue);font-weight:800;font-size:2.43vh}
+.mtx thead th.ours{color:var(--blue);font-weight:800;font-size:1.9vh}
 .mtx td.ours{background:#eaf2fb}
 .mtx td.ours .yes{color:var(--blue)}
 .mtx tr.hl td,.mtx tr.hl th{background:#fff8ec}
 .mtx tr.hl td.ours{background:#e4eefb}
-.mtx .grp{font-size:2.03vh;color:var(--faint);letter-spacing:.08em;text-transform:uppercase}
+.mtx .grp{font-size:1.45vh;color:var(--faint);letter-spacing:.08em;text-transform:uppercase}
 
 /* nav + overview */
 .navbtns{position:absolute;right:1.2vw;bottom:5.4vh;display:flex;gap:.6vw;z-index:30}
 .navbtns button{width:5vh;height:5vh;border-radius:50%;border:1px solid var(--line);background:#fff;
-  font-size:3.12vh;color:var(--accent,var(--blue));cursor:pointer;box-shadow:0 2px 8px rgba(10,30,60,.15);font-weight:700}
+  font-size:2.6vh;color:var(--accent,var(--blue));cursor:pointer;box-shadow:0 2px 8px rgba(10,30,60,.15);font-weight:700}
 .navbtns button:hover{background:var(--accent,var(--blue));color:#fff}
 .nb{white-space:nowrap}
 .deck.overview{overflow:auto;background:#0d1117;padding:2vh}
@@ -200,10 +200,10 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
 <!-- ====== 01 · TITLE ====== -->
 <section class="slide divider" style="--accent:var(--blue);align-items:center;text-align:center">
   <img src="assets/logo_eccv.png" alt="ECCV 2026" style="position:absolute;top:4vh;left:4vw;height:9vh;background:#fff;border-radius:12px;padding:1vh 1.4vh;box-shadow:0 2px 10px rgba(0,0,0,.2)">
-  <div class="kicker" style="font-size:3.24vh">ECCV 2026 · Spotlight</div>
+  <div class="kicker" style="font-size:2.7vh">ECCV 2026 · Spotlight</div>
   <h2 style="font-size:11vh">DoCoG</h2>
-  <p style="font-size:4.59vh">Mask-based <b>Multi-Type</b> Grounded <b>Chain-of-Thought</b> for Document QA</p>
-  <p style="font-size:3.54vh;margin-top:3.4vh;line-height:1.5"><span class="nb">Sai Madhusudan Gunda*</span> · <span class="nb">Jyothi Swaroopa Jinka*</span> · <span class="nb">Hrithik Sagar Rachakonda*</span><br><span class="nb">Aryan Jain†</span> · <span class="nb">Venkata Kesav Venna†</span> · <span class="nb">Anirudh Srinivasan</span> · <span class="nb">Ravi Kiran Sarvadevabhatla</span><br><span style="font-size:2.88vh;color:#ffffffbb">*, † equal contribution &nbsp;·&nbsp; IIIT Hyderabad · BharatGen &nbsp;·&nbsp; docog-eccv.github.io</span></p>
+  <p style="font-size:4.1vh">Mask-based <b>Multi-Type</b> Grounded <b>Chain-of-Thought</b> for Document QA</p>
+  <p style="font-size:2.95vh;margin-top:3.4vh;line-height:1.5"><span class="nb">Sai Madhusudan Gunda*</span> · <span class="nb">Jyothi Swaroopa Jinka*</span> · <span class="nb">Hrithik Sagar Rachakonda*</span><br><span class="nb">Aryan Jain†</span> · <span class="nb">Venkata Kesav Venna†</span> · <span class="nb">Anirudh Srinivasan</span> · <span class="nb">Ravi Kiran Sarvadevabhatla</span><br><span style="font-size:2.4vh;color:#ffffffbb">*, † equal contribution &nbsp;·&nbsp; IIIT Hyderabad · BharatGen &nbsp;·&nbsp; docog-eccv.github.io</span></p>
   <div class="logos" style="margin-top:4vh">
     <span><img src="assets/logo_bharatgen.png" alt="BharatGen" style="height:11.5vh"></span>
     <span><img src="assets/logo_iiith.jpg" alt="IIIT Hyderabad" style="height:11.5vh"></span>
@@ -219,9 +219,9 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
       <svg viewBox="0 0 520 300" style="width:100%">
         <path d="M120 40 L120 250 L400 250 Z" fill="#fbfdff" stroke="#16222e" stroke-width="3" stroke-linejoin="round"/>
         <path d="M120 226 h24 v24" fill="none" stroke="#16222e" stroke-width="2"/>
-        <text x="102" y="152" text-anchor="end" font-size="24.8" font-weight="600">3 cm</text>
-        <text x="260" y="286" text-anchor="middle" font-size="24.8" font-weight="600">4 cm</text>
-        <text x="296" y="126" font-size="26" font-weight="700" font-family="Georgia,serif" font-style="italic">x cm</text>
+        <text x="102" y="152" text-anchor="end" font-size="21" font-weight="600">3 cm</text>
+        <text x="260" y="286" text-anchor="middle" font-size="21" font-weight="600">4 cm</text>
+        <text x="296" y="126" font-size="22" font-weight="700" font-family="Georgia,serif" font-style="italic">x cm</text>
         <ellipse class="frag" cx="313" cy="119" rx="54" ry="27" fill="none" style="stroke:var(--pill-red)" stroke-width="3.5" stroke-linecap="round" transform="rotate(-10 313 119)"/>
       </svg>
     </div>
@@ -239,7 +239,7 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
       </figure>
     </div>
   </div>
-  <div class="frag" style="position:absolute;top:4.5vh;right:4vw;font-size:7.95vh;font-weight:800;line-height:1.05;color:var(--blue)">Why not <span style="color:var(--orange)">both</span>?</div>
+  <div class="frag" style="position:absolute;top:4.5vh;right:4vw;font-size:7.5vh;font-weight:800;line-height:1.05;color:var(--blue)">Why not <span style="color:var(--orange)">both</span>?</div>
   <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>The question</span></div>
 </section>
 
@@ -257,10 +257,10 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
         <img src="assets/doc_table_crop.png" alt="Credit Card Summary table" style="width:100%;border-radius:8px;display:block">
       </div>
       <span class="eqop">+</span>
-      <div class="card" style="padding:1.6vh"><p style="font-size:2.82vh">“What is JCB’s <b>Net Sales</b>?”</p></div>
+      <div class="card" style="padding:1.6vh"><p style="font-size:2.2vh">“What is JCB’s <b>Net Sales</b>?”</p></div>
       <span class="eqop">→</span>
       <div class="card" style="padding:1.6vh;text-align:center;background:#eaf2fb;border-color:#b9d3ee">
-        <p style="font-size:3.24vh;font-weight:800;color:var(--blue)">$30.00</p></div>
+        <p style="font-size:2.7vh;font-weight:800;color:var(--blue)">$30.00</p></div>
     </div>
 
     <div class="casc" style="animation-delay:.18s;display:grid;grid-template-columns:1.25fr auto 1.25fr auto .7fr;align-items:center;gap:1.2vw">
@@ -270,8 +270,8 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
           <path d="M70,75 L112.44,120.20 A62,62 0 0 1 27.56,120.20 Z" fill="#c3ceda" stroke="#fff" stroke-width="2"/>
           <path d="M70,75 L27.56,120.20 A62,62 0 0 1 17.65,41.78 Z" fill="#dfe6ed" stroke="#fff" stroke-width="2"/>
           <path d="M70,75 L17.65,41.78 A62,62 0 0 1 70,13 Z" fill="#eef2f6" stroke="#fff" stroke-width="2"/>
-          <text x="70" y="146" text-anchor="middle" font-size="13" fill="#8a97a5">Monthly spending</text>
-          <g font-size="14.8" fill="#39485a">
+          <text x="70" y="146" text-anchor="middle" font-size="11" fill="#8a97a5">Monthly spending</text>
+          <g font-size="12.5" fill="#39485a">
             <rect x="152" y="26" width="11" height="11" rx="2.5" fill="#05539C"/><text x="170" y="36">Housing 38%</text>
             <rect x="152" y="52" width="11" height="11" rx="2.5" fill="#c3ceda"/><text x="170" y="62">Food 24%</text>
             <rect x="152" y="78" width="11" height="11" rx="2.5" fill="#dfe6ed"/><text x="170" y="88">Transport 22%</text>
@@ -280,138 +280,130 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
         </svg>
       </div>
       <span class="eqop">+</span>
-      <div class="card" style="padding:1.6vh"><p style="font-size:2.82vh">“Which category has the <b>largest share</b>?”</p></div>
+      <div class="card" style="padding:1.6vh"><p style="font-size:2.2vh">“Which category has the <b>largest share</b>?”</p></div>
       <span class="eqop">→</span>
       <div class="card" style="padding:1.6vh;text-align:center;background:#eaf2fb;border-color:#b9d3ee">
-        <p style="font-size:3.24vh;font-weight:800;color:var(--blue)">Housing</p></div>
+        <p style="font-size:2.7vh;font-weight:800;color:var(--blue)">Housing</p></div>
     </div>
 
-    <p class="casc" style="animation-delay:.3s;text-align:center;font-size:2.88vh">
+    <p class="casc" style="animation-delay:.3s;text-align:center;font-size:2.4vh">
       A document, a question, an answer — over <span class="mk d1">text and graphics alike</span>.</p>
   </div>
   <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>The task</span></div>
 </section>
 
-<!-- ====== 04 · A LONGER QUESTION ====== -->
+<!-- ====== 04 · CAN YOU CHECK IT ====== -->
 <section class="slide" style="--accent:var(--blue)">
   <div class="rung"><i class="done"></i><i class="on"></i><i></i><i></i></div>
   <div class="qhead"><span class="mnum">2</span><div>
-    <div class="kicker" style="margin-bottom:.2vh">What about longer questions?</div>
-    <h2>“Is the <span class="k">Net Sales total</span> in this image correct?”</h2></div></div>
+    <div class="kicker" style="margin-bottom:.2vh">The problem</div>
+    <h2>The answer is right. <span class="k">Is every step?</span></h2></div></div>
 
-  <div style="flex:1;display:flex;flex-direction:column;gap:2.2vh;justify-content:center;min-height:0;padding-bottom:1.4vh">
-    <div class="cols" style="grid-template-columns:1fr 1.05fr;gap:2.2vw;align-items:center">
+  <div style="flex:1;display:flex;flex-direction:column;gap:2vh;justify-content:center;min-height:0;padding-bottom:1.4vh">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:.9vh">
+      <p style="font-size:2.35vh"><b>Q ·</b> “Does the Net Sales total equal the sum of the values?”</p>
       <img src="assets/doc_table_crop.png" alt="Credit Card Summary table with a Net Sales column"
-           style="width:100%;object-fit:contain;border:1px solid var(--line);border-radius:10px;box-shadow:0 3px 14px rgba(10,30,60,.12);background:#fff">
-
-      <div class="card casc" style="animation-delay:.1s;padding:2.4vh">
-        <p class="small" style="margin-bottom:1.2vh;font-weight:700">the system answers in steps</p>
-        <div style="display:flex;flex-direction:column;gap:1.3vh">
-          <div style="display:flex;gap:1vw"><span class="term" style="color:var(--faint);font-weight:800;font-size:2.43vh;width:3.4vh">S₁</span>
-            <span style="font-size:2.76vh">look at the <b>Net Sales</b> column</span></div>
-          <div style="display:flex;gap:1vw"><span class="term" style="color:var(--faint);font-weight:800;font-size:2.43vh;width:3.4vh">S₂</span>
-            <span style="font-size:2.76vh">read the values — <b>20 · 20 · 20 · 50 · 30 · 20</b></span></div>
-          <div style="display:flex;gap:1vw"><span class="term" style="color:var(--faint);font-weight:800;font-size:2.43vh;width:3.4vh">S₃</span>
-            <span style="font-size:2.76vh">they sum to <b>160</b></span></div>
-          <div style="display:flex;gap:1vw"><span class="term" style="color:var(--faint);font-weight:800;font-size:2.43vh;width:3.4vh">S<sub>f</sub></span>
-            <span style="font-size:2.76vh">the printed total is <b>150</b> — so <b>no</b>, it is wrong</span></div>
-        </div>
-      </div>
+           style="max-height:27vh;max-width:80vw;object-fit:contain;border:1px solid var(--line);border-radius:10px;box-shadow:0 3px 14px rgba(10,30,60,.12);background:#fff">
     </div>
 
-    <div class="keyidea frag" style="max-width:82vw;margin:0 auto">
-      <span class="tag">every step here is correct</span>
-      <p>But how would you check even one of them? Nothing points anywhere — so
-        <span class="mk bad">they could just as easily be invented</span>, and you would never know.</p>
+    <div class="mot prob casc" style="animation-delay:.12s;max-width:80vw;margin:0 auto;width:100%">
+      <h4>What a system tells you today</h4>
+      <p>It reads down the Net&nbsp;Sales column —
+        <b style="font-size:3vh;letter-spacing:.02em">20 · 20 · 20 · 50 ·
+        <span style="position:relative;display:inline-block">50<span class="frag" style="position:absolute;left:-.5vh;right:-.5vh;bottom:-.3vh;height:.7vh;background:var(--bad);border-radius:4px"></span></span>
+        · 20</b> —
+        “that is <b>180</b>, not 150, so the total is wrong.” <span style="color:var(--good);font-weight:800">✓ correct</span></p>
+      <p class="frag" style="font-size:2.3vh"><b style="color:var(--bad)">But the fifth value is JCB’s <i>Sales</i> column. Its Net Sales is $30.</b><br>
+        Right answer, <span class="mk bad">invented step</span> — and nothing in the reply points anywhere, so you cannot tell which is which.</p>
     </div>
   </div>
   <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>The problem</span></div>
 </section>
 
-<!-- ====== 05 · WHAT IF EVERY STEP POINTED ====== -->
+<!-- ====== 05 · WHAT HAS BEEN TRIED ====== -->
 <section class="slide" style="--accent:var(--blue)">
   <div class="rung"><i class="done"></i><i class="done"></i><i class="on"></i><i></i></div>
   <div class="qhead"><span class="mnum">3</span><div>
-    <div class="kicker" style="margin-bottom:.2vh">The idea</div>
-    <h2>What if every step <span class="k">pointed at the image</span>?</h2></div></div>
+    <div class="kicker" style="margin-bottom:.2vh">What has been tried</div>
+    <h2>Chain-of-thought. And grounding. <span class="k">Separately.</span></h2></div></div>
 
-  <div style="flex:1;display:flex;flex-direction:column;gap:3vh;justify-content:center;min-height:0;padding-bottom:1.4vh">
-
-    <div class="card casc" style="animation-delay:.05s;padding:2.8vh 3vh;max-width:84vw;margin:0 auto;width:100%">
-      <div style="display:flex;flex-direction:column;gap:1.5vh">
-        <div style="display:flex;gap:1vw;align-items:baseline"><span class="term" style="color:var(--faint);font-weight:800;font-size:2.43vh;width:3.4vh">S₁</span>
-          <span style="font-size:2.88vh">look at the <span class="msk" style="background:#e6d9c7"><b>Net Sales</b></span> column <span class="tok g">[GND]</span></span></div>
-        <div style="display:flex;gap:1vw;align-items:baseline"><span class="term" style="color:var(--faint);font-weight:800;font-size:2.43vh;width:3.4vh">S₂</span>
-          <span style="font-size:2.88vh">read the values —
-            <b style="font-size:3.24vh"><span class="msk" style="background:#dbeafe">20</span> <span class="msk" style="background:#dcfce7">20</span> <span class="msk" style="background:#f3e8ff">20</span> <span class="msk" style="background:#fef3c7">50</span> <span class="msk" style="background:#fce7f3">30</span> <span class="msk" style="background:#ccfbf1">20</span></b>
-            <span class="tok g">[GND]</span></span></div>
-        <div style="display:flex;gap:1vw;align-items:baseline"><span class="term" style="color:var(--faint);font-weight:800;font-size:2.43vh;width:3.4vh">S₃</span>
-          <span style="font-size:2.88vh">they sum to <b>160</b></span></div>
-        <div style="display:flex;gap:1vw;align-items:baseline"><span class="term" style="color:var(--faint);font-weight:800;font-size:2.43vh;width:3.4vh">S<sub>f</sub></span>
-          <span style="font-size:2.88vh">the printed total is <span class="msk" style="background:#ffe0e0"><b>150</b></span> <span class="tok g">[GND]</span> — so <b>no</b>, it is wrong</span></div>
-      </div>
-      <p class="small" style="margin-top:1.6vh">every value now carries <b>the exact region it was read from</b> — check any one of them</p>
-    </div>
-
+  <div style="flex:1;display:flex;flex-direction:column;gap:4vh;justify-content:center;min-height:0;padding-bottom:1.4vh">
     <div class="cols" style="gap:2.2vw;align-items:stretch">
-      <div class="mot casc" style="animation-delay:.16s;border-top:3px solid var(--pill-blue)">
+      <div class="mot casc" style="animation-delay:.05s;border-top:3px solid var(--pill-blue)">
         <div style="display:flex;align-items:center;gap:.9vw">
           <svg class="pillsvg" viewBox="0 0 60 26"><rect x="2" y="3" width="56" height="20" rx="10" style="fill:var(--pill-blue)"/><rect x="7" y="6.5" width="22" height="6.5" rx="3.2" fill="#ffffff55"/></svg>
-          <h4 style="color:var(--pill-blue)">the chain — the <i>what</i></h4>
+          <h4 style="color:var(--pill-blue)">Chain-of-thought — the <i>what</i></h4>
         </div>
+        <p>The model reasons in steps, and it genuinely helps: remove CoT from our own model and answers fall <b>85.8 → 73.3</b>.</p>
+        <p style="font-weight:700">But the steps are text. <span class="mk bad">Nothing to check.</span></p>
+        <p class="small">VisualCoT · every current VLM</p>
       </div>
-      <div class="mot casc" style="animation-delay:.24s;border-top:3px solid var(--pill-red)">
+      <div class="mot casc" style="animation-delay:.15s;border-top:3px solid var(--pill-red)">
         <div style="display:flex;align-items:center;gap:.9vw">
           <svg class="pillsvg" viewBox="0 0 60 26"><rect x="2" y="3" width="56" height="20" rx="10" style="fill:var(--pill-red)"/><rect x="7" y="6.5" width="22" height="6.5" rx="3.2" fill="#ffffff55"/></svg>
-          <h4 style="color:var(--pill-red)">its evidence — the <i>where</i></h4>
+          <h4 style="color:var(--pill-red)">Grounding — the <i>where</i></h4>
         </div>
+        <p>A box on the <b>final answer</b>, which also helps: answer quality <b>78.1 → 81.5</b>.</p>
+        <p style="font-weight:700">But the answer was already right. <span class="mk bad">The steps stay dark.</span></p>
+        <p class="small">BoundingDocs · DOGR</p>
       </div>
     </div>
 
-    <div class="keyidea frag" style="max-width:82vw;margin:0 auto">
-      <span class="tag">grounded chain-of-thought</span>
-      <p><b>Both — on every step.</b> That is the whole idea.</p>
+    <div class="keyidea frag" style="max-width:80vw;margin:0 auto">
+      <span class="tag">so — put them together</span>
+      <p><b>Ground every step, not just the answer.</b> A few do. And that is where the real problem shows up.</p>
     </div>
   </div>
-  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>The idea</span></div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>Prior work</span></div>
 </section>
 
-<!-- ====== 06 · ARE BOXES ENOUGH ====== -->
+<!-- ====== 06 · BOXES, NOT MASKS ====== -->
 <section class="slide" style="--accent:var(--blue)">
   <div class="rung"><i class="done"></i><i class="done"></i><i class="done"></i><i class="on"></i></div>
   <div class="qhead"><span class="mnum">4</span><div>
-    <div class="kicker" style="margin-bottom:.2vh">One catch</div>
-    <h2>Are <span class="x">boxes</span> enough?</h2></div></div>
+    <div class="kicker" style="margin-bottom:.2vh">The gap</div>
+    <h2>Every one of them grounds with <span class="x">a box.</span></h2></div></div>
 
-  <div style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:1vh 0 2vh">
-    <div class="chartcard" style="width:100%;max-width:78vw;max-height:100%;margin:0 auto">
+  <div class="cols" style="grid-template-columns:1.25fr .75fr;gap:2.2vw;flex:1;min-height:0;align-items:center;padding:1vh 0 2vh">
+    <div class="chartcard">
       <div class="sub">“What share is the third segment?” — the evidence you get back</div>
       <div class="svgbox" style="flex:1">
-      <svg viewBox="0 0 640 352" style="width:100%;max-height:60vh">
+      <svg viewBox="0 0 640 352" style="width:100%">
         <g>
-          <text x="150" y="34" text-anchor="middle" font-size="23.6" font-weight="800" fill="#b42318">A BOX</text>
+          <text x="150" y="34" text-anchor="middle" font-size="20" font-weight="800" fill="#b42318">A BOX</text>
           <path d="M150,175 L150,55 A120,120 0 0 1 269.54,185.46 Z" fill="#eef2f6" stroke="#fff" stroke-width="1.8"/>
           <path d="M150,175 L269.54,185.46 A120,120 0 0 1 181.06,290.91 Z" fill="#dfe6ed" stroke="#fff" stroke-width="1.8"/>
           <path d="M150,175 L181.06,290.91 A120,120 0 0 1 37.24,216.04 Z" fill="#c3ceda" stroke="#fff" stroke-width="1.8"/>
           <path d="M150,175 L37.24,216.04 A120,120 0 0 1 150,55 Z" fill="#e9eef3" stroke="#fff" stroke-width="1.8"/>
           <rect class="draw" style="--len:530;fill:var(--bad);stroke:var(--bad)" x="37.24" y="175" width="143.82" height="120" fill-opacity=".2" stroke-width="3" stroke-dasharray="530"/>
-          <text x="120" y="330" text-anchor="middle" font-size="20.6" fill="#b42318" font-weight="700">grabs both neighbours too</text>
+          <text x="120" y="330" text-anchor="middle" font-size="17.5" fill="#b42318" font-weight="700">grabs both neighbours too</text>
         </g>
         <g>
-          <text x="470" y="34" text-anchor="middle" font-size="23.6" font-weight="800" fill="#05539C">A MASK</text>
+          <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="800" fill="#05539C">A MASK</text>
           <path d="M470,175 L470,55 A120,120 0 0 1 589.54,185.46 Z" fill="#eef2f6" stroke="#fff" stroke-width="1.8"/>
           <path d="M470,175 L589.54,185.46 A120,120 0 0 1 501.06,290.91 Z" fill="#dfe6ed" stroke="#fff" stroke-width="1.8"/>
           <path d="M470,175 L501.06,290.91 A120,120 0 0 1 357.24,216.04 Z" fill="#c3ceda" stroke="#fff" stroke-width="1.8"/>
           <path d="M470,175 L357.24,216.04 A120,120 0 0 1 470,55 Z" fill="#e9eef3" stroke="#fff" stroke-width="1.8"/>
           <path class="pop s3" d="M470,175 L501.06,290.91 A120,120 0 0 1 357.24,216.04 Z" fill="#05539C" stroke="#fff" stroke-width="3" stroke-linejoin="round"/>
-          <text x="440" y="330" text-anchor="middle" font-size="20.6" fill="#05539C" font-weight="700">exactly the wedge</text>
+          <text x="440" y="330" text-anchor="middle" font-size="17.5" fill="#05539C" font-weight="700">exactly the wedge</text>
         </g>
       </svg>
       </div>
     </div>
 
+    <div style="display:flex;flex-direction:column;gap:1.5vh;justify-content:center">
+      <div class="mot prob casc" style="animation-delay:.12s">
+        <h4>Not one of them predicts a mask</h4>
+        <p>A box <span class="mk bad">cannot hug a wedge</span>, follow curved text, or trace an arrow. Partly <b>the wrong evidence</b>.</p>
+      </div>
+      <div class="mot casc" style="animation-delay:.2s">
+        <h4 style="color:var(--muted)">and the closest attempts are narrow</h4>
+        <p><b>ChartPoint</b> — a grounded chain, on <b>charts only</b>.<br><b>DOGR</b> — every document type, <b>text regions only</b>, no chain.</p>
+      </div>
+      <p class="small frag" style="text-align:center">masks are nearly free — <b>580 ms</b> vs <b>505 ms</b></p>
+    </div>
   </div>
-  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>Boxes or masks</span></div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>The gap</span></div>
 </section>
 
 <!-- ====== 07 · DOCOG IN ONE SENTENCE ====== -->
@@ -421,19 +413,19 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
 
   <div style="flex:1;display:flex;flex-direction:column;gap:1.8vh;min-height:0;justify-content:center;padding-bottom:1.4vh">
     <div class="fig framed casc" style="animation-delay:.05s;flex:1;min-height:0">
-      <img src="assets/docog_teaser_chart_crop.png" alt="Step-wise grounded chain of thought over a line chart: each step emits [GND] tokens that localise the evidence" style="max-height:54vh">
+      <img src="assets/docog_teaser_chart.png" alt="Step-wise grounded chain of thought over a line chart: each step emits [GND] tokens that localise the evidence" style="max-height:44vh">
     </div>
 
     <div style="display:flex;gap:1.4vw;align-items:stretch">
-      <div class="card frag" style="flex:1;display:flex;gap:1vw;align-items:flex-start">
+      <div class="card casc" style="animation-delay:.14s;flex:1;display:flex;gap:1vw;align-items:flex-start">
         <span class="mnum">1</span><div><h3>every step, not just the answer</h3>
         <p>a <span class="tok g">[GND]</span> token inside <b>every step</b> and the answer</p></div>
       </div>
-      <div class="card frag" style="flex:1;display:flex;gap:1vw;align-items:flex-start">
+      <div class="card casc" style="animation-delay:.24s;flex:1;display:flex;gap:1vw;align-items:flex-start">
         <span class="mnum">2</span><div><h3>a mask, not a box</h3>
         <p>each <span class="tok g">[GND]</span> → a <span class="mk blue">segmentation mask</span></p></div>
       </div>
-      <div class="card frag" style="flex:1;display:flex;gap:1vw;align-items:flex-start">
+      <div class="card casc" style="animation-delay:.34s;flex:1;display:flex;gap:1vw;align-items:flex-start">
         <span class="mnum">3</span><div><h3>text <i>and</i> graphics</h3>
         <p>wedges · legends · nodes · curved text</p></div>
       </div>
@@ -466,17 +458,17 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
   <div style="flex:1;display:flex;flex-direction:column;gap:4.5vh;justify-content:center;min-height:0;padding-bottom:1.4vh">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:2vw">
       <div class="card casc" style="animation-delay:.05s;padding:2.4vh">
-        <h3 style="font-size:3.36vh">DoCoG-QA</h3>
+        <h3 style="font-size:2.8vh">DoCoG-QA</h3>
         <div style="display:flex;gap:1.2vw;margin:1.2vh 0">
-          <div class="stat" style="flex:1;padding:1.2vh"><div class="v" style="font-size:4.48vh">325K</div><div class="l">documents</div></div>
-          <div class="stat" style="flex:1;padding:1.2vh"><div class="v" style="font-size:4.48vh">1.5M</div><div class="l">grounded QA pairs</div></div>
+          <div class="stat" style="flex:1;padding:1.2vh"><div class="v" style="font-size:4vh">325K</div><div class="l">documents</div></div>
+          <div class="stat" style="flex:1;padding:1.2vh"><div class="v" style="font-size:4vh">1.5M</div><div class="l">grounded QA pairs</div></div>
         </div>
         <p class="small">every step supervised: <b>text + mask</b> · charts, flowcharts, tables, documents</p>
       </div>
       <div class="card casc" style="animation-delay:.15s;padding:2.4vh;border:2px dashed #05539C">
-        <h3 style="font-size:3.36vh">DoCoG-PQA</h3>
+        <h3 style="font-size:2.8vh">DoCoG-PQA</h3>
         <div style="display:flex;gap:1.2vw;margin:1.2vh 0">
-          <div class="stat" style="flex:1;padding:1.2vh"><div class="v" style="font-size:4.48vh">20K</div><div class="l">preference pairs</div></div>
+          <div class="stat" style="flex:1;padding:1.2vh"><div class="v" style="font-size:4vh">20K</div><div class="l">preference pairs</div></div>
         </div>
         <p class="small">chains ranked by <b>answer</b> · <b>reasoning</b> · <b>grounding</b></p>
       </div>
@@ -505,7 +497,13 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
       <div class="card casc" style="animation-delay:.35s;text-align:center"><h3 style="color:var(--ink)">DoCoG-PQA</h3><p class="small">20K preference pairs</p></div>
     </div>
 
-    <div class="callout frag" style="max-width:76vw;margin:0 auto"><b>Why DPO?</b> SFT only imitates. Preferences teach the model to <b>prefer</b> a better chain — better answer, better reasoning, better grounding.</div>
+    <div class="cols" style="gap:2vw;align-items:stretch">
+      <div class="callout frag"><b>Why DPO?</b> SFT only imitates. Preferences teach the model to <b>prefer</b> a better chain — better answer, better reasoning, better grounding.</div>
+      <div class="mot prob frag">
+        <h4>And it only works with an anchor</h4>
+        <p>DPO is <b>text-only</b> — masks stay frozen. Without the anchor loss, grounding <span class="mk bad">collapses</span>: <b>81.9 → 41.7</b>.</p>
+      </div>
+    </div>
   </div>
   <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>Training</span></div>
 </section>
@@ -521,10 +519,10 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
         <g stroke="#e1e0d9" stroke-width="1">
           <line x1="70" y1="380" x2="690" y2="380"/><line x1="70" y1="300" x2="690" y2="300"/><line x1="70" y1="220" x2="690" y2="220"/><line x1="70" y1="140" x2="690" y2="140"/><line x1="70" y1="60" x2="690" y2="60"/>
         </g>
-        <g font-size="17.7" fill="#898781"><text x="56" y="384" text-anchor="end">0</text><text x="56" y="304" text-anchor="end">20</text><text x="56" y="224" text-anchor="end">40</text><text x="56" y="144" text-anchor="end">60</text><text x="56" y="64" text-anchor="end">80</text></g>
-        <g font-size="17.7" fill="#898781" text-anchor="middle"><text x="70" y="404">70</text><text x="225" y="404">75</text><text x="380" y="404">80</text><text x="535" y="404">85</text><text x="690" y="404">90</text></g>
-        <text x="380" y="419" text-anchor="middle" font-size="19.5" fill="#52514e" font-weight="600">answer quality →</text>
-        <text x="20" y="220" text-anchor="middle" font-size="19.5" fill="#52514e" font-weight="600" transform="rotate(-90 20 220)">grounding quality →</text>
+        <g font-size="15" fill="#898781"><text x="56" y="384" text-anchor="end">0</text><text x="56" y="304" text-anchor="end">20</text><text x="56" y="224" text-anchor="end">40</text><text x="56" y="144" text-anchor="end">60</text><text x="56" y="64" text-anchor="end">80</text></g>
+        <g font-size="15" fill="#898781" text-anchor="middle"><text x="70" y="404">70</text><text x="225" y="404">75</text><text x="380" y="404">80</text><text x="535" y="404">85</text><text x="690" y="404">90</text></g>
+        <text x="380" y="419" text-anchor="middle" font-size="16.5" fill="#52514e" font-weight="600">answer quality →</text>
+        <text x="20" y="220" text-anchor="middle" font-size="16.5" fill="#52514e" font-weight="600" transform="rotate(-90 20 220)">grounding quality →</text>
         <g>
           <circle class="pop s1" cx="470" cy="361" r="9" fill="#7d8b99" stroke="#fff" stroke-width="2"><title>GPT-5 · AQ 82.9 · GQ_fa 4.8</title></circle>
           <circle class="pop s1" cx="377" cy="352" r="9" fill="#7d8b99" stroke="#fff" stroke-width="2"><title>Claude Sonnet 4.5 · 79.9 · 7.1</title></circle>
@@ -535,26 +533,26 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
           <circle class="pop s5" cx="560" cy="52" r="15" fill="#05539C" fill-opacity=".18"/>
           <circle class="pop s5" cx="560" cy="52" r="11" fill="#05539C" stroke="#fff" stroke-width="2.5"><title>DoCoG · 85.8 · 81.9</title></circle>
         </g>
-        <g font-size="21.2" fill="#16222e">
+        <g font-size="18" fill="#16222e">
           <text x="484" y="366">GPT-5</text>
           <text x="364" y="357" text-anchor="end">Claude 4.5</text>
           <text x="526" y="339">Gemini 3 Pro</text>
           <text x="386" y="291" text-anchor="end">Gemini 3 Flash</text>
           <text x="319" y="137">Qwen3-VL ft</text>
           <text x="245" y="127" text-anchor="end">InternVL3.5 ft</text>
-          <text x="580" y="58" font-weight="700" font-size="24.8" fill="#05539C">DoCoG (9B)</text>
+          <text x="580" y="58" font-weight="700" font-size="21" fill="#05539C">DoCoG (9B)</text>
         </g>
       </svg>
     </div>
     <div style="display:flex;flex-direction:column;gap:1.3vh;justify-content:center">
-      <div class="stat"><div class="v" style="font-size:4.93vh">85.8 / 81.9</div><div class="l">best on <b>both</b> axes</div></div>
+      <div class="stat"><div class="v" style="font-size:4.4vh">85.8 / 81.9</div><div class="l">best on <b>both</b> axes</div></div>
       <div class="card frag" style="background:#05539C;border-color:#05539C;text-align:center;padding:2.2vh">
-        <h3 style="color:#fff;font-size:3.48vh;margin-bottom:.5vh">9B — beats much larger models</h3>
-        <p style="color:#cfe0f2;font-size:2.69vh">GPT-5 · Gemini 3 Pro · Claude 4.5</p>
+        <h3 style="color:#fff;font-size:2.9vh;margin-bottom:.5vh">9B — beats much larger models</h3>
+        <p style="color:#cfe0f2;font-size:2.1vh">GPT-5 · Gemini 3 Pro · Claude 4.5</p>
       </div>
       <div class="mot prob frag" style="padding:1.2vh 1.5vh">
-        <h4 style="font-size:2.5vh">the frontier models answer, but cannot point</h4>
-        <p style="font-size:2.56vh">GPT-5: <b>82.9</b> on answers, <span class="mk bad">4.8</span> on grounding.</p>
+        <h4 style="font-size:1.95vh">the frontier models answer, but cannot point</h4>
+        <p style="font-size:2vh">GPT-5: <b>82.9</b> on answers, <span class="mk bad">4.8</span> on grounding.</p>
       </div>
       <p class="small frag" style="text-align:center">general QA not traded away — best of its size on <b>8 of 10</b> benchmarks</p>
     </div>
@@ -579,17 +577,17 @@ svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
       </div>
       <figure class="frag" style="margin:0">
         <img src="assets/matrix_both_pills.png" alt="Did you just take both pills?" style="width:82%;display:block;margin:0 auto;border-radius:12px;border:1px solid var(--line);box-shadow:0 4px 18px rgba(10,30,60,.18)">
-        <figcaption style="margin-top:.8vh;font-size:3.12vh;text-align:center;color:#33424f"><b style="color:var(--blue)">yes — DoCoG takes both.</b></figcaption>
+        <figcaption style="margin-top:.8vh;font-size:2.6vh;text-align:center;color:#33424f"><b style="color:var(--blue)">yes — DoCoG takes both.</b></figcaption>
       </figure>
     </div>
   </div>
   <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>Both pills</span></div>
   <div class="frag" style="position:absolute;inset:0;z-index:5;pointer-events:none;display:flex;align-items:center;justify-content:center;background:rgba(246,248,250,.5);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)">
     <div class="card" style="text-align:center;padding:3vh 4vw;background:#fff;box-shadow:0 12px 44px rgba(10,30,60,.28)">
-      <p style="font-size:4.48vh;color:var(--blue);margin-bottom:1.4vh"><b>Come find us.</b></p>
+      <p style="font-size:3.6vh;color:var(--blue);margin-bottom:1.4vh"><b>come find out how —</b></p>
       <img src="assets/qr_docog.png" alt="DoCoG project page QR" style="height:58vh;display:block;margin:0 auto;image-rendering:pixelated">
-      <p style="font-size:4.7vh;margin-top:1.6vh"><b>docog-eccv.github.io</b></p>
-      <p style="font-size:3.47vh;margin-top:.8vh"><b>Poster #113 · ExHall</b> &nbsp;·&nbsp; <span style="color:#5b6b7a">Session 6 · 3:00 PM</span></p>
+      <p style="font-size:4.2vh;margin-top:1.6vh"><b>docog-eccv.github.io</b></p>
+      <p style="font-size:3.1vh;margin-top:.8vh"><b>Poster #113 · ExHall</b> &nbsp;·&nbsp; <span style="color:#5b6b7a">Session 6 · 3:00 PM</span></p>
     </div>
   </div>
 </section>

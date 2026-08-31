@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>From Grounded Answers to Grounded Reasoning — DoCoG</title>
+<style>
+:root{
+  --blue:#05539C; --orange:#F59222; --ink:#16222e; --muted:#5b6b7a; --faint:#8a97a5;
+  --bg:#f6f8fa; --card:#ffffff; --line:#dde5ec;
+  --m3:#05539C; --docog:#7C3AED; --dlvl:#0E7C61; --intro:#C2410C;
+  --neut:#7d8b99; --neut2:#a5b2be; --bad:#b42318;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#0d1117}
+body{font-family:"Avenir Next","Segoe UI",Inter,system-ui,-apple-system,sans-serif;color:var(--ink)}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;background:var(--bg);
+  padding:3.8vh 4vw 6vh;overflow:hidden}
+.slide.on{display:flex}
+.slide h2{font-size:4.3vh;line-height:1.12;margin-bottom:1.2vh;font-weight:700}
+.slide h2 .k{color:var(--accent,var(--blue))}
+.slide h2 .x{color:var(--bad)}
+.kicker{font-size:1.8vh;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--accent,var(--blue));margin-bottom:.8vh}
+.slide p{font-size:2.3vh;line-height:1.45}
+.small{font-size:1.8vh;color:var(--muted)}
+.tiny{font-size:1.6vh;color:var(--faint)}
+.vc{margin-top:auto;margin-bottom:auto}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:2vw;align-items:center;min-height:0}
+.rowflex{display:flex;gap:1.5vw;align-items:stretch;min-height:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.8vh 1.8vh;box-shadow:0 2px 10px rgba(10,30,60,.05)}
+.card h3{font-size:2.3vh;margin-bottom:.8vh;color:var(--accent,var(--blue))}
+.card p{font-size:2vh;color:#33424f}
+.fig{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:0}
+.fig img{max-width:100%;max-height:100%;object-fit:contain;border-radius:10px;background:#fff}
+.fig.framed img{border:1px solid var(--line);box-shadow:0 3px 14px rgba(10,30,60,.08);padding:1vh;background:#fff}
+.fig figcaption{font-size:1.75vh;color:var(--muted);margin-top:.9vh;text-align:center;max-width:60ch}
+.tok{font-family:ui-monospace,Menlo,monospace;font-size:.9em;background:#0d2740;color:#ffd28a;border-radius:6px;padding:.12vh .7vh;white-space:nowrap;margin:0 .2em}
+.tok.g{background:#2b1a4d;color:#e6d5ff}
+.tok.l{background:#0c352b;color:#b9f0dc}
+.spanchip{font-family:ui-monospace,Menlo,monospace;font-size:.9em;background:#fff3e0;border:1.5px solid var(--orange);border-radius:6px;padding:.12vh .7vh;color:#8a4b00;white-space:nowrap}
+.pill{display:inline-block;font-size:1.85vh;border:1.5px solid var(--accent,var(--blue));color:var(--accent,var(--blue));border-radius:999px;padding:.35vh 1.3vh;margin:.3vh .5vh .3vh 0;font-weight:600;background:#fff}
+.eqrow{display:flex;align-items:center;justify-content:center;gap:.8vw;flex-wrap:wrap;margin:1.2vh 0}
+.eqb{border-radius:12px;padding:1.2vh 1.4vh;font-family:Georgia,serif;font-style:italic;font-size:2.6vh;background:#fff;border:2px solid var(--line)}
+.eqb small{display:block;font-family:"Avenir Next",system-ui,sans-serif;font-style:normal;font-size:1.5vh;color:var(--muted);text-align:center;margin-top:.3vh}
+.eqb.hl{border-color:var(--accent,var(--blue));background:color-mix(in srgb,var(--accent,var(--blue)) 6%,#fff)}
+.eqop{font-size:3vh;color:var(--muted);font-weight:700}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.6vh 2vh;text-align:center;box-shadow:0 2px 10px rgba(10,30,60,.05)}
+.stat .v{font-size:5vh;font-weight:700;color:var(--accent,var(--blue));line-height:1.05}
+.stat .v.bad{color:var(--bad)}
+.stat .l{font-size:1.75vh;color:var(--muted);margin-top:.4vh}
+.statrow{display:grid;grid-auto-flow:column;gap:1.2vw;margin:1.2vh 0}
+.hero{justify-content:center;align-items:center;text-align:center;background:
+  radial-gradient(90vw 70vh at 15% -10%, #dbeafe 0%, transparent 55%),
+  radial-gradient(80vw 60vh at 100% 110%, #ffedd5 0%, transparent 55%), var(--bg)}
+.hero h1{font-size:6.6vh;line-height:1.1;max-width:80vw}
+.hero h1 .k{color:var(--blue)}
+.hero .sub{font-size:2.6vh;color:var(--muted);margin-top:2vh;max-width:72vw}
+.divider{justify-content:center;background:
+  linear-gradient(120deg, color-mix(in srgb, var(--accent) 92%, #000) 0%, var(--accent) 60%, color-mix(in srgb, var(--accent) 72%, #fff) 100%)}
+.divider .kicker{color:#ffffffcc;font-size:2.1vh;letter-spacing:.16em}
+.divider h2{color:#fff;font-size:8.4vh}
+.divider p{color:#ffffffdd;font-size:3.4vh;margin-top:1.6vh;max-width:82vw}
+.divider .time{position:absolute;top:4vh;right:4vw;color:#fff;border:2px solid #ffffff88;border-radius:999px;padding:.8vh 2.2vh;font-size:2.3vh;font-weight:700}
+.footer{position:absolute;left:0;right:0;bottom:0;height:4.4vh;display:flex;align-items:center;justify-content:space-between;padding:0 9vw 0 4vw;font-size:1.6vh;color:var(--muted)}
+.footer .act{font-weight:700;color:var(--accent,var(--blue))}
+#bar{position:fixed;left:0;bottom:0;height:.7vh;background:linear-gradient(90deg,var(--blue),var(--orange));width:0;z-index:50;transition:width .25s}
+#count{position:fixed;right:1.1vw;bottom:1.3vh;z-index:50;font-size:1.7vh;color:#9fb0c0;font-family:ui-monospace,Menlo,monospace}
+.frag{opacity:0;transform:translateY(1.2vh);transition:all .3s}
+.frag.show{opacity:1;transform:none}
+.callout{background:#fff;border:1px solid var(--line);border-left:6px solid var(--orange);border-radius:12px;padding:1.3vh 1.8vh;font-size:2.15vh}
+.callout b{color:var(--blue)}
+.logos{display:flex;gap:1.8vw;align-items:center;justify-content:center;margin-top:3.4vh}
+.logos span{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.4vh 2.2vh;display:flex;align-items:center;box-shadow:0 2px 8px rgba(10,30,60,.06)}
+.logos img{height:8.4vh;object-fit:contain}
+.papers{display:flex;gap:1.4vw;align-items:stretch;justify-content:center;margin-top:2.4vh}
+.papers .paper{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1.6vh 2.4vh;min-width:11vw;box-shadow:0 2px 8px rgba(10,30,60,.06)}
+.papers h4{margin:0;font-size:2.1vh;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+.papers span{display:block;margin-top:.5vh;font-size:1.55vh;color:var(--muted)}
+.papers .oral{font-size:inherit;font-weight:700;color:var(--orange)}
+.storyline{display:grid;grid-template-columns:repeat(3,1fr);align-items:stretch;gap:1.4vw}
+.storyline .chap{border-radius:18px;padding:2.8vh 2.4vh;color:#fff;display:flex;flex-direction:column;gap:1vh}
+.recipe{text-align:center;font-size:2.5vh;color:var(--ink);margin-bottom:3.2vh}
+.recipe b{color:var(--blue)}
+.probs{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6vw;margin-top:2.6vh}
+.probs .prob{background:#fdf2f0;border:1px solid #f3d4cf;border-radius:16px;padding:2.2vh 2vh}
+.probs .prob h3{font-size:2.2vh;color:#b42318;margin-bottom:.9vh}
+.probs .prob p{font-size:1.9vh;color:#7a4a44;line-height:1.45}
+.abl{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+.abl th{font-size:1.55vh;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:.7vh .9vh;border-bottom:2px solid var(--line);text-align:center}
+.abl td{font-size:1.95vh;color:#33424f;padding:1vh .9vh;border-bottom:1px solid var(--line);text-align:center}
+.abl td:first-child{text-align:left}
+.abl tr.ours td{background:#eaf1f8;font-weight:700;color:var(--m3);border-bottom:none}
+.sw{display:inline-block;width:1.6vh;height:1.6vh;border-radius:4px;margin-right:.6vw;vertical-align:baseline;transform:translateY(.15vh)}
+.fracline{height:2.5px;background:var(--ink);border-radius:2px;margin:.9vh 0}
+.storyline .chap h3{font-size:3vh;color:#fff}
+.storyline .chap p{font-size:2.05vh;color:#ffffffdd}
+.storyline .chap .v{font-size:1.6vh;font-weight:700;letter-spacing:.08em;color:#ffffffb0;text-transform:uppercase}
+.storyline .chap svg{margin-top:auto}
+.storyline .chap .keyline{font-size:1.9vh;color:#fff;font-weight:700;margin-top:1vh}
+.storyline .arr{align-self:center;font-size:4.4vh;color:#8aa2b8;font-weight:800}
+kbd{font-family:ui-monospace,Menlo,monospace;background:#fff;border:1px solid var(--line);border-bottom-width:3px;border-radius:6px;padding:.1vh .7vh;font-size:1.7vh}
+.svgbox{min-height:0;display:flex;align-items:center;justify-content:center}
+.svgbox svg{max-width:100%;max-height:100%;height:auto}
+svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
+.chartcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:1.8vh;box-shadow:0 2px 10px rgba(10,30,60,.06);display:flex;flex-direction:column;min-height:0}
+.chartcard h3{font-size:2.1vh;margin-bottom:.4vh}
+.chartcard .sub{font-size:1.7vh;color:var(--muted);margin-bottom:1vh}
+.ifwrap{flex:1;min-height:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 3px 14px rgba(10,30,60,.1);background:#fff}
+.ifwrap iframe{width:100%;height:100%;border:0;display:block}
+.ifbar{display:flex;justify-content:space-between;align-items:center;margin-top:.8vh;padding-right:8vw}
+.ifbar a{color:var(--accent,var(--blue));font-weight:700;font-size:1.8vh;text-decoration:none}
+.navbtns{position:absolute;right:1.2vw;bottom:5.4vh;display:flex;gap:.6vw;z-index:30}
+.navbtns button{width:5vh;height:5vh;border-radius:50%;border:1px solid var(--line);background:#fff;
+  font-size:2.6vh;color:var(--accent,var(--blue));cursor:pointer;box-shadow:0 2px 8px rgba(10,30,60,.15);font-weight:700}
+.navbtns button:hover{background:var(--accent,var(--blue));color:#fff}
+.nb{white-space:nowrap}
+.deck.overview{overflow:auto;background:#0d1117;padding:2vh}
+.deck.overview .slide{display:flex;position:relative;inset:auto;width:32vw;height:18vw;float:left;margin:.5vw;border-radius:8px;overflow:hidden;cursor:pointer;zoom:.32}
+.deck.overview .ifwrap iframe{display:none}
+@media print{
+  html,body{background:#fff}
+  .deck .slide{display:flex !important;position:relative;inset:auto;width:100%;height:100vh;page-break-after:always}
+  .frag{opacity:1 !important;transform:none !important}
+  #bar,#count,.navbtns{display:none}
+}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<!-- ====== 20 · DOCOG DIVIDER ====== -->
+<section class="slide divider" style="--accent:var(--docog)">
+  <div class="kicker">ECCV 2026 &nbsp;<span style="background:#F59222;color:#3b2200;padding:.4vh 1.4vh;border-radius:100px;letter-spacing:.14em;font-weight:800">SPOTLIGHT</span></div>
+  <h2>DoCoG</h2>
+  <p>Mask-based <b>Multi-Type</b> Grounded <b>Chain-of-Thought</b> for Document QA</p>
+  <p style="font-size:2.45vh;margin-top:3vh"><span class="nb">Sai Madhusudan Gunda*</span> · <span class="nb">Jyothi Swaroopa Jinka*</span> · <span class="nb">Hrithik Sagar Rachakonda*</span> · <span class="nb">Aryan Jain†</span> · <span class="nb">Venkata Kesav Venna†</span> · <span class="nb">Anirudh Srinivasan</span> · <span class="nb">Ravi Kiran Sarvadevabhatla</span><br><span style="font-size:2.05vh;color:#ffffffbb">*, † equal contribution &nbsp;·&nbsp; IIIT Hyderabad · BharatGen &nbsp;·&nbsp; docog-eccv.github.io</span></p>
+  <div class="logos" style="justify-content:flex-start;margin-top:4vh">
+    <span><img src="assets/logo_bharatgen.png" alt="BharatGen" style="height:10vh"></span>
+    <span><img src="assets/logo_iiith.jpg" alt="IIIT Hyderabad" style="height:10vh"></span>
+    <span><img src="assets/logo_eccv.png" alt="ECCV 2026" style="height:10vh"></span>
+  </div>
+</section>
+
+<!-- ====== 3 · WHY GROUNDING ====== -->
+<section class="slide" style="--accent:var(--intro)">
+  <div class="kicker">The setting · Document question answering</div>
+  <h2>An answer you can't <span class="k">point to</span> is an answer you can't trust</h2>
+  <div class="cols vc" style="grid-template-columns:1.2fr .8fr">
+    <div class="card" style="padding:2.4vh">
+      <svg viewBox="0 0 560 210" style="width:100%">
+        <rect x="10" y="8" width="250" height="194" rx="10" fill="#fbfdff" stroke="#c9d4de" stroke-width="1.5"/>
+        <rect x="26" y="22" width="130" height="13" rx="4" fill="#33424f"/>
+        <rect x="26" y="47" width="218" height="8" rx="3" fill="#d5dee6"/>
+        <rect x="26" y="62" width="196" height="8" rx="3" fill="#d5dee6"/>
+        <rect x="22" y="80" width="226" height="22" rx="6" fill="#cfe0f2" stroke="#05539C" stroke-width="1.5"/>
+        <rect x="28" y="84" width="96" height="14" rx="4" fill="#05539C"/>
+        <text x="134" y="95" font-size="10.5" fill="#3d5568">72.0 fL &nbsp; (83–101)</text>
+        <rect x="26" y="112" width="218" height="8" rx="3" fill="#d5dee6"/>
+        <rect x="26" y="127" width="176" height="8" rx="3" fill="#d5dee6"/>
+        <rect x="26" y="142" width="205" height="8" rx="3" fill="#d5dee6"/>
+        <rect x="26" y="157" width="150" height="8" rx="3" fill="#d5dee6"/>
+        <text x="135" y="190" text-anchor="middle" font-size="11" fill="#8a97a5">lab report</text>
+        <path d="M256 91 q6 49 26 49" fill="none" stroke="#F59222" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#warr)"/>
+        <defs><marker id="warr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#F59222"/></marker></defs>
+        <text x="300" y="44" font-size="14.5" fill="#5b6b7a">Q: “Which value is abnormal?”</text>
+        <rect x="288" y="118" width="262" height="44" rx="10" fill="#fff" stroke="#dde5ec" stroke-width="1.5"/>
+        <text x="300" y="145" font-size="13.5" fill="#33424f">A: “the <tspan fill="#8a4b00" font-family="Menlo,monospace" font-size="12">MCV of 72.0 fL</tspan> <tspan fill="#8a4b00" font-family="Menlo,monospace" font-size="11" font-weight="700">[GROUND]</tspan>”</text>
+      </svg>
+      <p class="small" style="margin-top:1vh;text-align:center">Grounded QA: every claimed value is <b>linked to the exact pixels</b> it came from.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1.4vh">
+      <div class="card frag"><h3>Verify at a glance</h3><p>Highlighted evidence turns fact-checking into one look.</p></div>
+      <div class="card frag"><h3>Audit &amp; cite</h3><p>Healthcare, legal, finance need a trail from output to page.</p></div>
+      <div class="card frag"><h3>Act on regions</h3><p>Redaction, extraction, agents — all need <i>where</i>, not just <i>what</i>.</p></div>
+    </div>
+  </div>
+  <div class="footer"><span class="act">Document QA</span><span>Why grounding</span></div>
+</section>
+
+<!-- ====== 6 · SAM RECIPE ====== -->
+<section class="slide" style="--accent:var(--intro)">
+  <div class="kicker">Our previous work · M3Grounder (CVPR 2026)</div>
+  <h2>Promptable segmentation — <span class="k">the prompt need not be human</span></h2>
+  <div class="vc">
+  <div class="svgbox">
+  <svg viewBox="0 0 900 398" style="width:84%">
+    <defs>
+      <marker id="arr3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8a97a5"/></marker>
+      <marker id="arr4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#F59222"/></marker>
+    </defs>
+    <text x="76" y="26" text-anchor="middle" font-size="14" fill="#5b6b7a">document + question</text>
+    <rect x="16" y="38" width="120" height="150" rx="10" fill="#fff" stroke="#dde5ec" stroke-width="2"/>
+    <g fill="#c9d4de"><rect x="30" y="54" width="92" height="10" rx="3"/><rect x="30" y="70" width="70" height="10" rx="3"/><rect x="30" y="92" width="92" height="34" rx="3"/><rect x="30" y="134" width="92" height="10" rx="3"/><rect x="30" y="150" width="52" height="10" rx="3"/></g>
+    <path d="M142 113 h44" stroke="#8a97a5" stroke-width="3" marker-end="url(#arr3)"/>
+    <rect x="194" y="71" width="170" height="84" rx="12" fill="#05539C"/>
+    <text x="279" y="121" text-anchor="middle" font-size="19" font-weight="700" fill="#fff">VLM</text>
+    <path d="M370 113 h44" stroke="#8a97a5" stroke-width="3" marker-end="url(#arr3)"/>
+    <text x="700" y="72" text-anchor="middle" font-size="12.5" font-weight="700" fill="#8a4b00">special token</text>
+    <rect x="420" y="81" width="344" height="64" rx="10" fill="#0d2740"/>
+    <text x="438" y="120" font-size="16" font-family="Menlo,monospace" fill="#dfe9f5">…the answer is Mumbai</text>
+    <rect x="646" y="91" width="108" height="44" rx="8" fill="#F59222"/>
+    <text x="700" y="118" text-anchor="middle" font-size="15" font-weight="700" font-family="Menlo,monospace" fill="#3b2200">[GROUND]</text>
+    <path d="M700 145 v41 q0 12 -12 12 h-130 q-12 0 -12 12 v46" fill="none" stroke="#F59222" stroke-width="4" marker-end="url(#arr4)"/>
+    <text x="690" y="178" text-anchor="end" font-size="13.5" font-weight="700" fill="#8a4b00">its hidden state = the prompt</text>
+    <path d="M76 194 v62" stroke="#8a97a5" stroke-width="3" marker-end="url(#arr3)"/>
+    <rect x="16" y="266" width="150" height="80" rx="12" fill="#05539C"/>
+    <text x="91" y="313" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">image encoder</text>
+    <path d="M172 306 h36" stroke="#8a97a5" stroke-width="3" marker-end="url(#arr3)"/>
+    <g transform="translate(214,278)"><g fill="#9ec5f4"><rect width="16" height="16" x="0" y="0" rx="2"/><rect width="16" height="16" x="20" y="0" rx="2"/><rect width="16" height="16" x="40" y="0" rx="2"/><rect width="16" height="16" x="0" y="20" rx="2"/><rect width="16" height="16" x="20" y="20" rx="2" fill="#2a78d6"/><rect width="16" height="16" x="40" y="20" rx="2"/><rect width="16" height="16" x="0" y="40" rx="2"/><rect width="16" height="16" x="20" y="40" rx="2"/><rect width="16" height="16" x="40" y="40" rx="2"/></g><text x="28" y="80" text-anchor="middle" font-size="13" fill="#5b6b7a">features</text></g>
+    <path d="M278 306 h166" stroke="#8a97a5" stroke-width="3" marker-end="url(#arr3)"/>
+    <rect x="452" y="266" width="188" height="80" rx="12" fill="#05539C"/>
+    <text x="546" y="313" text-anchor="middle" font-size="16" font-weight="700" fill="#fff">mask decoder</text>
+    <text x="546" y="376" text-anchor="middle" font-size="13" fill="#8a97a5">clicks &amp; boxes plug into the same slot</text>
+    <path d="M646 306 h56" stroke="#8a97a5" stroke-width="3" marker-end="url(#arr3)"/>
+    <path transform="translate(-25,196)" d="M760 92 q14 -26 46 -20 q36 7 44 28 q8 22 -10 34 q-24 16 -56 6 q-30 -10 -24 -48 z" fill="#05539C" opacity=".85"/>
+    <text x="806" y="382" text-anchor="middle" font-size="14" fill="#5b6b7a">pixel mask · any shape</text>
+  </svg>
+  </div>
+  <div class="callout frag" style="margin-top:1.4vh;text-align:center;font-size:2.5vh">A VLM emits a <b>special token</b> — its <b>hidden state is the prompt</b>. No coordinates are ever written as text.</div>
+  <p class="small frag" style="text-align:center;margin-top:.8vh">This grounds <b>one answer</b> (F1 79.0 vs Gemini-2.5-Pro 43.4 · +63 ms). But an answer is the end of a chain of reasoning&hellip;</p>
+  </div>
+  <div class="footer"><span class="act">Our previous work · M3Grounder</span><span>Hidden state = prompt</span></div>
+</section>
+
+<!-- ====== 21 · DOCOG GAP ====== -->
+<section class="slide" style="--accent:var(--docog)">
+  <div class="kicker">DoCoG · The gap</div>
+  <h2>The answer is grounded — the <span class="k">reasoning</span> isn't</h2>
+  <div class="svgbox vc">
+  <svg viewBox="0 0 900 330" style="width:92%">
+    <text x="220" y="28" text-anchor="middle" font-size="16" font-weight="700" fill="#b42318">ungrounded CoT</text>
+    <g font-size="14">
+      <rect x="40" y="48" width="360" height="52" rx="10" fill="#fff" stroke="#dde5ec" stroke-width="2"/><text x="58" y="79" fill="#33424f">Step 1 · "The table lists Q4 revenue…"</text>
+      <rect x="40" y="112" width="360" height="52" rx="10" fill="#fdecea" stroke="#b42318" stroke-width="2"/><text x="58" y="137" fill="#8a4444">Step 2 · "…which grew 12% over Q3"</text><text x="58" y="156" font-weight="700" fill="#b42318">⚠ invented? no way to tell</text>
+      <rect x="40" y="176" width="360" height="52" rx="10" fill="#fff" stroke="#dde5ec" stroke-width="2"/><text x="58" y="207" fill="#33424f">Answer · "$3.2B"</text>
+    </g>
+    <text x="220" y="262" text-anchor="middle" font-size="14" fill="#5b6b7a">a fluent chain can silently hallucinate its middle</text>
+    <text x="680" y="28" text-anchor="middle" font-size="16" font-weight="700" fill="#7C3AED">DoCoG: step-wise grounded CoT</text>
+    <g font-size="14">
+      <rect x="500" y="48" width="360" height="52" rx="10" fill="#fff" stroke="#7C3AED" stroke-width="2"/><text x="518" y="79" fill="#33424f">Step 1 · reads the revenue row</text><rect x="796" y="60" width="52" height="28" rx="6" fill="#2b1a4d"/><text x="822" y="79" text-anchor="middle" font-family="Menlo,monospace" font-size="11.5" fill="#e6d5ff">[GND]</text>
+      <rect x="500" y="112" width="360" height="52" rx="10" fill="#fff" stroke="#7C3AED" stroke-width="2"/><text x="518" y="143" fill="#33424f">Step 2 · compares with Q3 cell</text><rect x="796" y="124" width="52" height="28" rx="6" fill="#2b1a4d"/><text x="822" y="143" text-anchor="middle" font-family="Menlo,monospace" font-size="11.5" fill="#e6d5ff">[GND]</text>
+      <rect x="500" y="176" width="360" height="52" rx="10" fill="#f4eeff" stroke="#7C3AED" stroke-width="2.5"/><text x="518" y="207" fill="#33424f" font-weight="700">Answer · "$3.2B"</text><rect x="796" y="188" width="52" height="28" rx="6" fill="#2b1a4d"/><text x="822" y="207" text-anchor="middle" font-family="Menlo,monospace" font-size="11.5" fill="#e6d5ff">[GND]</text>
+    </g>
+    <text x="680" y="262" text-anchor="middle" font-size="14" fill="#5b6b7a">every step commits to evidence — a mask per [GND]</text>
+    <text x="450" y="308" text-anchor="middle" font-size="15" fill="#5b6b7a"><tspan font-weight="700" fill="#7C3AED">multi-type:</tspan> text, pie wedges, legends, flowchart nodes &amp; arrows</text>
+  </svg>
+  </div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>Motivation</span></div>
+</section>
+
+<!-- ====== 32 · DOCOG QUAL ====== -->
+<section class="slide iframe-slide" style="--accent:var(--docog)">
+  <div class="kicker">DoCoG · In the wild</div>
+  <h2 style="font-size:3.4vh">Evidence no box could express — <span class="k">step through it</span></h2>
+  <div class="ifwrap"><iframe data-src="interactive/docog-examples.html" loading="lazy" title="DoCoG grounded reasoning examples"></iframe></div>
+  <div class="ifbar">
+    <span class="small">Autoplays · tabs switch examples · click any <span class="tok g">[GND]</span> to re-sweep its mask</span>
+    <a href="interactive/docog-examples.html" target="_blank">open standalone ↗</a>
+  </div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>In the wild</span></div>
+</section>
+
+<!-- ====== 24 · DOCOG INTERACTIVE ====== -->
+<section class="slide iframe-slide" style="--accent:var(--docog)">
+  <div class="kicker">DoCoG · Interactive</div>
+  <h2 style="font-size:3.4vh">Watch the forward pass — tokens flow through GIM into masks</h2>
+  <div class="ifwrap"><iframe data-src="interactive/docog.html" loading="lazy" title="DoCoG interactive architecture"></iframe></div>
+  <div class="ifbar">
+    <span class="small">Click inside to drive it · <kbd>Space</kbd> pause · <kbd>R</kbd> restart · <kbd>F</kbd> fit — then use ‹ › to continue the talk</span>
+    <a href="interactive/docog.html" target="_blank">open standalone ↗</a>
+  </div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>Interactive architecture</span></div>
+</section>
+
+<!-- ====== 26 · DOCOG SFT ====== -->
+<section class="slide" style="--accent:var(--docog)">
+  <div class="kicker">DoCoG · Training</div>
+  <h2>Training in two stages: <span class="k">SFT</span> → <span class="k">DPO</span></h2>
+  <div class="vc" style="display:flex;flex-direction:column;gap:2.2vh;justify-content:center">
+  <div class="svgbox">
+  <svg viewBox="0 0 900 232" style="width:80%">
+    <defs><marker id="arrT" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#8a97a5"/></marker></defs>
+    <rect x="16" y="74" width="168" height="56" rx="11" fill="#fff" stroke="#dde5ec" stroke-width="2"/>
+    <text x="100" y="98" text-anchor="middle" font-size="14" font-weight="700" fill="#16222e">DoCoG-QA</text>
+    <text x="100" y="117" text-anchor="middle" font-size="11.5" fill="#5b6b7a">1.5M grounded QA</text>
+    <path d="M184 102 h44" stroke="#8a97a5" stroke-width="2.5" fill="none" marker-end="url(#arrT)"/>
+    <rect x="236" y="48" width="256" height="108" rx="14" fill="#7C3AED"/>
+    <text x="364" y="92" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">Stage 1 · SFT</text>
+    <text x="364" y="116" text-anchor="middle" font-size="12.5" fill="#e6d5ff">learn the skill —</text>
+    <text x="364" y="133" text-anchor="middle" font-size="12.5" fill="#e6d5ff">grounded step-wise CoT + masks</text>
+    <path d="M492 102 h52" stroke="#8a97a5" stroke-width="2.5" fill="none" marker-end="url(#arrT)"/>
+    <rect x="552" y="48" width="256" height="108" rx="14" fill="#f9f6ff" stroke="#7C3AED" stroke-width="2" stroke-dasharray="7 5"/>
+    <text x="680" y="92" text-anchor="middle" font-size="17" font-weight="700" fill="#7C3AED">Stage 2 · DPO</text>
+    <text x="680" y="116" text-anchor="middle" font-size="12.5" fill="#5b6b7a">sharpen the judgment —</text>
+    <text x="680" y="133" text-anchor="middle" font-size="12.5" fill="#5b6b7a">prefer its better chains</text>
+    <rect x="596" y="188" width="168" height="40" rx="11" fill="#fff" stroke="#dde5ec" stroke-width="2"/>
+    <text x="680" y="213" text-anchor="middle" font-size="12.5" fill="#5b6b7a"><tspan font-weight="700" fill="#16222e">DoCoG-PQA</tspan> · 20K pairs</text>
+    <path d="M680 188 v-26" stroke="#8a97a5" stroke-width="2.5" fill="none" marker-end="url(#arrT)"/>
+  </svg>
+  </div>
+  <p class="small" style="text-align:center">Stage 1 is plain supervised fine-tuning, end-to-end (VLM + GIM + mask decoder):<br>cross-entropy on the text · Dice + BCE on every predicted evidence mask.</p>
+  <div class="callout frag" style="width:82%;margin:0 auto"><b>Why a stage 2?</b> SFT only imitates the single annotated chain — fixed-style supervision. It never compares the model's own better and worse chains — DPO adds that.</div>
+  </div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>Training · stage 1</span></div>
+</section>
+
+<!-- ====== DPO FORMULA ====== -->
+<section class="slide" style="--accent:var(--docog)">
+  <div class="kicker">DoCoG · Training stage 2 · the objective</div>
+  <h2>The DPO formula — <span class="k">every term is text</span></h2>
+  <div class="vc" style="display:flex;flex-direction:column;gap:1.7vh">
+  <div class="eqrow">
+    <div class="eqb" style="border-color:transparent;background:transparent;box-shadow:none;padding-right:0">𝓛<sub>DPO</sub> = −log σ( β [</div>
+    <div class="eqb" style="border-color:#0ca30c;background:#f7fdf5">
+      <div style="display:flex;align-items:center;gap:.6vw;justify-content:center">
+        <span>log</span>
+        <span>
+          <span style="display:block;text-align:center;padding:0 1vh">π<sub>θ</sub>(y<sup style="color:#006300;font-style:normal">✓</sup> | I, q)</span>
+          <span class="fracline" style="display:block;margin:.5vh 0"></span>
+          <span style="display:block;text-align:center;padding:0 1vh">π<sub>ref</sub>(y<sup style="color:#006300;font-style:normal">✓</sup> | I, q)</span>
+        </span>
+      </div>
+      <small style="color:#006300;font-weight:700">the better chain — pushed up</small>
+    </div>
+    <div class="eqop">−</div>
+    <div class="eqb" style="border-color:#d03b3b;background:#fdf6f5">
+      <div style="display:flex;align-items:center;gap:.6vw;justify-content:center">
+        <span>log</span>
+        <span>
+          <span style="display:block;text-align:center;padding:0 1vh">π<sub>θ</sub>(y<sup style="color:#b42318;font-style:normal">✗</sup> | I, q)</span>
+          <span class="fracline" style="display:block;margin:.5vh 0"></span>
+          <span style="display:block;text-align:center;padding:0 1vh">π<sub>ref</sub>(y<sup style="color:#b42318;font-style:normal">✗</sup> | I, q)</span>
+        </span>
+      </div>
+      <small style="color:#b42318;font-weight:700">the worse chain — pushed down</small>
+    </div>
+    <div class="eqb" style="border-color:transparent;background:transparent;box-shadow:none;padding-left:0">] )</div>
+  </div>
+  <div class="cols" style="grid-template-columns:repeat(3,1fr);gap:1.2vw;align-items:stretch">
+    <div class="card"><h3>π(y | I, q) is a text likelihood</h3><p class="small">y is the chain, <b>as tokens</b> — π is the <b>LM head's</b> probability of writing it. θ = tuned · ref = frozen SFT copy · β = push strength.</p></div>
+    <div class="card frag"><h3>So only the VLM can move</h3><p class="small">Every π comes from the LM head → gradients reach only the <b>🔥 VLM</b>. GIM + segmenter appear <b>nowhere in the formula</b> → <b>❄ frozen</b>.</p></div>
+    <div class="card frag"><h3>Why no mask term?</h3><p class="small">A preference needs a likelihood — a mask has none: the decoder emits <b>one mask</b>, not a distribution. <b>Ill-posed</b>, so left out.</p></div>
+  </div>
+  <div class="callout frag"><b>The catch</b> — π<sub>ref</sub> leashes the <b>text</b>, not the hidden <span class="tok g">[GND]</span> states the frozen mask pipeline reads → the drift trap, next.</div>
+  </div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>DPO · the formula</span></div>
+</section>
+
+<!-- ====== 27 · DOCOG DPO ====== -->
+<section class="slide" style="--accent:var(--docog)">
+  <div class="kicker">DoCoG · Training stage 2</div>
+  <h2>DPO on text only — and the <span class="x">drift trap</span></h2>
+  <div class="rowflex vc" style="align-items:center">
+    <div class="card" style="flex:1.1">
+      <h3>What DPO does here</h3>
+      <p class="small">From each preference pair, DPO pushes the VLM to make the <b>chosen ✓</b> chain more likely than the <b>rejected ✗</b> one, against a frozen reference. <b>Only the VLM's weights change</b> — mask preferences are ill-posed, so GIM + segmenter stay frozen.</p>
+      <div class="svgbox" style="margin-top:1vh">
+      <svg viewBox="0 0 420 170" style="width:92%">
+        <g><circle cx="80" cy="52" r="9" fill="#a5b2be"/><circle cx="112" cy="36" r="9" fill="#a5b2be"/><circle cx="98" cy="78" r="9" fill="#a5b2be"/><text x="96" y="14" text-anchor="middle" font-size="12.5" fill="#5b6b7a">SFT hidden states</text></g>
+        <g><circle cx="300" cy="70" r="9" fill="#b42318"/><circle cx="336" cy="50" r="9" fill="#b42318"/><circle cx="318" cy="96" r="9" fill="#b42318"/><text x="318" y="26" text-anchor="middle" font-size="12.5" fill="#b42318" font-weight="700">after DPO: shifted</text></g>
+        <path d="M130 56 q60 10 150 10" stroke="#b42318" stroke-width="2.5" fill="none" stroke-dasharray="7 5" marker-end="url(#arr7)"/>
+        <defs><marker id="arr7" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#b42318"/></marker></defs>
+        <text x="210" y="134" text-anchor="middle" font-size="13" fill="#8a4444">frozen GIM reads inputs it was never trained on</text>
+        <text x="210" y="156" text-anchor="middle" font-size="13" font-weight="700" fill="#b42318">masks silently collapse</text>
+      </svg>
+      </div>
+    </div>
+    <div style="flex:.9;display:flex;flex-direction:column;gap:1.2vh;justify-content:center">
+      <div class="statrow" style="grid-auto-flow:column;margin:0">
+        <div class="stat"><div class="v bad" style="font-size:4.2vh">70.5 → 40.3</div><div class="l">mask IoU without the fix</div></div>
+        <div class="stat"><div class="v bad" style="font-size:4.2vh">81.9 → 41.7</div><div class="l">GQ<sub>fa</sub> without the fix</div></div>
+      </div>
+      <div class="card frag" style="border-left:6px solid var(--docog)">
+        <h3>The fix — anchor loss</h3>
+        <p style="font-family:Georgia,serif;font-style:italic;font-size:2.5vh;margin:.6vh 0">𝓛<sub>anchor</sub> = (1/K) Σ<sub>k</sub> ‖G<sub>k</sub><sup>θ</sup> − G<sub>k</sub><sup>ref</sup>‖²</p>
+        <p class="small">A moving VLM drags the [GND] states with it — this keeps them where the frozen GIM + segmenter expect them.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>DPO + anchor loss</span></div>
+</section>
+
+<!-- ====== 29 · DOCOG DATA ====== -->
+<section class="slide" style="--accent:var(--docog)">
+  <div class="kicker">DoCoG · Stage-1 data</div>
+  <h2>DoCoG-QA: 325K docs · 1.5M QA — <span class="k">multi-type by construction</span></h2>
+  <div class="cols vc" style="grid-template-columns:.8fr 1.2fr">
+    <div style="display:flex;flex-direction:column;gap:1.2vh;justify-content:center">
+      <div class="chartcard">
+        <h3>Composition (source documents)</h3>
+        <svg viewBox="0 0 400 250" role="img" aria-label="Dataset composition donut">
+        <g transform="translate(120,125)">
+          <path d="M0 -92 A92 92 0 0 1 91.3 -11.1 L0 0 Z" fill="#7C3AED"/>
+          <path d="M91.3 -11.1 A92 92 0 0 1 22.0 89.3 L0 0 Z" fill="#9d6ef2"/>
+          <path d="M22.0 89.3 A92 92 0 0 1 -86.1 32.6 L0 0 Z" fill="#bfa0f7"/>
+          <path d="M-86.1 32.6 A92 92 0 0 1 0 -92 L0 0 Z" fill="#4a2d8f"/>
+          <circle r="52" fill="#fff"/>
+          <text y="-4" text-anchor="middle" font-size="20" font-weight="700" fill="#16222e">325K</text>
+          <text y="18" text-anchor="middle" font-size="12" fill="#5b6b7a">documents</text>
+        </g>
+        <g font-size="13.5" fill="#16222e">
+          <g transform="translate(238,52)"><rect width="12" height="12" rx="3" fill="#7C3AED"/><text x="18" y="11">75K charts</text></g>
+          <g transform="translate(238,84)"><rect width="12" height="12" rx="3" fill="#9d6ef2"/><text x="18" y="11">75K tables</text></g>
+          <g transform="translate(238,116)"><rect width="12" height="12" rx="3" fill="#bfa0f7"/><text x="18" y="11">75K flowcharts</text></g>
+          <g transform="translate(238,148)"><rect width="12" height="12" rx="3" fill="#4a2d8f"/><text x="18" y="11">100K diverse docs</text></g>
+        </g>
+      </svg>
+      </div>
+      <div class="card frag"><p class="small">The engine cites <b>element IDs</b>, never coordinates. Verified: <b>gpt-oss-120B judge</b> (a different family, on purpose) · ROSCOE · <b>33,500 masks checked by hand</b>.</p></div>
+      <p class="tiny" style="margin:0;text-align:center">Eval twin: <b>DoCoG-Bench</b> — 3K images · 10K QA · two-stage human verification.</p>
+    </div>
+    <figure class="fig framed" style="height:100%">
+      <img src="assets/docog_data_example.png" alt="Grounded step-wise CoT on an Olympics infographic" style="max-height:56vh">
+      <figcaption>what the data teaches: every step cites its evidence — locations, dashed routes, numbers — as masks</figcaption>
+    </figure>
+  </div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>Stage-1 data</span></div>
+</section>
+
+<!-- ====== 28 · DOCOG REWARDS ====== -->
+<section class="slide" style="--accent:var(--docog)">
+  <div class="kicker">DoCoG · Preference data</div>
+  <h2>DoCoG-PQA: 20K pairs — <span class="k">one format check, three scores</span></h2>
+  <div class="vc" style="display:flex;flex-direction:column;gap:1.6vh">
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.2vw">
+    <div class="card" style="border-top:4px solid #7d8b99"><h3>FR · format <span style="font-weight:400;color:#8a97a5">— must pass first</span></h3><p class="small">Do steps, answer, and <span class="tok g">[GND]</span> references all <b>parse</b>? Fail ⇒ <b>rejected before scoring</b>.</p></div>
+    <div class="card frag"><h3>AQ · answer</h3><p class="small">Matches ground truth — after <b>normalization + numeric tolerance</b>. Rule-based, <b>no LLM judge</b>.</p></div>
+    <div class="card frag"><h3>CQ · chain</h3><p class="small"><b>ROSCOE check</b> (below threshold ⇒ 0), then <b>bipartite</b> step matching (E5 similarity) → step-level <b>F1</b>.</p></div>
+    <div class="card frag"><h3>GQ · grounding</h3><p class="small">A mask counts iff <b>IoU ≥ 0.5</b> + <b>same element type</b> + <b>right step</b>. All steps + answer = GQ<sub>all</sub> · answer only = GQ<sub>fa</sub> · GQ = mean.</p></div>
+  </div>
+  <div class="cols frag" style="grid-template-columns:1fr 1fr">
+    <div class="card" style="border:2px solid #0ca30c"><h3 style="color:#006300">✓ chosen</h3><p class="small"><b>highest total reward</b> — right answer <i>and</i> faithful grounding</p></div>
+    <div class="card" style="border:2px solid #d03b3b"><h3 style="color:#b42318">✗ rejected</h3><p class="small"><b>lowest total</b> — a right answer can still lose on weak grounding</p></div>
+  </div>
+  <p class="small frag" style="text-align:center;margin:0">Same yardstick at test time: <b>DoCoG-Bench reports exactly these metrics</b> (deterministic, + one G-Eval) — the numbers on the next slides.</p>
+  </div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>Reward design</span></div>
+</section>
+
+<!-- ====== 30 · DOCOG RESULTS SCATTER ====== -->
+<section class="slide" style="--accent:var(--docog)">
+  <div class="kicker">DoCoG · Results</div>
+  <h2>Frontier models <span class="k">answer</span> — they can't <span class="x">show</span></h2>
+  <div class="cols vc" style="grid-template-columns:1.35fr .65fr">
+    <div class="chartcard">
+      <h3>DoCoG-Bench (All): answer quality vs final-answer grounding</h3>
+      <svg viewBox="0 0 720 420" role="img" aria-label="Scatter of AQ vs grounding quality">
+        <g stroke="#e1e0d9" stroke-width="1">
+          <line x1="70" y1="380" x2="690" y2="380"/><line x1="70" y1="300" x2="690" y2="300"/><line x1="70" y1="220" x2="690" y2="220"/><line x1="70" y1="140" x2="690" y2="140"/><line x1="70" y1="60" x2="690" y2="60"/>
+        </g>
+        <g font-size="13" fill="#898781"><text x="56" y="384" text-anchor="end">0</text><text x="56" y="304" text-anchor="end">20</text><text x="56" y="224" text-anchor="end">40</text><text x="56" y="144" text-anchor="end">60</text><text x="56" y="64" text-anchor="end">80</text></g>
+        <g font-size="13" fill="#898781" text-anchor="middle"><text x="70" y="404">70</text><text x="225" y="404">75</text><text x="380" y="404">80</text><text x="535" y="404">85</text><text x="690" y="404">90</text></g>
+        <text x="380" y="418" text-anchor="middle" font-size="13.5" fill="#52514e">answer quality (AQ) →</text>
+        <text x="20" y="220" text-anchor="middle" font-size="13.5" fill="#52514e" transform="rotate(-90 20 220)">grounding GQ<tspan font-size="10" dy="3">fa</tspan><tspan dy="-3"> →</tspan></text>
+        <rect x="380" y="300" width="310" height="80" rx="10" fill="#fdecea" opacity=".65"/>
+        <text x="676" y="320" text-anchor="end" font-size="13.5" fill="#b42318" font-weight="700">fluent but unverifiable</text>
+        <g>
+          <circle cx="470" cy="361" r="9" fill="#7d8b99" stroke="#fff" stroke-width="2"><title>GPT-5 · AQ 82.9 · GQ_fa 4.8</title></circle>
+          <circle cx="377" cy="352" r="9" fill="#7d8b99" stroke="#fff" stroke-width="2"><title>Claude Sonnet 4.5 · 79.9 · 7.1</title></circle>
+          <circle cx="510" cy="334" r="9" fill="#7d8b99" stroke="#fff" stroke-width="2"><title>Gemini 3 Pro · 84.2 · 11.4</title></circle>
+          <circle cx="303" cy="132" r="9" fill="#7d8b99" stroke="#fff" stroke-width="2"><title>Qwen3-VL fine-tuned · 77.5 · 61.9</title></circle>
+          <circle cx="259" cy="122" r="9" fill="#7d8b99" stroke="#fff" stroke-width="2"><title>InternVL3.5 fine-tuned · 76.1 · 64.6</title></circle>
+          <circle cx="560" cy="52" r="11" fill="#7C3AED" stroke="#fff" stroke-width="2.5"><title>DoCoG · 85.8 · 81.9</title></circle>
+        </g>
+        <g font-size="13.5" fill="#16222e">
+          <text x="486" y="367">GPT-5</text><text x="290" y="340">Claude 4.5</text><text x="430" y="325">Gemini 3 Pro</text>
+          <text x="315" y="126">Qwen3-VL ft</text><text x="140" y="112">InternVL3.5 ft</text>
+          <text x="578" y="46" font-weight="700">DoCoG (9B)</text>
+        </g>
+      </svg>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1.1vh;justify-content:center">
+      <div class="stat"><div class="v" style="font-size:4.2vh">85.8 / 81.9</div><div class="l">DoCoG · AQ / GQ<sub>fa</sub> — best on <b>both</b> axes</div></div>
+      <div class="card frag"><h3>Per domain (AQ / GQ<sub>fa</sub>)</h3><p class="small"><span style="white-space:nowrap">charts 83.5 / 80.3</span> · <span style="white-space:nowrap">flowcharts 82.2 / 79.2</span> · <span style="white-space:nowrap">docs 89.7 / 85.4</span> · <span style="white-space:nowrap">tables 87.8 / 82.7</span></p></div>
+      <div class="card frag"><h3>General QA intact</h3><p class="small">ChartQA <b>92.7</b> · ChartBench <b>79.4</b> · FlowVQA 85.5 · MISS-QA <b>78.4</b> · TabFact <b>89.4</b> · DocVQA 93.4</p></div>
+    </div>
+  </div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>Main results</span></div>
+</section>
+
+<!-- ====== DOCOG POSTER ====== -->
+<section class="slide" style="--accent:var(--docog)">
+  <div class="kicker">DoCoG · In one image</div>
+  <figure class="fig" style="flex:1;min-height:0"><img src="assets/docog_poster.png" alt="DoCoG: the answer and its grounding — take both pills" style="max-height:80vh"></figure>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>Poster</span></div>
+</section>
+
+<!-- ====== THANKS ====== -->
+<section class="slide hero" style="--accent:var(--docog)">
+  <h1 style="font-size:5.4vh">Thank you — <span class="k">questions?</span></h1>
+  <div style="display:flex;justify-content:center;margin-top:2.6vh"><figure style="margin:0;background:#fff;border:1px solid #dde5ec;border-radius:14px;padding:1.6vh;box-shadow:0 2px 8px rgba(10,30,60,.06);text-align:center"><img src="assets/qr_docog.png" alt="DoCoG project page QR" style="height:19vh;display:block"><figcaption style="font-size:1.8vh;color:#5b6b7a;margin-top:.8vh">docog-eccv.github.io</figcaption></figure></div>
+  <div class="logos"><span><img src="assets/logo_bharatgen.png" alt="BharatGen" style="height:10vh"></span><span><img src="assets/logo_iiith.jpg" alt="IIIT Hyderabad" style="height:10vh"></span><span><img src="assets/logo_eccv.png" alt="ECCV 2026" style="height:10vh"></span></div>
+  <p class="sub" style="font-size:1.85vh;margin-top:2.6vh">DoCoG (ECCV 2026, Spotlight) · BharatGen · IIIT Hyderabad</p>
+</section>
+</div>
+
+<div id="bar"></div><div id="count"></div>
+
+<script>
+(function(){
+  const slides=[...document.querySelectorAll('.slide')];
+  const deck=document.getElementById('deck');
+  const bar=document.getElementById('bar'), count=document.getElementById('count');
+  let i=Math.max(0,Math.min(slides.length-1,(parseInt(location.hash.slice(1),10)||1)-1));
+  const ALL=location.search.includes('all');
+  function frags(s){return [...s.querySelectorAll('.frag')]}
+  function loadIframe(s){
+    const f=s.querySelector('iframe[data-src]');
+    if(f && !f.src){f.src=f.dataset.src}
+  }
+  function show(n,revealAll){
+    slides.forEach((s,j)=>s.classList.toggle('on',j===n));
+    frags(slides[n]).forEach(el=>el.classList.toggle('show',ALL||!!revealAll));
+    loadIframe(slides[n]);
+    i=n; location.hash=String(n+1);
+    bar.style.width=((n+1)/slides.length*100)+'%';
+    count.textContent=(n+1)+' / '+slides.length;
+  }
+  function next(){
+    const f=frags(slides[i]).filter(el=>!el.classList.contains('show'));
+    if(f.length){f[0].classList.add('show');return}
+    if(i<slides.length-1)show(i+1,false);
+  }
+  function prev(){
+    const f=frags(slides[i]).filter(el=>el.classList.contains('show'));
+    if(f.length){f[f.length-1].classList.remove('show');return}
+    if(i>0)show(i-1,true);
+  }
+  window.deckNext=next; window.deckPrev=prev;
+  document.querySelectorAll('.iframe-slide').forEach(s=>{
+    const nb=document.createElement('div'); nb.className='navbtns';
+    const b1=document.createElement('button'); b1.textContent='‹'; b1.onclick=e=>{e.stopPropagation();prev()};
+    const b2=document.createElement('button'); b2.textContent='›'; b2.onclick=e=>{e.stopPropagation();next()};
+    nb.append(b1,b2); s.appendChild(nb);
+  });
+  addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();next()}
+    else if(e.key==='ArrowLeft'||e.key==='Backspace'||e.key==='PageUp'){e.preventDefault();prev()}
+    else if(e.key==='Home')show(0,false);
+    else if(e.key==='End')show(slides.length-1,true);
+    else if(e.key==='f'||e.key==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}
+    else if(e.key==='g'||e.key==='G'){deck.classList.toggle('overview')}
+  });
+  deck.addEventListener('click',e=>{
+    if(deck.classList.contains('overview')){
+      const s=e.target.closest('.slide');
+      if(s){deck.classList.remove('overview');show(slides.indexOf(s),false)}
+      return;
+    }
+    if(e.target.closest('a'))return;
+    if(e.target.closest('.iframe-slide'))return;
+    (e.clientX>innerWidth*.35)?next():prev();
+  });
+  addEventListener('hashchange',()=>{
+    const n=(parseInt(location.hash.slice(1),10)||1)-1;
+    if(n!==i&&n>=0&&n<slides.length)show(n,false);
+  });
+  show(i,false);
+})();
+</script>
+</body>
+</html>

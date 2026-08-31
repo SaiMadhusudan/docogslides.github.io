@@ -8,42 +8,39 @@
 *{box-sizing:border-box}
 html,body{margin:0;height:100%;background:#fff;font-family:'Avenir Next',Avenir,'Segoe UI',system-ui,sans-serif;color:#16222e}
 .qual-demo{width:100%;height:100vh;display:flex;flex-direction:column;overflow:hidden;background:#fff}
-.qd-toolbar{display:flex;align-items:center;border-bottom:1px solid #e3e9ef;background:#f6f8fa;flex-shrink:0}
-.qd-tabs{display:flex;overflow-x:auto;scrollbar-width:none;flex:1}
-.qd-tabs::-webkit-scrollbar{display:none}
-.qd-tab{padding:.62rem 1.05rem;font-size:.85rem;font-weight:600;color:#5b6b7a;background:none;border:none;border-bottom:2.5px solid transparent;cursor:pointer;font-family:inherit;white-space:nowrap;margin-bottom:-1px;transition:color .18s,border-color .18s,background .18s}
-.qd-tab:hover{color:#16222e;background:#fff}
-.qd-tab.on{color:#7C3AED;border-bottom-color:#7C3AED;background:#fff}
+.qd-header{flex-shrink:0;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.75rem 1.2rem;border-bottom:1px solid #e3e9ef;background:#fff}
+.qd-h1{font-size:1.829rem;font-weight:700;color:#16222e;line-height:1.2}
+.qd-h1 b{color:#05539C}
+.qd-badge{flex-shrink:0;background:#05539C;color:#fff;border-radius:100px;padding:.34rem 1.05rem;font-weight:700;font-size:1.235rem;white-space:nowrap}
 .qd-panel{display:grid;grid-template-columns:55fr 45fr;flex:1;min-height:0}
 .qd-img-panel{border-right:1px solid #e3e9ef;padding:1rem;display:flex;align-items:center;justify-content:center;background:#f6f8fa;min-height:0}
 .qd-img-wrap{position:relative;display:inline-block;max-width:100%;max-height:100%}
-.qd-img{display:block;max-width:100%;max-height:calc(100vh - 76px);width:auto;height:auto;border-radius:8px}
+.qd-img{display:block;max-width:100%;max-height:calc(100vh - 4.5rem - 32px);width:auto;height:auto;border-radius:8px}
 .qd-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
 .qd-chat-panel{display:flex;flex-direction:column;padding:1.1rem 1.2rem;overflow-y:auto;min-height:0}
 .qd-question-row{display:flex;flex-direction:column;align-items:flex-end;gap:.5rem;margin-bottom:.7rem}
-.qd-bubble{background:#7C3AED;color:#fff;border-radius:16px 16px 4px 16px;padding:.6rem 1rem;font-size:.92rem;line-height:1.5;max-width:92%;text-align:left}
-.qd-send-btn{background:#7C3AED;color:#fff;border:none;border-radius:100px;padding:.4rem 1.1rem;font-size:.85rem;font-weight:700;font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:.4rem;transition:opacity .2s}
-.qd-send-btn:hover:not(:disabled){opacity:.85}
-.qd-send-btn:disabled{opacity:.42;cursor:not-allowed}
+.qd-bubble{background:#05539C;color:#fff;border-radius:16px 16px 4px 16px;padding:.75rem 1.25rem;font-size:1.77rem;font-weight:600;line-height:1.4;max-width:92%;text-align:left}
 .qd-steps{flex:1}
-.qd-step-row{display:flex;align-items:flex-start;gap:.5rem;margin-top:.7rem;font-size:.93rem;line-height:1.62;color:#16222e}
-.qd-step-label{flex-shrink:0;font-size:.72rem;font-style:italic;font-weight:600;background:#f6f8fa;color:#5b6b7a;padding:.12rem .42rem;border-radius:4px;border:1px solid #e3e9ef;margin-top:.22rem}
-.qd-step-label-final{background:#7C3AED;color:#fff;border-color:#7C3AED;font-style:normal;font-weight:700}
+.qd-step-row{display:flex;align-items:flex-start;gap:.5rem;margin-top:.85rem;font-size:1.392rem;line-height:1.6;color:#16222e}
+.qd-step-label{flex-shrink:0;font-size:1.105rem;font-style:italic;font-weight:600;background:#f6f8fa;color:#5b6b7a;padding:.12rem .45rem;border-radius:4px;border:1px solid #e3e9ef;margin-top:.28rem}
+.qd-step-label-final{background:#05539C;color:#fff;border-color:#05539C;font-style:normal;font-weight:700}
 .qd-step-text{flex:1;word-break:break-word}
 .qd-span{border-radius:3px;padding:0 2px;font-weight:500}
-.qd-gnd-chip{display:inline;cursor:pointer;font-size:.72em;font-weight:700;font-family:ui-monospace,Menlo,monospace;margin:0 2px;vertical-align:baseline;padding:1px 4px;border-radius:3px;line-height:1;transition:background .15s}
+.qd-gnd-chip{display:inline;cursor:pointer;font-size:1.008em;font-weight:700;font-family:ui-monospace,Menlo,monospace;margin:0 2px;vertical-align:baseline;padding:1px 4px;border-radius:3px;line-height:1;transition:background .15s}
 .qd-step-header{display:flex;flex-direction:column;flex-shrink:0;gap:.3rem;align-items:flex-start}
-.qd-show-all-btn{font-size:.68rem;font-weight:600;font-family:inherit;padding:.1rem .5rem;border-radius:100px;border:1px solid #cfd8e0;background:#f6f8fa;color:#5b6b7a;cursor:pointer;line-height:1.5;white-space:nowrap;transition:color .15s,border-color .15s}
-.qd-show-all-btn:hover{color:#7C3AED;border-color:#7C3AED}
-.qd-reset-row{display:flex;justify-content:flex-end;margin-top:.9rem;padding-top:.7rem;border-top:1px solid #e3e9ef}
-.qd-reset-btn{background:#f6f8fa;color:#5b6b7a;border:1.5px solid #e3e9ef;border-radius:100px;padding:.35rem .9rem;font-size:.82rem;font-weight:600;font-family:inherit;cursor:pointer;transition:color .18s,border-color .18s}
-.qd-reset-btn:hover{color:#7C3AED;border-color:#7C3AED}
+.qd-show-all-btn{font-size:0.952rem;font-weight:600;font-family:inherit;padding:.1rem .5rem;border-radius:100px;border:1px solid #cfd8e0;background:#f6f8fa;color:#5b6b7a;cursor:pointer;line-height:1.5;white-space:nowrap;transition:color .15s,border-color .15s}
+.qd-show-all-btn:hover{color:#05539C;border-color:#05539C}
+.qd-ctrl-row{margin-top:auto;padding-top:.8rem;display:flex;align-items:center;gap:.75rem}
+.qd-play-btn{flex-shrink:0;background:#05539C;color:#fff;border:1px solid #05539C;border-radius:100px;padding:.32rem .95rem;font-size:1.12rem;font-weight:700;font-family:inherit;cursor:pointer;line-height:1.4;white-space:nowrap;transition:background .15s}
+.qd-play-btn:hover{background:#033e75;border-color:#033e75}
+.qd-hint{font-size:1.092rem;color:#8a97a5;font-family:ui-monospace,Menlo,monospace}
 </style>
 </head>
 <body>
 <div class="qual-demo" id="qualDemo">
-  <div class="qd-toolbar">
-    <div class="qd-tabs" id="qdTabs"></div>
+  <div class="qd-header">
+    <div class="qd-h1">A food chain — <b>let’s take one question</b></div>
+    <div class="qd-badge">DoCoG in action</div>
   </div>
   <div class="qd-panel">
     <div class="qd-img-panel">
@@ -57,11 +54,11 @@ html,body{margin:0;height:100%;background:#fff;font-family:'Avenir Next',Avenir,
     <div class="qd-chat-panel">
       <div class="qd-question-row" id="qdQuestionRow">
         <div class="qd-bubble" id="qdBubble"></div>
-        <button class="qd-send-btn" id="qdSendBtn">&#9654;&ensp;Send</button>
       </div>
       <div class="qd-steps" id="qdSteps"></div>
-      <div class="qd-reset-row" id="qdResetRow" style="display:none">
-        <button class="qd-reset-btn" id="qdResetBtn">&#8635;&ensp;Reset</button>
+      <div class="qd-ctrl-row">
+        <button class="qd-play-btn" id="qdPlayBtn" type="button">▶ Play</button>
+        <span class="qd-hint">▶ plays the flow · click any [GND] → its evidence lights up</span>
       </div>
     </div>
   </div>
@@ -92,7 +89,7 @@ const DOCOG_EXAMPLES = [
       { text: 'penguins', masks: [
         { points:[[65.14,39.5],[65.05,38],[68.68,37.75],[68.95,37],[69.05,35.38],[69.95,33.63],[69.59,30.38],[69.32,27.38],[69.41,23.75],[69.86,19],[72.41,15.13],[74.95,14.63],[75.68,16],[77.5,17.63],[77.59,18.5],[75.68,18.13],[75.05,18.5],[75.14,20],[77.05,26.88],[77.14,33.38],[76.14,34.38],[76.95,36.38],[76.14,37.13],[75.5,37.63],[77.23,37.88],[77.23,40.25],[72.77,40.63],[67.59,40.5]], bbox:{x:65.05,y:14.63,w:12.54,h:26} }
       ] },
-      { text: 'arrows from penguins', masks: [
+      { text: 'out-arrows from penguins', masks: [
         { points:[[60.59,25.75],[62.68,27.63],[63.32,26.75],[69.59,26.75],[69.68,25.37],[63.32,25.25],[63.41,24]], bbox:{x:60.59,y:24,w:9.09,h:3.63} },
         { points:[[58.59,15.63],[59.32,19],[60.23,17.88],[68.95,23.88],[69.5,22.25],[61.14,16.63],[61.5,15.75]], bbox:{x:58.59,y:15.63,w:10.91,h:8.25} }
       ] },
@@ -116,8 +113,8 @@ const DOCOG_EXAMPLES = [
       {
         label: 'S2',
         tokens: [
-          { type:'text', content:'Look at out ' },
-          { type:'span_start', spanIndex:1 }, { type:'text', content:'arrows from penguins' }, { type:'span_end' }, { type:'ground', spanIndex:1 },
+          { type:'text', content:'Look at the ' },
+          { type:'span_start', spanIndex:1 }, { type:'text', content:'out-arrows from penguins' }, { type:'span_end' }, { type:'ground', spanIndex:1 },
           { type:'text', content:'.' },
         ]
       },
@@ -685,14 +682,23 @@ const DOCOG_EXAMPLES = [
 ];
 
 /* ══════════════════════════════════════════════════════════
-   DoCoG Interactive Qual Demo — Engine
-   Reads DOCOG_EXAMPLES from qual-data.js (loaded first).
-   No example-specific data is hardcoded here.
+   DoCoG Interactive Qual Demo — Engine (presenter-controlled)
+   Shows ONE example (Food Web) fully rendered on load:
+   question, all steps, final answer, every [GND] chip.
+   No tabs, NO autoplay — nothing animates until the presenter
+   presses ▶ Play. Play clears the steps and replays the whole
+   exchange as a flow (streamed tokens, mask sweeps as each
+   [GND] appears, ending on the highlighted final answer);
+   ⏸ Stop pauses the flow in place and ▶ Play resumes it.
+   When the flow is idle, clicking a [GND] chip (or a per-step
+   "Show all" button) sweeps its masks onto the document.
+   Other examples' data is kept in DOCOG_EXAMPLES but is not
+   reachable from the UI.
    ══════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
 
-  const CHAR_DELAY = 42; // ms per character during streaming
+  const CHAR_DELAY = 42; // ms per character while the flow streams
 
   const SPAN_COLORS = [
     { fill: 'rgba(79,126,248,0.26)',  border: '#4f7ef8' }, // blue
@@ -706,49 +712,15 @@ const DOCOG_EXAMPLES = [
   ];
 
   // ── State ────────────────────────────────────────────────
-  let currentExIdx = 0;
-  let activeGenId = 0;   // Incremented on reset/tab-switch; cancels in-flight streaming
+  const currentExIdx = 0; // Food Web — the only example shown
+  let activeGenId = 0;   // Incremented on each fresh Play; cancels in-flight streaming
   let maskGenId   = 0;   // Incremented on each showSpanMasks call; cancels in-flight mask anims
   let currentlyShownSpanIndices = []; // Array: multiple spans can be visible at once
+  let flowState = 'idle';   // 'idle' | 'playing' | 'paused'
+  let pendingResume = null; // Continuation stored when a timer fires while paused
 
   // ── DOM refs (populated in init) ─────────────────────────
-  let tabsEl, imgEl, svgEl, defsEl, bubbleEl, sendBtn, stepsEl, resetRow, resetBtn, chatPanel;
-
-  // ══════════════════════════════════════════════════════════
-  // TAB BUILDING
-  // ══════════════════════════════════════════════════════════
-  function buildTabs() {
-    tabsEl.innerHTML = DOCOG_EXAMPLES.map((ex, i) =>
-      `<button class="qd-tab${i === 0 ? ' on' : ''}" data-i="${i}">${ex.label}<\/button>`
-    ).join('');
-    tabsEl.addEventListener('click', e => {
-      const btn = e.target.closest('.qd-tab');
-      if (btn) switchExample(+btn.dataset.i);
-    });
-  }
-
-  // ══════════════════════════════════════════════════════════
-  // EXAMPLE SWITCHING
-  // ══════════════════════════════════════════════════════════
-  function switchExample(i) {
-    activeGenId++;
-    clearAllMasks(true);
-    currentExIdx = i;
-    currentlyShownSpanIndices = [];
-
-    tabsEl.querySelectorAll('.qd-tab').forEach((btn, j) =>
-      btn.classList.toggle('on', j === i)
-    );
-
-    const ex = DOCOG_EXAMPLES[i];
-    imgEl.src = ex.image;
-    imgEl.alt = ex.label + ' document';
-    bubbleEl.textContent = ex.question;
-    stepsEl.innerHTML = '';
-    resetRow.style.display = 'none';
-    sendBtn.disabled = false;
-    chatPanel.scrollTop = 0;
-  }
+  let imgEl, svgEl, defsEl, bubbleEl, stepsEl, chatPanel, playBtn;
 
   // ══════════════════════════════════════════════════════════
   // SVG MASK HELPERS
@@ -912,23 +884,6 @@ const DOCOG_EXAMPLES = [
   }
 
   // ══════════════════════════════════════════════════════════
-  // TOKEN OP BUILDER
-  // Flattens the token stream into a linear sequence of ops:
-  //   span_start | span_end | ground | char
-  // ══════════════════════════════════════════════════════════
-  function buildOps(step) {
-    const ops = [];
-    for (const tok of step.tokens) {
-      if (tok.type === 'text') {
-        for (const ch of tok.content) ops.push({ type: 'char', ch });
-      } else {
-        ops.push(tok); // span_start / span_end / ground pass through
-      }
-    }
-    return ops;
-  }
-
-  // ══════════════════════════════════════════════════════════
   // CHIP FACTORY
   // ══════════════════════════════════════════════════════════
   function createChip(spanIdx) {
@@ -972,7 +927,110 @@ const DOCOG_EXAMPLES = [
   }
 
   // ══════════════════════════════════════════════════════════
+  // INSTANT STEP RENDERING — no timers, no typing, no masks
+  // ══════════════════════════════════════════════════════════
+  function renderStep(step) {
+    const isFinal = step.label === 'Sf';
+
+    const rowEl = document.createElement('div');
+    rowEl.className = 'qd-step-row';
+
+    const labelEl = document.createElement('span');
+    labelEl.className   = 'qd-step-label' + (isFinal ? ' qd-step-label-final' : '');
+    labelEl.textContent = step.label;
+
+    const textEl = document.createElement('span');
+    textEl.className = 'qd-step-text';
+
+    // Spans grounded in this step (drives the per-step "Show all" button)
+    const stepSpans = step.tokens.filter(t => t.type === 'ground').map(t => t.spanIndex);
+
+    // If step has 2+ ground events, wrap label + "Show all" button in a header column
+    if (stepSpans.length >= 2) {
+      const headerEl = document.createElement('div');
+      headerEl.className = 'qd-step-header';
+      headerEl.appendChild(labelEl);
+
+      const showAllBtn = document.createElement('button');
+      showAllBtn.className   = 'qd-show-all-btn';
+      showAllBtn.textContent = 'Show all';
+      showAllBtn.addEventListener('click', () => showStepMasks(stepSpans));
+      headerEl.appendChild(showAllBtn);
+
+      rowEl.appendChild(headerEl);
+    } else {
+      rowEl.appendChild(labelEl);
+    }
+
+    rowEl.appendChild(textEl);
+
+    // Walk the token stream synchronously
+    let currentContainer = textEl;
+    const spanStack = [];
+    for (const tok of step.tokens) {
+      switch (tok.type) {
+        case 'text':
+          currentContainer.appendChild(document.createTextNode(tok.content));
+          break;
+        case 'span_start': {
+          const color  = SPAN_COLORS[tok.spanIndex % SPAN_COLORS.length];
+          const spanEl = document.createElement('span');
+          spanEl.className           = 'qd-span';
+          spanEl.style.background    = color.fill;
+          spanEl.style.color         = color.border;
+          spanEl.style.borderBottom  = `2px solid ${color.border}`;
+          spanEl.style.paddingBottom = '1px';
+          currentContainer.appendChild(spanEl);
+          spanStack.push(currentContainer);
+          currentContainer = spanEl;
+          break;
+        }
+        case 'span_end':
+          if (spanStack.length > 0) currentContainer = spanStack.pop();
+          break;
+        case 'ground':
+          currentContainer.appendChild(createChip(tok.spanIndex));
+          break;
+      }
+    }
+
+    stepsEl.appendChild(rowEl);
+  }
+
+  // ══════════════════════════════════════════════════════════
+  // TOKEN OP BUILDER
+  // Flattens the token stream into a linear sequence of ops:
+  //   span_start | span_end | ground | char
+  // ══════════════════════════════════════════════════════════
+  function buildOps(step) {
+    const ops = [];
+    for (const tok of step.tokens) {
+      if (tok.type === 'text') {
+        for (const ch of tok.content) ops.push({ type: 'char', ch });
+      } else {
+        ops.push(tok); // span_start / span_end / ground pass through
+      }
+    }
+    return ops;
+  }
+
+  // ══════════════════════════════════════════════════════════
+  // PAUSE-AWARE SCHEDULER
+  // Every async hop in the flow goes through schedule(). If the
+  // timer fires while the presenter has pressed Stop, the
+  // continuation is parked in pendingResume; pressing Play
+  // again runs it, resuming exactly where the flow halted.
+  // ══════════════════════════════════════════════════════════
+  function schedule(fn, delay) {
+    setTimeout(() => {
+      if (flowState === 'paused') { pendingResume = fn; return; }
+      fn();
+    }, delay);
+  }
+
+  // ══════════════════════════════════════════════════════════
   // STREAMING — one step at a time, char by char
+  // (salvaged from the pre-patch engine; runs only on ▶ Play)
   // ══════════════════════════════════════════════════════════
   function streamStep(stepIdx, genId, onAllDone) {
     if (genId !== activeGenId) return;
@@ -1044,7 +1102,7 @@ const DOCOG_EXAMPLES = [
       if (genId !== activeGenId) return;
       if (opIdx >= ops.length) {
         // Step done — pause before next step so the reader can absorb it
-        setTimeout(() => streamStep(stepIdx + 1, genId, onAllDone), 500);
+        schedule(() => streamStep(stepIdx + 1, genId, onAllDone), 500);
         return;
       }
 
@@ -1078,12 +1136,12 @@ const DOCOG_EXAMPLES = [
           stepShownSpans.push(op.spanIndex);
           chatPanel.scrollTop = chatPanel.scrollHeight;
           // Pause so each grounding has time to register before the next token streams
-          setTimeout(processOp, 450);
+          schedule(processOp, 450);
           break;
         }
         case 'char': {
           currentContainer.appendChild(document.createTextNode(op.ch));
-          setTimeout(processOp, CHAR_DELAY);
+          schedule(processOp, CHAR_DELAY);
           break;
         }
       }
@@ -1093,16 +1151,22 @@ const DOCOG_EXAMPLES = [
   }
 
   // ══════════════════════════════════════════════════════════
-  // START / RESET
+  // FLOW CONTROL — ▶ Play / ⏸ Stop
   // ══════════════════════════════════════════════════════════
-  function startStreaming() {
+  function setBtn(mode) {
+    playBtn.textContent = mode === 'stop' ? '⏸ Stop' : '▶ Play';
+  }
+
+  function startFlow() {
     activeGenId++;
     const genId = activeGenId;
+    flowState = 'playing';
+    pendingResume = null;
+    setBtn('stop');
 
     clearAllMasks(true);
     stepsEl.innerHTML = '';
-    resetRow.style.display = 'none';
-    sendBtn.disabled = true;
+    chatPanel.scrollTop = 0;
 
     streamStep(0, genId, () => {
       if (genId !== activeGenId) return;
@@ -1111,55 +1175,59 @@ const DOCOG_EXAMPLES = [
       const sfStep   = ex.steps[ex.steps.length - 1];
       const sfHasGnd = sfStep.tokens.some(t => t.type === 'ground');
       if (!sfHasGnd) clearAllMasks(false);
-      resetRow.style.display = 'flex';
+      flowState = 'idle';
+      pendingResume = null;
+      setBtn('play');
     });
   }
 
-  function resetDemo() {
-    activeGenId++;
-    clearAllMasks(true);
-    stepsEl.innerHTML = '';
-    resetRow.style.display = 'none';
-    sendBtn.disabled = false;
-    currentlyShownSpanIndices = [];
-    chatPanel.scrollTop = 0;
+  function handlePlayBtn() {
+    if (flowState === 'playing') {
+      // ⏸ Stop — halt the flow in place (next scheduled hop parks itself)
+      flowState = 'paused';
+      setBtn('play');
+    } else if (flowState === 'paused') {
+      // ▶ Play — resume from where the flow stopped
+      flowState = 'playing';
+      setBtn('stop');
+      const cont = pendingResume;
+      pendingResume = null;
+      if (cont) cont();
+      // If no continuation is parked yet, the in-flight timer will
+      // see flowState === 'playing' when it fires and carry on.
+    } else {
+      // idle — fresh replay from the start
+      startFlow();
+    }
   }
 
   // ══════════════════════════════════════════════════════════
-  // INIT
+  // INIT — render the single example fully, immediately
   // ══════════════════════════════════════════════════════════
   function init() {
-    tabsEl    = document.getElementById('qdTabs');
     imgEl     = document.getElementById('qdImg');
     svgEl     = document.getElementById('qdSvg');
     defsEl    = document.getElementById('qdDefs');
     bubbleEl  = document.getElementById('qdBubble');
-    sendBtn   = document.getElementById('qdSendBtn');
     stepsEl   = document.getElementById('qdSteps');
-    resetRow  = document.getElementById('qdResetRow');
-    resetBtn  = document.getElementById('qdResetBtn');
     chatPanel = document.querySelector('.qd-chat-panel');
+    playBtn   = document.getElementById('qdPlayBtn');
 
-    if (!tabsEl) return; // Section not present — nothing to do
+    if (!imgEl) return; // Section not present — nothing to do
 
-    buildTabs();
-    switchExample(0);
+    const ex = DOCOG_EXAMPLES[currentExIdx];
+    imgEl.src = ex.image;
+    imgEl.alt = ex.label + ' document';
+    bubbleEl.textContent = ex.question;
+    stepsEl.innerHTML = '';
+    ex.steps.forEach(renderStep);
+    chatPanel.scrollTop = 0;
 
-    sendBtn.addEventListener('click', startStreaming);
-    resetBtn.addEventListener('click', resetDemo);
+    if (playBtn) playBtn.addEventListener('click', handlePlayBtn);
   }
 
   document.addEventListener('DOMContentLoaded', init);
 })();
-
-
-/* deck convention: autoplay 700ms after load */
-window.addEventListener('load', function(){
-  setTimeout(function(){
-    var b = document.getElementById('qdSendBtn');
-    if (b && !b.disabled) b.click();
-  }, 700);
-});
 
 </script>
 </body>

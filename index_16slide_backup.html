@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DoCoG — ECCV 2026</title>
+<style>
+:root{
+  --blue:#05539C; --orange:#F59222; --ink:#16222e; --muted:#5b6b7a; --faint:#8a97a5;
+  --bg:#f6f8fa; --card:#ffffff; --line:#dde5ec;
+  --m3:#05539C; --docog:#7C3AED; --dlvl:#0E7C61; --intro:#C2410C;
+  --neut:#7d8b99; --neut2:#a5b2be; --bad:#b42318; --good:#0e7c61;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#0d1117}
+body{font-family:"Avenir Next","Segoe UI",Inter,system-ui,-apple-system,sans-serif;color:var(--ink)}
+.deck{position:relative;width:100vw;height:100vh;overflow:hidden}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;background:var(--bg);
+  padding:3.8vh 4vw 6vh;overflow:hidden}
+.slide.on{display:flex}
+.slide h2{font-size:4.3vh;line-height:1.12;margin-bottom:1.2vh;font-weight:700}
+.slide h2 .k{color:var(--accent,var(--blue))}
+.slide h2 .x{color:var(--bad)}
+.kicker{font-size:1.8vh;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--accent,var(--blue));margin-bottom:.8vh}
+.slide p{font-size:2.3vh;line-height:1.45}
+.small{font-size:1.8vh;color:var(--muted)}
+.tiny{font-size:1.6vh;color:var(--faint)}
+.vc{margin-top:auto;margin-bottom:auto}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:2vw;align-items:center;min-height:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.8vh 1.8vh;box-shadow:0 2px 10px rgba(10,30,60,.05)}
+.card h3{font-size:2.3vh;margin-bottom:.8vh;color:var(--accent,var(--blue))}
+.card p{font-size:2vh;color:#33424f}
+.fig{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:0}
+.fig img{max-width:100%;max-height:100%;object-fit:contain;border-radius:10px;background:#fff}
+.fig.framed img{border:1px solid var(--line);box-shadow:0 3px 14px rgba(10,30,60,.08);padding:1vh;background:#fff}
+.tok{font-family:ui-monospace,Menlo,monospace;font-size:.9em;background:#0d2740;color:#ffd28a;border-radius:6px;padding:.12vh .7vh;white-space:nowrap;margin:0 .2em}
+.tok.g{background:#0d2740;color:#ffd28a}
+.pill{display:inline-block;font-size:1.85vh;border:1.5px solid var(--accent,var(--blue));color:var(--accent,var(--blue));border-radius:999px;padding:.35vh 1.3vh;margin:.3vh .5vh .3vh 0;font-weight:600;background:#fff}
+.eqop{font-size:3.4vh;color:var(--muted);font-weight:700}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.6vh 2vh;text-align:center;box-shadow:0 2px 10px rgba(10,30,60,.05)}
+.stat .v{font-size:5vh;font-weight:700;color:var(--accent,var(--blue));line-height:1.05}
+.stat .l{font-size:1.75vh;color:var(--muted);margin-top:.4vh}
+.divider{justify-content:center;background:
+  linear-gradient(120deg, color-mix(in srgb, var(--accent) 92%, #000) 0%, var(--accent) 60%, color-mix(in srgb, var(--accent) 72%, #fff) 100%)}
+.divider .kicker{color:#ffffffcc;font-size:2.1vh;letter-spacing:.16em}
+.divider h2{color:#fff;font-size:8.4vh}
+.divider p{color:#ffffffdd;font-size:3.4vh;margin-top:1.6vh;max-width:82vw}
+.footer{position:absolute;left:0;right:0;bottom:0;height:4.4vh;display:flex;align-items:center;justify-content:space-between;padding:0 9vw 0 4vw;font-size:1.6vh;color:var(--muted)}
+.footer .act{font-weight:700;color:var(--accent,var(--blue))}
+#bar{position:fixed;left:0;bottom:0;height:.7vh;background:linear-gradient(90deg,var(--blue),var(--orange));width:0;z-index:50;transition:width .25s}
+#count{position:fixed;right:1.1vw;bottom:1.3vh;z-index:50;font-size:1.7vh;color:#9fb0c0;font-family:ui-monospace,Menlo,monospace}
+.frag{opacity:0;transform:translateY(1.2vh);transition:all .3s}
+.frag.show{opacity:1;transform:none}
+.callout{background:#fff;border:1px solid var(--line);border-left:6px solid var(--orange);border-radius:12px;padding:1.3vh 1.8vh;font-size:2.15vh}
+.callout b{color:var(--blue)}
+.logos{display:flex;gap:1.8vw;align-items:center;justify-content:center;margin-top:3.4vh}
+.logos span{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.4vh 2.2vh;display:flex;align-items:center;box-shadow:0 2px 8px rgba(10,30,60,.06)}
+.logos img{height:8.4vh;object-fit:contain}
+kbd{font-family:ui-monospace,Menlo,monospace;background:#fff;border:1px solid var(--line);border-bottom-width:3px;border-radius:6px;padding:.1vh .7vh;font-size:1.7vh}
+.svgbox{min-height:0;display:flex;align-items:center;justify-content:center}
+.svgbox svg{max-width:100%;max-height:100%;height:auto}
+svg text{font-family:"Avenir Next","Segoe UI",system-ui,sans-serif}
+.chartcard{background:#fff;border:1px solid var(--line);border-radius:16px;padding:1.8vh;box-shadow:0 2px 10px rgba(10,30,60,.06);display:flex;flex-direction:column;min-height:0}
+.chartcard h3{font-size:2.1vh;margin-bottom:.4vh}
+.chartcard .sub{font-size:1.7vh;color:var(--muted);margin-bottom:1vh}
+.fullbleed{position:absolute;inset:0;background:#fff}
+.fullbleed iframe{width:100%;height:100%;border:0;display:block}
+.stepcard{display:flex;justify-content:space-between;align-items:center;gap:1vw}
+.msk{border-radius:5px;padding:0 .55vh;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+
+/* ============================================================
+   MOTION LAYER — ported from the MERIT project page, which is
+   scroll-driven (IntersectionObserver adds .in / .in-view).  Here
+   the deck adds .in to a slide one frame after it becomes active,
+   so the same transitions fire on keypress instead of on scroll.
+   ============================================================ */
+@keyframes slideEnter{from{opacity:0}to{opacity:1}}
+@keyframes riseIn{from{opacity:0;transform:translateY(2vh)}to{opacity:1;transform:none}}
+.slide.on{animation:slideEnter .22s ease}
+.slide.in .casc{animation:riseIn .55s cubic-bezier(.2,.7,.3,1) both}
+
+/* highlighter mark (MERIT .mark) — wipes in left-to-right */
+.mk{font-weight:700;padding:0 .12em;border-radius:2px;
+  background-image:linear-gradient(180deg,transparent 55%,var(--mkc,#ffe08a) 55%);
+  background-repeat:no-repeat;background-size:0% 100%;
+  transition:background-size .6s cubic-bezier(.4,0,.2,1)}
+.slide.in .mk{background-size:100% 100%}
+.slide.in .mk.d1{transition-delay:.35s} .slide.in .mk.d2{transition-delay:.7s} .slide.in .mk.d3{transition-delay:1.05s}
+.frag .mk{background-size:0% 100%} .frag.show .mk{background-size:100% 100%;transition-delay:.1s}
+.mk.bad{--mkc:#ffc9c9} .mk.blue{--mkc:#bcd9f5} .mk.gd{--mkc:#bdedd0}
+
+/* dumbbell connector (MERIT .db-conn scaleX) */
+.db-conn{transform-origin:left center;transform:scaleX(0);
+  transition:transform .95s cubic-bezier(.4,0,.2,1) .15s}
+.slide.in .db-conn{transform:scaleX(1)}
+.frag.show .db-conn{transform:scaleX(1)}
+
+/* SVG stroke draw-on */
+.draw{stroke-dasharray:var(--len,700);stroke-dashoffset:var(--len,700);
+  transition:stroke-dashoffset 1s cubic-bezier(.4,0,.2,1)}
+.slide.in .draw{stroke-dashoffset:0}
+.frag.show .draw{stroke-dashoffset:0}
+
+/* grow-from-center with overshoot (MERIT radar polygons) */
+.pop{transform:scale(0);transform-box:fill-box;transform-origin:center;
+  transition:transform .65s cubic-bezier(.34,1.28,.5,1)}
+.slide.in .pop{transform:scale(1)}
+.frag .pop{transform:scale(0)} .frag.show .pop{transform:scale(1)}
+.slide.in .pop.s1{transition-delay:.06s} .slide.in .pop.s2{transition-delay:.16s}
+.slide.in .pop.s3{transition-delay:.26s} .slide.in .pop.s4{transition-delay:.36s}
+.slide.in .pop.s5{transition-delay:.46s} .slide.in .pop.s6{transition-delay:.56s}
+
+/* problem / solution card pair (MERIT .mot-card) */
+.mot{border-radius:14px;padding:1.5vh 1.8vh;border:1px solid var(--line);background:#fff;
+  box-shadow:0 2px 10px rgba(10,30,60,.05);display:flex;flex-direction:column;gap:.8vh}
+.mot h4{font-size:2.1vh;font-weight:800;margin:0}
+.mot p{font-size:2.1vh;line-height:1.45;color:#39485a}
+.mot.prob{background:#fffcfc;border-color:#f7d9da;border-top:3px solid #f06072}
+.mot.prob h4{color:#c9394a} .mot.prob h4::before{content:"⚠  "}
+.mot.sol{background:#fafffa;border-color:#d2e7d2;border-top:3px solid #39a450}
+.mot.sol h4{color:#2f8a42} .mot.sol h4::before{content:"✓  "}
+
+/* key-idea callout (MERIT .insight-callout) */
+.keyidea{background:#fff;border-left:5px solid var(--accent,var(--blue));border-radius:0 14px 14px 0;
+  padding:1.4vh 2vh;box-shadow:0 2px 12px rgba(10,30,60,.07)}
+.keyidea .tag{display:inline-block;background:var(--accent,var(--blue));color:#fff;font-size:1.35vh;
+  font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.3vh 1vh;border-radius:999px;margin-bottom:.7vh}
+.keyidea p{font-size:2.3vh;line-height:1.4}
+.keyidea b{color:var(--accent,var(--blue))}
+
+/* pill chip — keeps the red/blue motif alive across the ladder so
+   slide 9's "everything hands you one pill" is something they already saw */
+.pillchip{position:absolute;top:8.6vh;right:4vw;display:flex;align-items:center;gap:.55vw;z-index:6}
+.pillchip .pillsvg{height:2.4vh}
+.pillchip .off{opacity:.22;filter:grayscale(1)}
+.pillchip span{font-size:1.5vh;font-weight:700;color:var(--muted);letter-spacing:.02em}
+
+/* the rung rail — tells you where you are on the ladder */
+.rung{position:absolute;top:3.9vh;right:4vw;display:flex;align-items:center;gap:.55vw;z-index:6}
+.rung i{width:1.15vh;height:1.15vh;border-radius:50%;background:#cfd8e0;font-style:normal;
+  transition:background .3s,transform .3s}
+.rung i.on{background:var(--accent,var(--blue));transform:scale(1.55)}
+.rung i.done{background:#9fb4c6}
+.mnum{flex:0 0 auto;width:4.4vh;height:4.4vh;border-radius:50%;display:grid;place-items:center;
+  font-weight:800;font-size:2.1vh;color:#fff;background:var(--accent,var(--blue))}
+.qhead{display:flex;align-items:center;gap:1vw;margin-bottom:.6vh}
+.qhead h2{margin-bottom:0}
+
+/* prior-work gallery */
+.pwrow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;align-items:stretch;width:100%}
+.pw{position:relative;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:20px;
+  padding:2.7vh 1.1vw 1.9vh;display:flex;flex-direction:column;align-items:center;gap:1.1vh;
+  box-shadow:0 3px 18px rgba(10,30,60,.07)}
+.pwbar{position:absolute;top:0;left:0;right:0;height:.6vh;background:#cfd8e0}
+.pwnum{font-size:1.4vh;font-weight:800;letter-spacing:.16em;color:var(--faint)}
+.pwtag{font-size:2.5vh;font-weight:700;line-height:1.15;text-align:center}
+.pwart{width:100%;height:25vh}
+.pwdots{display:flex;gap:.4vw}
+.pwdots span{font-size:1.45vh;font-weight:700;font-family:ui-monospace,Menlo,monospace;
+  padding:.3vh .8vh;border-radius:6px;background:#eef2f6;color:#aab6c2;border:1px solid #e3e9ef}
+.pwdots span.on{background:#05539C;color:#fff;border-color:#05539C}
+.pwmiss{font-size:2.1vh;text-align:center;color:#b42318;font-weight:700;line-height:1.3;margin-top:auto}
+.pwmeth{font-size:1.55vh;text-align:center;color:var(--muted);line-height:1.3}
+.pwchev{display:flex;align-items:center;justify-content:center;font-size:3.2vh;color:#a5b2be;padding:0 .5vw}
+.pw.bad .pwbar{background:#d03b3b}
+.pw.win{border:2px solid #05539C;box-shadow:0 12px 38px rgba(5,83,156,.28)}
+.pw.win .pwbar{background:#05539C}
+.pw.win .pwnum{background:#05539C;color:#fff;padding:.35vh 1.1vh;border-radius:999px}
+.pw.win .pwtag{color:#05539C}
+.pw.win .pwmiss{color:#0e7c61}
+.pw.win.frag.show{transform:translateY(-1.1vh)}
+.pillsvg{height:2.8vh;flex:none}
+
+/* capability matrix */
+.mtx{width:100%;border-collapse:separate;border-spacing:0;font-size:1.9vh}
+.mtx th,.mtx td{padding:.85vh .6vw;text-align:center;border-bottom:1px solid var(--line)}
+.mtx thead th{font-size:1.7vh;color:var(--muted);font-weight:700;line-height:1.2;vertical-align:bottom;padding-bottom:1.1vh}
+.mtx tbody th{text-align:left;font-weight:700;color:var(--ink);font-size:2vh;white-space:nowrap;padding-left:0}
+.mtx .yes{color:var(--good);font-weight:800;font-size:2.5vh}
+.mtx .no{color:#c8d3dc;font-weight:700;font-size:2.3vh}
+.mtx .txt{color:var(--muted);font-family:ui-monospace,Menlo,monospace;font-size:1.6vh}
+.mtx col.ours{background:#eaf2fb}
+.mtx thead th.ours{color:var(--blue);font-weight:800;font-size:1.9vh}
+.mtx td.ours{background:#eaf2fb}
+.mtx td.ours .yes{color:var(--blue)}
+.mtx tr.hl td,.mtx tr.hl th{background:#fff8ec}
+.mtx tr.hl td.ours{background:#e4eefb}
+.mtx .grp{font-size:1.45vh;color:var(--faint);letter-spacing:.08em;text-transform:uppercase}
+
+/* nav + overview */
+.navbtns{position:absolute;right:1.2vw;bottom:5.4vh;display:flex;gap:.6vw;z-index:30}
+.navbtns button{width:5vh;height:5vh;border-radius:50%;border:1px solid var(--line);background:#fff;
+  font-size:2.6vh;color:var(--accent,var(--blue));cursor:pointer;box-shadow:0 2px 8px rgba(10,30,60,.15);font-weight:700}
+.navbtns button:hover{background:var(--accent,var(--blue));color:#fff}
+.nb{white-space:nowrap}
+.deck.overview{overflow:auto;background:#0d1117;padding:2vh}
+.deck.overview .slide{display:flex;position:relative;inset:auto;width:32vw;height:18vw;float:left;margin:.5vw;border-radius:8px;overflow:hidden;cursor:pointer;zoom:.32}
+.deck.overview .fullbleed iframe{display:none}
+
+/* mono step labels (S1 … Sf) */
+.term{font-family:ui-monospace,Menlo,monospace}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001s !important;animation-iteration-count:1 !important;
+    transition-duration:.001s !important;transition-delay:0s !important}
+}
+@media print{
+  html,body{background:#fff}
+  .deck .slide{display:flex !important;position:relative;inset:auto;width:100%;height:100vh;page-break-after:always}
+  .frag{opacity:1 !important;transform:none !important}
+  .slide.on,.slide.on .casc{animation:none !important}
+  .mk{background-size:100% 100% !important}
+  .pop{transform:scale(1) !important}
+  .draw{stroke-dashoffset:0 !important}
+  .db-conn{transform:scaleX(1) !important}
+  #bar,#count,.navbtns{display:none}
+}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<!-- ====== 01 · TITLE ====== -->
+<section class="slide divider" style="--accent:var(--blue);align-items:center;text-align:center">
+  <img src="assets/logo_eccv.png" alt="ECCV 2026" style="position:absolute;top:4vh;left:4vw;height:9vh;background:#fff;border-radius:12px;padding:1vh 1.4vh;box-shadow:0 2px 10px rgba(0,0,0,.2)">
+  <div class="kicker" style="font-size:2.7vh">ECCV 2026 · Spotlight</div>
+  <h2 style="font-size:11vh">DoCoG</h2>
+  <p style="font-size:4.1vh">Mask-based <b>Multi-Type</b> Grounded <b>Chain-of-Thought</b> for Document QA</p>
+  <p style="font-size:2.95vh;margin-top:3.4vh;line-height:1.5"><span class="nb">Sai Madhusudan Gunda*</span> · <span class="nb">Jyothi Swaroopa Jinka*</span> · <span class="nb">Hrithik Sagar Rachakonda*</span><br><span class="nb">Aryan Jain†</span> · <span class="nb">Venkata Kesav Venna†</span> · <span class="nb">Anirudh Srinivasan</span> · <span class="nb">Ravi Kiran Sarvadevabhatla</span><br><span style="font-size:2.4vh;color:#ffffffbb">*, † equal contribution &nbsp;·&nbsp; IIIT Hyderabad · BharatGen &nbsp;·&nbsp; docog-eccv.github.io</span></p>
+  <div class="logos" style="margin-top:4vh">
+    <span><img src="assets/logo_bharatgen.png" alt="BharatGen" style="height:11.5vh"></span>
+    <span><img src="assets/logo_iiith.jpg" alt="IIIT Hyderabad" style="height:11.5vh"></span>
+  </div>
+</section>
+
+<!-- ====== 02 · FIND X HOOK ====== -->
+<section class="slide" style="--accent:var(--blue)">
+  <div class="kicker">First — a small question</div>
+  <h2>Find <span class="k" style="font-family:Georgia,serif;font-style:italic">x</span>.</h2>
+  <div class="cols vc" style="grid-template-columns:1.1fr .9fr">
+    <div class="card" style="padding:3vh 2vh">
+      <svg viewBox="0 0 520 300" style="width:100%">
+        <path d="M120 40 L120 250 L400 250 Z" fill="#fbfdff" stroke="#16222e" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M120 226 h24 v24" fill="none" stroke="#16222e" stroke-width="2"/>
+        <text x="102" y="152" text-anchor="end" font-size="21" font-weight="600">3 cm</text>
+        <text x="260" y="286" text-anchor="middle" font-size="21" font-weight="600">4 cm</text>
+        <text x="296" y="126" font-size="22" font-weight="700" font-family="Georgia,serif" font-style="italic">x cm</text>
+        <ellipse class="frag" cx="313" cy="119" rx="54" ry="27" fill="none" stroke="#d03b3b" stroke-width="3.5" stroke-linecap="round" transform="rotate(-10 313 119)"/>
+      </svg>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1.6vh;justify-content:center">
+      <div class="card frag" style="border:2px solid #d03b3b;display:flex;align-items:center;gap:1vw">
+        <svg class="pillsvg" viewBox="0 0 60 26"><rect x="2" y="3" width="56" height="20" rx="10" fill="#d03b3b"/><rect x="7" y="6.5" width="22" height="6.5" rx="3.2" fill="#ffffff55"/></svg>
+        <p><b style="color:#b42318">“here it is”</b> — you see <b>where</b></p>
+      </div>
+      <div class="card frag" style="border:2px solid #2563eb;display:flex;align-items:center;gap:1vw">
+        <svg class="pillsvg" viewBox="0 0 60 26"><rect x="2" y="3" width="56" height="20" rx="10" fill="#2563eb"/><rect x="7" y="6.5" width="22" height="6.5" rx="3.2" fill="#ffffff55"/></svg>
+        <p><b style="color:#1d4ed8">“x = 5”</b> — you know <b>what</b></p>
+      </div>
+      <figure class="frag" style="margin:0">
+        <img src="assets/matrix_offer.png" alt="Red pill — here it is · blue pill — x = 5" style="width:88%;display:block;margin:0 auto;border-radius:12px;border:1px solid var(--line);box-shadow:0 4px 18px rgba(10,30,60,.18)">
+      </figure>
+    </div>
+  </div>
+  <div class="frag" style="position:absolute;top:4.5vh;right:4vw;font-size:7.5vh;font-weight:800;line-height:1.05;color:var(--blue)">Why not <span style="color:var(--orange)">both</span>?</div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>The question</span></div>
+</section>
+
+<!-- ====== 03 · WHAT IS DOCUMENT QA ====== -->
+<section class="slide" style="--accent:var(--blue)">
+  <div class="rung"><i class="on"></i><i></i><i></i><i></i><i></i></div>
+  <div class="qhead"><span class="mnum">1</span><div>
+    <div class="kicker" style="margin-bottom:.2vh">The task</div>
+    <h2>What is <span class="k">document question answering</span>?</h2></div></div>
+
+  <div style="flex:1;display:flex;flex-direction:column;gap:2vh;justify-content:space-evenly;min-height:0;padding-bottom:1.4vh">
+    <div style="display:grid;grid-template-columns:1.5fr auto 1.15fr auto .8fr;align-items:center;gap:1.1vw">
+      <div class="card casc" style="padding:1.1vh;animation-delay:.05s">
+        <img src="assets/doc_table_crop.png" alt="Credit Card Summary table" style="width:100%;border-radius:8px;display:block">
+        <p class="tiny" style="text-align:center;margin-top:.5vh">a document</p>
+      </div>
+      <span class="eqop casc" style="animation-delay:.12s">+</span>
+      <div class="card casc" style="animation-delay:.19s;padding:1.6vh">
+        <p style="font-size:2.15vh;line-height:1.4">“Does the <b>Net Sales</b> total equal the sum of the values?”</p>
+        <p class="tiny" style="margin-top:.7vh">a question</p>
+      </div>
+      <span class="eqop casc" style="animation-delay:.26s">→</span>
+      <div class="card casc" style="animation-delay:.33s;padding:1.6vh;text-align:center;background:#eaf2fb;border-color:#b9d3ee">
+        <p style="font-size:2.9vh;font-weight:800;color:var(--blue)">“No.”</p>
+        <p class="tiny" style="margin-top:.7vh">an answer</p>
+      </div>
+    </div>
+
+    <p class="casc" style="animation-delay:.44s;text-align:center;font-size:2.4vh">
+      Real documents are <span class="mk d1">heterogeneous</span> — text and graphics together.</p>
+
+    <div class="casc" style="animation-delay:.52s;display:flex;justify-content:center;gap:1.4vw">
+      <div class="card" style="padding:1.2vh 1.6vh;display:flex;flex-direction:column;align-items:center;gap:.7vh">
+        <svg width="72" height="60" viewBox="0 0 72 60"><g class="pop s1"><path d="M36 30 L36 4 A26 26 0 0 1 58.5 43 Z" fill="#93a5b6"/><path d="M36 30 L58.5 43 A26 26 0 0 1 13.5 43 Z" fill="#c3ceda"/><path d="M36 30 L13.5 43 A26 26 0 0 1 36 4 Z" fill="#e4eaf0"/></g></svg>
+        <span class="small" style="font-weight:700">charts</span></div>
+      <div class="card" style="padding:1.2vh 1.6vh;display:flex;flex-direction:column;align-items:center;gap:.7vh">
+        <svg width="72" height="60" viewBox="0 0 72 60"><g class="pop s2"><rect x="8" y="8" width="56" height="44" rx="3" fill="#eef2f6"/><rect x="8" y="8" width="56" height="11" fill="#93a5b6"/><path d="M8 30h56M8 41h56M27 19v33M46 19v33" stroke="#fff" stroke-width="2"/></g></svg>
+        <span class="small" style="font-weight:700">tables</span></div>
+      <div class="card" style="padding:1.2vh 1.6vh;display:flex;flex-direction:column;align-items:center;gap:.7vh">
+        <svg width="72" height="60" viewBox="0 0 72 60"><g class="pop s3"><rect x="24" y="5" width="24" height="13" rx="3" fill="#93a5b6"/><rect x="5" y="41" width="24" height="13" rx="3" fill="#c3ceda"/><rect x="43" y="41" width="24" height="13" rx="3" fill="#c3ceda"/><path d="M36 18v12M36 30H17v11M36 30h19v11" fill="none" stroke="#7d8b99" stroke-width="2.2"/></g></svg>
+        <span class="small" style="font-weight:700">flowcharts</span></div>
+      <div class="card" style="padding:1.2vh 1.6vh;display:flex;flex-direction:column;align-items:center;gap:.7vh">
+        <svg width="72" height="60" viewBox="0 0 72 60"><g class="pop s4"><rect x="14" y="4" width="44" height="52" rx="3" fill="#eef2f6" stroke="#cfd8e0"/><path d="M21 14h30M21 22h30M21 30h22M21 38h30M21 46h18" stroke="#a5b2be" stroke-width="2.6" stroke-linecap="round"/></g></svg>
+        <span class="small" style="font-weight:700">documents</span></div>
+      <div class="card" style="padding:1.2vh 1.6vh;display:flex;flex-direction:column;align-items:center;gap:.7vh">
+        <svg width="72" height="60" viewBox="0 0 72 60"><g class="pop s5"><path d="M10 44 Q36 12 62 40" fill="none" stroke="#93a5b6" stroke-width="3.4" stroke-linecap="round"/><circle cx="10" cy="44" r="4" fill="#7d8b99"/><circle cx="62" cy="40" r="4" fill="#7d8b99"/><path d="M14 54 Q36 28 58 52" fill="none" stroke="#cfd8e0" stroke-width="2.4" stroke-dasharray="4 4"/></g></svg>
+        <span class="small" style="font-weight:700">curved text</span></div>
+    </div>
+
+    <div class="keyidea frag" style="max-width:74vw;margin:0 auto">
+      <span class="tag">what the model returns</span>
+      <p>A short string. <b>Nothing else.</b></p>
+    </div>
+  </div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>The task</span></div>
+</section>
+
+<!-- ====== 04 · CAN YOU CHECK IT ====== -->
+<section class="slide" style="--accent:var(--blue)">
+  <div class="rung"><i class="done"></i><i class="on"></i><i></i><i></i><i></i></div>
+  <div class="qhead"><span class="mnum">2</span><div>
+    <div class="kicker" style="margin-bottom:.2vh">The problem</div>
+    <h2>The answer is right. <span class="k">Is every step?</span></h2></div></div>
+
+  <div style="flex:1;display:flex;flex-direction:column;gap:1.6vh;justify-content:space-evenly;min-height:0;padding-bottom:1.4vh">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:.9vh">
+      <p style="font-size:2.35vh"><b>Q ·</b> “Does the Net Sales total equal the sum of the values?”</p>
+      <img src="assets/doc_table_crop.png" alt="Credit Card Summary table with Sales, Credits and Net Sales columns"
+           style="max-height:29vh;max-width:82vw;object-fit:contain;border:1px solid var(--line);border-radius:10px;box-shadow:0 3px 14px rgba(10,30,60,.12);background:#fff">
+    </div>
+
+    <div class="cols" style="gap:2.2vw;align-items:stretch">
+      <div class="mot prob casc" style="animation-delay:.1s">
+        <h4>What a system tells you today</h4>
+        <p>reads the Net&nbsp;Sales values<br>
+          <b style="font-size:3vh;letter-spacing:.02em">20 · 20 · 20 · 50 ·
+          <span style="position:relative;display:inline-block">50<span class="frag" style="position:absolute;left:-.5vh;right:-.5vh;bottom:-.3vh;height:.7vh;background:#d03b3b;border-radius:4px"></span></span>
+          · 20</b><br>
+          <b>180</b>, not 150 — the total is wrong</p>
+        <p style="color:var(--good);font-weight:800;font-size:2.2vh">✓ correct.</p>
+      </div>
+      <div class="mot prob frag">
+        <h4>But look at the fifth value</h4>
+        <p><b style="color:#c9394a">$50 is JCB’s <i>Sales</i> column. Its Net Sales is $30.</b></p>
+        <p>Right answer. <span class="mk bad">Invented step.</span></p>
+      </div>
+    </div>
+
+    <div class="keyidea frag" style="max-width:74vw;margin:0 auto">
+      <span class="tag">the real problem</span>
+      <p>You cannot check a claim you <span class="mk bad">cannot locate</span>.</p>
+    </div>
+  </div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>The problem</span></div>
+</section>
+
+<!-- ====== 05 · FIX 1 · GROUND THE ANSWER ====== -->
+<section class="slide" style="--accent:var(--blue)">
+  <div class="rung"><i class="done"></i><i class="done"></i><i class="on"></i><i></i><i></i></div>
+  <div class="pillchip"><svg class="pillsvg" viewBox="0 0 60 26"><rect x="2" y="3" width="56" height="20" rx="10" fill="#d03b3b"/><rect x="7" y="6.5" width="22" height="6.5" rx="3.2" fill="#ffffff55"/></svg><svg class="pillsvg off" viewBox="0 0 60 26"><rect x="2" y="3" width="56" height="20" rx="10" fill="#2563eb"/><rect x="7" y="6.5" width="22" height="6.5" rx="3.2" fill="#ffffff55"/></svg><span>where, only</span></div>
+  <div class="qhead"><span class="mnum">3</span><div>
+    <div class="kicker" style="margin-bottom:.2vh">First fix — and some models do this</div>
+    <h2>Ground the answer. <span class="k">Is that enough?</span></h2></div></div>
+
+  <div style="flex:1;display:flex;flex-direction:column;gap:2.2vh;justify-content:space-evenly;min-height:0">
+    <div class="card casc" style="padding:3.2vh 2.6vh;animation-delay:.05s">
+      <div style="display:flex;align-items:center;gap:1.2vw">
+        <div style="flex:0 0 auto;text-align:center">
+          <svg width="150" height="108" viewBox="0 0 120 86"><rect x="6" y="4" width="108" height="78" rx="5" fill="#eef2f6" stroke="#cfd8e0"/><path d="M18 20h84M18 32h84M18 44h60M18 56h84M18 68h44" stroke="#a5b2be" stroke-width="3.4" stroke-linecap="round"/></svg>
+          <p class="tiny">document + question</p>
+        </div>
+        <span class="eqop">→</span>
+        <div style="flex:1;display:flex;align-items:center;gap:1vw">
+          <div style="flex:1;background:#fbfdff;border:1px solid var(--line);border-radius:12px;padding:1.6vh 2vh">
+            <p style="font-size:3.1vh"><b>“No — the total is wrong.”</b>
+              <span style="display:inline-block;border:2.5px dashed #d03b3b;background:#d03b3b22;border-radius:6px;padding:.1vh .9vh;margin-left:.6vw;font-size:2vh;color:#b42318;font-weight:800">box</span></p>
+            <p class="small" style="margin-top:.6vh">the answer + where it lives</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cols" style="gap:2vw;align-items:stretch">
+      <div class="mot sol casc" style="animation-delay:.16s">
+        <h4>What it buys</h4>
+        <p>You can point at the answer. Answer quality <b>78.1 → 81.5</b>.</p>
+        <p class="small">BoundingDocs · DOGR · MMDocBench · VisualMRC</p>
+      </div>
+      <div class="mot prob frag">
+        <h4>What it misses</h4>
+        <p>The answer was <b>already right</b>. The invented step is <span class="mk bad">not shown at all</span> — nothing to put a box on.</p>
+        <p class="small">step-level grounding: <b>undefined</b></p>
+      </div>
+    </div>
+
+    <div class="keyidea frag" style="max-width:80vw;margin:0 auto">
+      <span class="tag">so the next question is</span>
+      <p>The error is in the reasoning. <b>So show the reasoning.</b></p>
+    </div>
+  </div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>Fix 1 · ground the answer</span></div>
+</section>
+
+<!-- ====== 06 · FIX 2 · SHOW THE REASONING ====== -->
+<section class="slide" style="--accent:var(--blue)">
+  <div class="rung"><i class="done"></i><i class="done"></i><i class="done"></i><i class="on"></i><i></i></div>
+  <div class="pillchip"><svg class="pillsvg off" viewBox="0 0 60 26"><rect x="2" y="3" width="56" height="20" rx="10" fill="#d03b3b"/><rect x="7" y="6.5" width="22" height="6.5" rx="3.2" fill="#ffffff55"/></svg><svg class="pillsvg" viewBox="0 0 60 26"><rect x="2" y="3" width="56" height="20" rx="10" fill="#2563eb"/><rect x="7" y="6.5" width="22" height="6.5" rx="3.2" fill="#ffffff55"/></svg><span>what, only</span></div>
+  <div class="qhead"><span class="mnum">4</span><div>
+    <div class="kicker" style="margin-bottom:.2vh">Second fix — and models are good at this</div>
+    <h2>Show the reasoning. <span class="k">Is <i>that</i> enough?</span></h2></div></div>
+
+  <div style="flex:1;display:flex;flex-direction:column;gap:2vh;justify-content:space-evenly;min-height:0">
+    <div class="card casc" style="padding:3vh 2.6vh;animation-delay:.05s">
+      <div style="display:flex;flex-direction:column;gap:1.7vh">
+        <div style="display:flex;align-items:center;gap:1vw"><span class="term" style="color:var(--faint);font-weight:800;font-size:1.9vh;width:3.4vh">S₁</span>
+          <span style="font-size:2.6vh">read the Net Sales values</span></div>
+        <div style="display:flex;align-items:center;gap:1vw"><span class="term" style="color:var(--faint);font-weight:800;font-size:1.9vh;width:3.4vh">S₂</span>
+          <span style="font-size:2.6vh">the fifth value is <b>$50</b></span>
+          <span class="frag" style="font-size:1.85vh;color:#b42318;font-weight:800;border:1.5px solid #f0a0a0;background:#fff2f2;border-radius:999px;padding:.2vh 1vh">← invented</span></div>
+        <div style="display:flex;align-items:center;gap:1vw"><span class="term" style="color:var(--faint);font-weight:800;font-size:1.9vh;width:3.4vh">S₃</span>
+          <span style="font-size:2.6vh">they sum to <b>180</b></span></div>
+        <div style="display:flex;align-items:center;gap:1vw"><span class="term" style="color:var(--faint);font-weight:800;font-size:1.9vh;width:3.4vh">S<sub>f</sub></span>
+          <span style="font-size:2.6vh"><b>180 ≠ 150</b> — the printed total is wrong</span>
+          <span style="display:inline-block;border:2.5px dashed #d03b3b;background:#d03b3b22;border-radius:6px;padding:.05vh .8vh;font-size:1.8vh;color:#b42318;font-weight:800">box</span></div>
+      </div>
+    </div>
+
+    <div class="cols" style="gap:2vw;align-items:stretch">
+      <div class="mot sol casc" style="animation-delay:.16s">
+        <h4>What it buys</h4>
+        <p>It genuinely helps. Remove CoT from our own model: <b>85.8 → 73.3</b>.</p>
+        <p class="small">VisualCoT · every current VLM</p>
+      </div>
+      <div class="mot prob frag">
+        <h4>What it misses</h4>
+        <p><span class="mk bad">Four claims you cannot check</span> instead of one. Steps are text, and text can be confidently wrong.</p>
+        <p class="small">VisualCoT grounds — but not the steps: <b>3.5</b></p>
+      </div>
+    </div>
+
+    <div class="keyidea frag" style="max-width:80vw;margin:0 auto">
+      <span class="tag">so the next question is</span>
+      <p>So — <b>ground every step.</b> Has anyone?</p>
+    </div>
+  </div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>Fix 2 · show the reasoning</span></div>
+</section>
+
+<!-- ====== 07 · FIX 3 · BOXES ON EVERY STEP ====== -->
+<section class="slide" style="--accent:var(--blue)">
+  <div class="rung"><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="on"></i></div>
+  <div class="qhead"><span class="mnum">5</span><div>
+    <div class="kicker" style="margin-bottom:.2vh">Third fix — the closest anyone gets</div>
+    <h2>Ground every step — <span class="k">with a box.</span></h2></div></div>
+
+  <div class="cols" style="grid-template-columns:1.25fr .75fr;gap:2.2vw;flex:1;min-height:0;align-items:center;padding:1vh 0 2vh">
+    <div class="chartcard">
+      <div class="sub">“What share is the third segment?” — the evidence you get back</div>
+      <div class="svgbox" style="flex:1">
+      <svg viewBox="0 0 640 352" style="width:100%">
+        <g>
+          <text x="150" y="34" text-anchor="middle" font-size="20" font-weight="800" fill="#b42318">A BOX</text>
+          <path d="M150,175 L150,55 A120,120 0 0 1 269.54,185.46 Z" fill="#eef2f6" stroke="#fff" stroke-width="1.8"/>
+          <path d="M150,175 L269.54,185.46 A120,120 0 0 1 181.06,290.91 Z" fill="#dfe6ed" stroke="#fff" stroke-width="1.8"/>
+          <path d="M150,175 L181.06,290.91 A120,120 0 0 1 37.24,216.04 Z" fill="#c3ceda" stroke="#fff" stroke-width="1.8"/>
+          <path d="M150,175 L37.24,216.04 A120,120 0 0 1 150,55 Z" fill="#e9eef3" stroke="#fff" stroke-width="1.8"/>
+          <rect class="draw" style="--len:530" x="37.24" y="175" width="143.82" height="120" fill="#d03b3b" fill-opacity=".2" stroke="#d03b3b" stroke-width="3" stroke-dasharray="530"/>
+          <text x="120" y="330" text-anchor="middle" font-size="17.5" fill="#b42318" font-weight="700">grabs both neighbours too</text>
+        </g>
+        <g>
+          <text x="470" y="34" text-anchor="middle" font-size="20" font-weight="800" fill="#05539C">A MASK</text>
+          <path d="M470,175 L470,55 A120,120 0 0 1 589.54,185.46 Z" fill="#eef2f6" stroke="#fff" stroke-width="1.8"/>
+          <path d="M470,175 L589.54,185.46 A120,120 0 0 1 501.06,290.91 Z" fill="#dfe6ed" stroke="#fff" stroke-width="1.8"/>
+          <path d="M470,175 L501.06,290.91 A120,120 0 0 1 357.24,216.04 Z" fill="#c3ceda" stroke="#fff" stroke-width="1.8"/>
+          <path d="M470,175 L357.24,216.04 A120,120 0 0 1 470,55 Z" fill="#e9eef3" stroke="#fff" stroke-width="1.8"/>
+          <path class="pop s3" d="M470,175 L501.06,290.91 A120,120 0 0 1 357.24,216.04 Z" fill="#05539C" stroke="#fff" stroke-width="3" stroke-linejoin="round"/>
+          <text x="440" y="330" text-anchor="middle" font-size="17.5" fill="#05539C" font-weight="700">exactly the wedge</text>
+        </g>
+      </svg>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:1.3vh;justify-content:center">
+      <div class="mot sol casc" style="animation-delay:.14s">
+        <h4>Some do reach the steps</h4>
+        <p><b>ChartPoint</b> — a grounded chain, on <b>charts only</b>.<br><b>DOGR</b> — every document type, <b>text regions only</b>, no chain.</p>
+      </div>
+      <div class="mot prob frag">
+        <h4>And every one of them uses a rectangle</h4>
+        <p>A box <span class="mk bad">cannot hug a wedge</span>, follow curved text, or trace an arrow. Partly <b>the wrong evidence</b>.</p>
+      </div>
+      <p class="small frag" style="text-align:center">masks are nearly free — <b>580 ms</b> vs <b>505 ms</b></p>
+    </div>
+  </div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>Fix 3 · boxes on every step</span></div>
+</section>
+
+<!-- ====== 08 · CAPABILITY MATRIX ====== -->
+<section class="slide" style="--accent:var(--blue)">
+  <div class="kicker">Every grounded-DocVQA resource, side by side</div>
+  <h2>Nobody has <span class="k">all of it</span>.</h2>
+
+  <div style="flex:1;display:flex;flex-direction:column;gap:1.6vh;justify-content:space-evenly;min-height:0">
+  <div class="card casc" style="padding:2.4vh 2.4vh">
+  <table class="mtx">
+    <colgroup><col><col><col><col><col><col><col class="ours"></colgroup>
+    <thead><tr><th style="text-align:left" class="grp">capability</th>
+      <th>ChartQA<br>DocVQA</th>
+      <th>Bounding<br>Docs</th>
+      <th>DOGR</th>
+      <th>Visual<br>CoT</th>
+      <th>Chart<br>Point</th>
+      <th class="ours">DoCoG<br>(Ours)</th></tr></thead>
+    <tbody>
+      <tr><th>Step-wise CoT</th>
+        <td><span class="no pop s1">✗</span></td>
+        <td><span class="no pop s2">✗</span></td>
+        <td><span class="no pop s3">✗</span></td>
+        <td><span class="yes pop s4">✓</span></td>
+        <td><span class="yes pop s5">✓</span></td>
+        <td class="ours"><span class="yes pop s6">✓</span></td>
+      </tr>
+      <tr><th>Grounding</th>
+        <td><span class="no pop s1">✗</span></td>
+        <td><span class="yes pop s2">✓</span></td>
+        <td><span class="yes pop s3">✓</span></td>
+        <td><span class="yes pop s4">✓</span></td>
+        <td><span class="yes pop s5">✓</span></td>
+        <td class="ours"><span class="yes pop s6">✓</span></td>
+      </tr>
+      <tr><th>Grounded CoT</th>
+        <td><span class="no pop s1">✗</span></td>
+        <td><span class="no pop s2">✗</span></td>
+        <td><span class="no pop s3">✗</span></td>
+        <td><span class="no pop s4">✗</span></td>
+        <td><span class="yes pop s5">✓</span></td>
+        <td class="ours"><span class="yes pop s6">✓</span></td>
+      </tr>
+      <tr class="hl"><th>Pixel masks</th>
+        <td><span class="no pop s1">✗</span></td>
+        <td><span class="no pop s2">✗</span></td>
+        <td><span class="no pop s3">✗</span></td>
+        <td><span class="no pop s4">✗</span></td>
+        <td><span class="no pop s5">✗</span></td>
+        <td class="ours"><span class="yes pop s6">✓</span></td>
+      </tr>
+      <tr><th>Multi-type evidence</th>
+        <td><span class="no pop s1">✗</span></td>
+        <td><span class="txt pop s2">txt</span></td>
+        <td><span class="txt pop s3">txt</span></td>
+        <td><span class="txt pop s4">txt</span></td>
+        <td><span class="txt pop s5">t+g</span></td>
+        <td class="ours"><span class="yes pop s6" style="font-size:2vh">t+g</span></td>
+      </tr>
+      <tr class="hl"><th>Document types</th>
+        <td><span class="txt pop s1">C / D</span></td>
+        <td><span class="txt pop s2">D</span></td>
+        <td><span class="txt pop s3">All</span></td>
+        <td><span class="txt pop s4">All</span></td>
+        <td><span class="txt pop s5">C</span></td>
+        <td class="ours"><span class="yes pop s6" style="font-size:2vh">All</span></td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="cols" style="gap:2vw;align-items:stretch">
+    <div class="mot prob frag">
+      <h4>One row is empty all the way across</h4>
+      <p>Not one prior resource predicts a <span class="mk bad">pixel mask</span>.</p>
+    </div>
+    <div class="mot prob frag">
+      <h4>And the one that reasons and grounds does it on charts alone</h4>
+      <p>ChartPoint clears every row above — then stops at <span class="mk bad">one document type</span>.</p>
+    </div>
+  </div>
+  <p class="tiny" style="text-align:center">condensed from Tab. 1 · the full table compares 19 datasets</p>
+  </div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>The gap</span></div>
+</section>
+
+<!-- ====== 09 · DOCOG IN ONE SENTENCE ====== -->
+<section class="slide" style="--accent:var(--blue)">
+  <div class="kicker">Our answer</div>
+  <h2>DoCoG — <span class="k">mask-based, multi-type, grounded, step-wise CoT</span></h2>
+
+  <div style="flex:1;display:flex;flex-direction:column;gap:1.8vh;min-height:0;justify-content:center;padding-bottom:1.4vh">
+    <div class="fig framed casc" style="animation-delay:.05s;flex:1;min-height:0">
+      <img src="assets/docog_teaser_chart.png" alt="Step-wise grounded chain of thought over a line chart: each step emits [GND] tokens that localise the evidence" style="max-height:44vh">
+    </div>
+
+    <div style="display:flex;gap:1.4vw;align-items:stretch">
+      <div class="card casc" style="animation-delay:.14s;flex:1;display:flex;gap:1vw;align-items:flex-start">
+        <span class="mnum">1</span><div><h3>every step, not just the answer</h3>
+        <p>a <span class="tok g">[GND]</span> token inside <b>every step</b> and the answer</p></div>
+      </div>
+      <div class="card casc" style="animation-delay:.24s;flex:1;display:flex;gap:1vw;align-items:flex-start">
+        <span class="mnum">2</span><div><h3>a mask, not a box</h3>
+        <p>each <span class="tok g">[GND]</span> → a <span class="mk blue">segmentation mask</span></p></div>
+      </div>
+      <div class="card casc" style="animation-delay:.34s;flex:1;display:flex;gap:1vw;align-items:flex-start">
+        <span class="mnum">3</span><div><h3>text <i>and</i> graphics</h3>
+        <p>wedges · legends · nodes · curved text</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>What DoCoG is</span></div>
+</section>
+
+<!-- ====== 10 · LIVE EXAMPLE (interactive) ====== -->
+<section class="slide iframe-slide" style="--accent:var(--blue);padding:0">
+  <div class="fullbleed"><iframe data-src="interactive/docog-examples.html" loading="lazy" title="DoCoG grounded reasoning — one example"></iframe></div>
+</section>
+
+<!-- ====== 11 · HOW TRANSITION ====== -->
+<section class="slide divider" style="--accent:var(--blue);align-items:center;text-align:center">
+  <div class="kicker">That was DoCoG in action</div>
+  <h2>How does it <span style="color:var(--orange)">work</span>?</h2>
+  <p>the architecture — step by step</p>
+</section>
+
+<!-- ====== 12 · ARCHITECTURE (interactive) ====== -->
+<section class="slide iframe-slide" style="--accent:var(--blue);padding:0">
+  <div class="fullbleed"><iframe data-src="interactive/docog.html" loading="lazy" title="DoCoG architecture — manual walkthrough"></iframe></div>
+</section>
+
+<!-- ====== 13 · DATA ====== -->
+<section class="slide" style="--accent:var(--blue)">
+  <div class="kicker">DoCoG · Data</div>
+  <h2>To train it we had to <span class="k">build the data</span></h2>
+  <div style="flex:1;display:flex;flex-direction:column;gap:4.5vh;justify-content:center;min-height:0;padding-bottom:1.4vh">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2vw">
+      <div class="card casc" style="animation-delay:.05s;padding:2.4vh">
+        <h3 style="font-size:2.8vh">DoCoG-QA</h3>
+        <div style="display:flex;gap:1.2vw;margin:1.2vh 0">
+          <div class="stat" style="flex:1;padding:1.2vh"><div class="v" style="font-size:4vh">325K</div><div class="l">documents</div></div>
+          <div class="stat" style="flex:1;padding:1.2vh"><div class="v" style="font-size:4vh">1.5M</div><div class="l">grounded QA pairs</div></div>
+        </div>
+        <p class="small">every step supervised: <b>text + mask</b> · charts, flowcharts, tables, documents</p>
+      </div>
+      <div class="card casc" style="animation-delay:.15s;padding:2.4vh;border:2px dashed #05539C">
+        <h3 style="font-size:2.8vh">DoCoG-PQA</h3>
+        <div style="display:flex;gap:1.2vw;margin:1.2vh 0">
+          <div class="stat" style="flex:1;padding:1.2vh"><div class="v" style="font-size:4vh">20K</div><div class="l">preference pairs</div></div>
+        </div>
+        <p class="small">chains ranked by <b>answer</b> · <b>reasoning</b> · <b>grounding</b></p>
+      </div>
+    </div>
+    <div class="keyidea frag" style="max-width:78vw;margin:0 auto">
+      <span class="tag">and to measure it</span>
+      <p><b>DoCoG-Bench</b> — 3K documents, 10K QA pairs, <b>human-verified</b>.</p>
+    </div>
+    <p class="small frag" style="text-align:center">mask quality manually verified over a stratified subset of <b>33,500 masks</b></p>
+  </div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>Data</span></div>
+</section>
+
+<!-- ====== 14 · TRAINING ====== -->
+<section class="slide" style="--accent:var(--blue)">
+  <div class="kicker">DoCoG · Training</div>
+  <h2>Two stages: <span class="k">SFT</span> → <span class="k">DPO</span></h2>
+  <div style="flex:1;display:flex;flex-direction:column;gap:5vh;justify-content:center;min-height:0;padding-bottom:1.4vh">
+    <div style="display:flex;align-items:center;justify-content:center;gap:.9vw">
+      <div class="card casc" style="animation-delay:.05s;text-align:center"><h3 style="color:var(--ink)">DoCoG-QA</h3><p class="small">1.5M grounded QA</p></div>
+      <span class="eqop casc" style="animation-delay:.1s">→</span>
+      <div class="card casc" style="animation-delay:.15s;background:#05539C;border-color:#05539C;text-align:center"><h3 style="color:#fff">Stage 1 · SFT</h3><p style="color:#cfe0f2">grounded CoT + masks</p></div>
+      <span class="eqop casc" style="animation-delay:.2s">→</span>
+      <div class="card casc" style="animation-delay:.25s;border:2px dashed #05539C;text-align:center"><h3>Stage 2 · DPO</h3><p class="small">learn from preferences</p></div>
+      <span class="eqop casc" style="animation-delay:.3s">←</span>
+      <div class="card casc" style="animation-delay:.35s;text-align:center"><h3 style="color:var(--ink)">DoCoG-PQA</h3><p class="small">20K preference pairs</p></div>
+    </div>
+
+    <div class="cols" style="gap:2vw;align-items:stretch">
+      <div class="callout frag"><b>Why DPO?</b> SFT only imitates. Preferences teach the model to <b>prefer</b> a better chain — better answer, better reasoning, better grounding.</div>
+      <div class="mot prob frag">
+        <h4>And it only works with an anchor</h4>
+        <p>DPO is <b>text-only</b> — masks stay frozen. Without the anchor loss, grounding <span class="mk bad">collapses</span>: <b>81.9 → 41.7</b>.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>Training</span></div>
+</section>
+
+<!-- ====== 15 · RESULTS SCATTER ====== -->
+<section class="slide" style="--accent:var(--blue)">
+  <div class="kicker">DoCoG · Results</div>
+  <h2>Best on <span class="k">both</span> — answers <span class="k">and</span> grounding</h2>
+  <div class="cols vc" style="grid-template-columns:1.35fr .65fr">
+    <div class="chartcard">
+      <div class="sub">DoCoG-Bench (All) · AQ vs GQ<sub>fa</sub></div>
+      <svg viewBox="0 0 720 428" role="img" aria-label="Answer quality vs grounding quality">
+        <g stroke="#e1e0d9" stroke-width="1">
+          <line x1="70" y1="380" x2="690" y2="380"/><line x1="70" y1="300" x2="690" y2="300"/><line x1="70" y1="220" x2="690" y2="220"/><line x1="70" y1="140" x2="690" y2="140"/><line x1="70" y1="60" x2="690" y2="60"/>
+        </g>
+        <g font-size="15" fill="#898781"><text x="56" y="384" text-anchor="end">0</text><text x="56" y="304" text-anchor="end">20</text><text x="56" y="224" text-anchor="end">40</text><text x="56" y="144" text-anchor="end">60</text><text x="56" y="64" text-anchor="end">80</text></g>
+        <g font-size="15" fill="#898781" text-anchor="middle"><text x="70" y="404">70</text><text x="225" y="404">75</text><text x="380" y="404">80</text><text x="535" y="404">85</text><text x="690" y="404">90</text></g>
+        <text x="380" y="419" text-anchor="middle" font-size="16.5" fill="#52514e" font-weight="600">answer quality →</text>
+        <text x="20" y="220" text-anchor="middle" font-size="16.5" fill="#52514e" font-weight="600" transform="rotate(-90 20 220)">grounding quality →</text>
+        <g>
+          <circle class="pop s1" cx="470" cy="361" r="9" fill="#7d8b99" stroke="#fff" stroke-width="2"><title>GPT-5 · AQ 82.9 · GQ_fa 4.8</title></circle>
+          <circle class="pop s1" cx="377" cy="352" r="9" fill="#7d8b99" stroke="#fff" stroke-width="2"><title>Claude Sonnet 4.5 · 79.9 · 7.1</title></circle>
+          <circle class="pop s2" cx="510" cy="334" r="9" fill="#7d8b99" stroke="#fff" stroke-width="2"><title>Gemini 3 Pro · 84.2 · 11.4</title></circle>
+          <circle class="pop s2" cx="399" cy="286" r="9" fill="#7d8b99" stroke="#fff" stroke-width="2"><title>Gemini 3 Flash · 80.6 · 23.6</title></circle>
+          <circle class="pop s3" cx="303" cy="132" r="9" fill="#7d8b99" stroke="#fff" stroke-width="2"><title>Qwen3-VL fine-tuned · 77.5 · 61.9</title></circle>
+          <circle class="pop s3" cx="259" cy="122" r="9" fill="#7d8b99" stroke="#fff" stroke-width="2"><title>InternVL3.5 fine-tuned · 76.1 · 64.6</title></circle>
+          <circle class="pop s5" cx="560" cy="52" r="15" fill="#05539C" fill-opacity=".18"/>
+          <circle class="pop s5" cx="560" cy="52" r="11" fill="#05539C" stroke="#fff" stroke-width="2.5"><title>DoCoG · 85.8 · 81.9</title></circle>
+        </g>
+        <g font-size="18" fill="#16222e">
+          <text x="484" y="366">GPT-5</text>
+          <text x="364" y="357" text-anchor="end">Claude 4.5</text>
+          <text x="526" y="339">Gemini 3 Pro</text>
+          <text x="386" y="291" text-anchor="end">Gemini 3 Flash</text>
+          <text x="319" y="137">Qwen3-VL ft</text>
+          <text x="245" y="127" text-anchor="end">InternVL3.5 ft</text>
+          <text x="580" y="58" font-weight="700" font-size="21" fill="#05539C">DoCoG (9B)</text>
+        </g>
+      </svg>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1.3vh;justify-content:center">
+      <div class="stat"><div class="v" style="font-size:4.4vh">85.8 / 81.9</div><div class="l">best on <b>both</b> axes</div></div>
+      <div class="card frag" style="background:#05539C;border-color:#05539C;text-align:center;padding:2.2vh">
+        <h3 style="color:#fff;font-size:2.9vh;margin-bottom:.5vh">9B — beats much larger models</h3>
+        <p style="color:#cfe0f2;font-size:2.1vh">GPT-5 · Gemini 3 Pro · Claude 4.5</p>
+      </div>
+      <div class="mot prob frag" style="padding:1.2vh 1.5vh">
+        <h4 style="font-size:1.95vh">the frontier models answer, but cannot point</h4>
+        <p style="font-size:2vh">GPT-5: <b>82.9</b> on answers, <span class="mk bad">4.8</span> on grounding.</p>
+      </div>
+      <p class="small frag" style="text-align:center">general QA not traded away — best of its size on <b>8 of 10</b> benchmarks</p>
+    </div>
+  </div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>Results</span></div>
+</section>
+
+<!-- ====== 16 · ANSWER CALLBACK ====== -->
+<section class="slide" style="--accent:var(--blue)">
+  <div class="kicker">So — what is x?</div>
+  <h2>The first question, <span class="k">answered</span></h2>
+  <div class="cols vc" style="grid-template-columns:1.05fr .95fr">
+    <figure class="fig framed"><img src="assets/triangle_grounded.png" alt="DoCoG grounded answer to Find x" style="max-height:70vh"></figure>
+    <div style="display:flex;flex-direction:column;gap:1.6vh;justify-content:center">
+      <div class="card frag" style="border:2px solid #d03b3b;display:flex;align-items:center;gap:1vw">
+        <svg class="pillsvg" viewBox="0 0 60 26"><rect x="2" y="3" width="56" height="20" rx="10" fill="#d03b3b"/><rect x="7" y="6.5" width="22" height="6.5" rx="3.2" fill="#ffffff55"/></svg>
+        <p><b style="color:#b42318">where</b> — every value points to its pixels &nbsp;✓</p>
+      </div>
+      <div class="card frag" style="border:2px solid #2563eb;display:flex;align-items:center;gap:1vw">
+        <svg class="pillsvg" viewBox="0 0 60 26"><rect x="2" y="3" width="56" height="20" rx="10" fill="#2563eb"/><rect x="7" y="6.5" width="22" height="6.5" rx="3.2" fill="#ffffff55"/></svg>
+        <p><b style="color:#1d4ed8">what</b> — <span style="font-family:Georgia,serif;font-style:italic">x</span> = 5 &nbsp;✓</p>
+      </div>
+      <figure class="frag" style="margin:0">
+        <img src="assets/matrix_both_pills.png" alt="Did you just take both pills?" style="width:82%;display:block;margin:0 auto;border-radius:12px;border:1px solid var(--line);box-shadow:0 4px 18px rgba(10,30,60,.18)">
+        <figcaption style="margin-top:.8vh;font-size:2.6vh;text-align:center;color:#33424f"><b style="color:var(--blue)">yes — DoCoG takes both.</b></figcaption>
+      </figure>
+    </div>
+  </div>
+  <div class="footer"><span class="act">DoCoG · ECCV 2026</span><span>Both pills</span></div>
+  <div class="frag" style="position:absolute;inset:0;z-index:5;pointer-events:none;display:flex;align-items:center;justify-content:center;background:rgba(246,248,250,.5);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)">
+    <div class="card" style="text-align:center;padding:3vh 4vw;background:#fff;box-shadow:0 12px 44px rgba(10,30,60,.28)">
+      <p style="font-size:3.6vh;color:var(--blue);margin-bottom:1.4vh"><b>come find out how —</b></p>
+      <img src="assets/qr_docog.png" alt="DoCoG project page QR" style="height:58vh;display:block;margin:0 auto;image-rendering:pixelated">
+      <p style="font-size:4.2vh;margin-top:1.6vh"><b>docog-eccv.github.io</b></p>
+      <p style="font-size:3.1vh;margin-top:.8vh"><b>Poster #113 · ExHall</b> &nbsp;·&nbsp; <span style="color:#5b6b7a">Session 6 · 3:00 PM</span></p>
+    </div>
+  </div>
+</section>
+</div>
+
+<div id="bar"></div><div id="count"></div>
+
+<script>
+(function(){
+  const slides=[...document.querySelectorAll('.slide')];
+  const deck=document.getElementById('deck');
+  const bar=document.getElementById('bar'), count=document.getElementById('count');
+  let i=Math.max(0,Math.min(slides.length-1,(parseInt(location.hash.slice(1),10)||1)-1));
+  const ALL=location.search.includes('all');
+  function frags(s){return [...s.querySelectorAll('.frag')]}
+  function loadIframe(s){
+    const f=s.querySelector('iframe[data-src]');
+    if(f && !f.src){f.src=f.dataset.src}
+  }
+  // MERIT's IntersectionObserver adds .in when a section scrolls into view.
+  // Here the slide IS the viewport, so .in goes on one frame after .on —
+  // the delay is required or the transitions have nothing to animate from.
+  function arm(s){
+    void s.offsetWidth;                       // flush the zero state so the transition has a start
+    requestAnimationFrame(()=>requestAnimationFrame(()=>s.classList.add('in')));
+  }
+  function show(n,revealAll){
+    slides.forEach((s,j)=>{
+      const on=(j===n);
+      s.classList.toggle('on',on);
+      if(!on)s.classList.remove('in');
+    });
+    frags(slides[n]).forEach(el=>el.classList.toggle('show',ALL||!!revealAll));
+    loadIframe(slides[n]);
+    arm(slides[n]);
+    i=n; location.hash=String(n+1);
+    bar.style.width=((n+1)/slides.length*100)+'%';
+    count.textContent=(n+1)+' / '+slides.length;
+  }
+  function next(){
+    const f=frags(slides[i]).filter(el=>!el.classList.contains('show'));
+    if(f.length){f[0].classList.add('show');return}
+    if(i<slides.length-1)show(i+1,false);
+  }
+  function prev(){
+    const f=frags(slides[i]).filter(el=>el.classList.contains('show'));
+    if(f.length){f[f.length-1].classList.remove('show');return}
+    if(i>0)show(i-1,true);
+  }
+  window.deckNext=next; window.deckPrev=prev;
+  document.querySelectorAll('.iframe-slide').forEach(s=>{
+    const nb=document.createElement('div'); nb.className='navbtns';
+    const b1=document.createElement('button'); b1.textContent='‹'; b1.onclick=e=>{e.stopPropagation();prev()};
+    const b2=document.createElement('button'); b2.textContent='›'; b2.onclick=e=>{e.stopPropagation();next()};
+    nb.append(b1,b2); s.appendChild(nb);
+  });
+  addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();next()}
+    else if(e.key==='ArrowLeft'||e.key==='Backspace'||e.key==='PageUp'){e.preventDefault();prev()}
+    else if(e.key==='Home')show(0,false);
+    else if(e.key==='End')show(slides.length-1,true);
+    else if(e.key==='f'||e.key==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}
+    else if(e.key==='g'||e.key==='G'){deck.classList.toggle('overview')}
+  });
+  deck.addEventListener('click',e=>{
+    if(deck.classList.contains('overview')){
+      const s=e.target.closest('.slide');
+      if(s){deck.classList.remove('overview');show(slides.indexOf(s),false)}
+      return;
+    }
+    if(e.target.closest('a'))return;
+    if(e.target.closest('.iframe-slide'))return;
+    (e.clientX>innerWidth*.35)?next():prev();
+  });
+  addEventListener('hashchange',()=>{
+    const n=(parseInt(location.hash.slice(1),10)||1)-1;
+    if(n!==i&&n>=0&&n<slides.length)show(n,false);
+  });
+  addEventListener('beforeprint',()=>slides.forEach(s=>s.classList.add('in','on')));
+  show(i,false);
+})();
+</script>
+</body>
+</html>
