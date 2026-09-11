@@ -147,7 +147,7 @@ documents, every step supervised with text and a mask."
 
 ▸ "It takes both pills."
 
-▸ *(QR)* "Come find us at the poster, 113 in the ExHall. Thank you."
+▸ *(QR)* "Come find us at the poster, 106 in the ExHall. Thank you."
 
 ---
 
